@@ -24,7 +24,7 @@ export default fastifyPlugin(async function (app) {
   await app.register(fastifyAutoload, {
     dir: join(__dirname, '../routes'),
     matchFilter: (path) => {
-      const isMatched = /\.route\.(ts|js|cjs|mjs)$/.test(path);
+      const isMatched = /\.?route\.(ts|js|cjs|mjs)$/.test(path);
       if (!isMatched) return false;
       logger.info(`Route ${yellow('Register')} {%s}`, path.substring(1));
       return true;
