@@ -1,17 +1,17 @@
+import { yellow } from 'colorette';
+import { join } from 'node:path';
 import fastifyPlugin from 'fastify-plugin';
 import fastifyAutoload from '@fastify/autoload';
 import fastifyCors from '@fastify/cors';
 import fastifyMiddie from '@fastify/middie';
 import fastifyStatic from '@fastify/static';
 import logger from '../lib/utils/logger';
-import { yellow } from 'colorette';
-import { join } from 'node:path';
-import { morganMiddleware } from '../middlewares/morgan.middleware';
+import morganMiddleware from '../middlewares/morgan.middleware';
 
-export default fastifyPlugin(async function (app) {
+export default fastifyPlugin(async function setupPlugin(app) {
   await app.register(fastifyMiddie);
 
-  app.use(morganMiddleware());
+  app.use(morganMiddleware);
 
   await app.register(fastifyCors, {
     origin: '*',
