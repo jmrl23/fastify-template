@@ -1,6 +1,6 @@
 import { type Cache, caching } from 'cache-manager';
 
-export class CacheService {
+export default class CacheService {
   private static instance: CacheService;
 
   private constructor(private readonly cache: Cache) {}

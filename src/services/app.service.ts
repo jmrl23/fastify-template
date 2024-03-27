@@ -1,7 +1,7 @@
-import { CacheService } from './cache.service';
+import CacheService from './cache.service';
 import { type Cache, caching } from 'cache-manager';
 
-export class AppService {
+export default class AppService {
   private static instance: AppService;
 
   private constructor(private readonly cacheService: CacheService) {}

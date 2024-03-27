@@ -1,5 +1,5 @@
-import { AppService } from '../services/app.service';
-import { type FastifyInstance } from 'fastify';
+import type { FastifyInstance } from 'fastify';
+import AppService from '../services/app.service';
 
 export const autoPrefix = '/test';
 

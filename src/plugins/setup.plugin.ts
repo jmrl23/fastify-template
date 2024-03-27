@@ -5,7 +5,7 @@ import fastifyAutoload from '@fastify/autoload';
 import fastifyCors from '@fastify/cors';
 import fastifyMiddie from '@fastify/middie';
 import fastifyStatic from '@fastify/static';
-import logger from '../lib/utils/logger';
+import logger from '../libs/utils/logger';
 import morganMiddleware from '../middlewares/morgan.middleware';
 
 export default fastifyPlugin(async function setupPlugin(app) {

@@ -1,7 +1,7 @@
-import morgan from 'morgan';
 import { gray } from 'colorette';
-import { logger } from '../lib/utils/logger';
+import { logger } from '../libs/utils/logger';
 import type { NextHandleFunction } from '@fastify/middie';
+import morgan from 'morgan';
 
 export default (function morganMiddleware(request, response, next) {
   const format =

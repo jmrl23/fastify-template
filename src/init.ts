@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { loadEnvFiles } from './lib/utils/load-env-files';
+import loadEnvFiles from './libs/utils/load-env-files';
 
 console.clear();
 

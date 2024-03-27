@@ -1,7 +1,7 @@
 import './init';
 import app from './app';
 import env from 'env-var';
-import logger from './lib/utils/logger';
+import logger from './libs/utils/logger';
 import detectPort from 'detect-port';
 import setupPlugin from './plugins/setup.plugin';
 
