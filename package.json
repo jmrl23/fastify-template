@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "main": "build/main.js",
+  "license": "UNLICENSED",
   "scripts": {
     "build": "tsc --build",
     "start": "node .",
