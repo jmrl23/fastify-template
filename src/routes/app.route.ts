@@ -18,6 +18,7 @@ export default async function appRoute(app: FastifyInstance) {
         properties: {
           message: {
             type: 'string',
+            minLength: 1,
             default: 'Hello, World!',
           },
         },
