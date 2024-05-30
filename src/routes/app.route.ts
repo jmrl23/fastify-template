@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import AppService from '../services/app.service';
 
-export const autoPrefix = '/';
+// export const prefix = '/';
 
 export default async function appRoute(app: FastifyInstance) {
   const appService = await AppService.getInstance();

@@ -74,11 +74,6 @@
     ajv-formats "^2.1.1"
     fast-uri "^2.0.0"
 
-"@fastify/autoload@^5.8.2":
-  version "5.8.2"
-  resolved "https://registry.yarnpkg.com/@fastify/autoload/-/autoload-5.8.2.tgz#92450091fb5ab00bf623c89c9113a5391835a823"
-  integrity sha512-AX555mbAvtYPWZhOJG73y8zV39wH+wEnOcgg13xfGoHJ46rdsfx0Rs8Yfi5exE4bBqdzcM72iIZdhTbLbEqScA==
-
 "@fastify/cors@^9.0.1":
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/@fastify/cors/-/cors-9.0.1.tgz#9ddb61b4a61e02749c5c54ca29f1c646794145be"
