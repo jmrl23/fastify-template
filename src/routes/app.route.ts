@@ -1,10 +1,24 @@
-import type { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyRequest } from 'fastify';
+import type { FromSchema } from 'json-schema-to-ts';
 import AppService from '../services/app.service';
+import { asJsonSchema, asRoute } from '../lib/utils/fastify/typings';
 
 // export const prefix = '/';
 
-export default async function appRoute(app: FastifyInstance) {
+export default asRoute(async function appRoute(app) {
   const appService = await AppService.getInstance();
+
+  const messageReverseBodySchema = asJsonSchema({
+    type: 'object',
+    properties: {
+      message: {
+        type: 'string',
+        minLength: 1,
+      },
+    },
+    required: ['message'],
+    additionalProperties: false,
+  } as const);
 
   app.route({
     method: 'POST',
@@ -13,23 +27,11 @@ export default async function appRoute(app: FastifyInstance) {
       description: 'Reverse message value',
       tags: ['example'],
       security: [],
-      body: {
-        type: 'object',
-        properties: {
-          message: {
-            type: 'string',
-            minLength: 1,
-            default: 'Hello, World!',
-          },
-        },
-        required: ['message'],
-      },
+      body: messageReverseBodySchema,
     },
     async handler(
       request: FastifyRequest<{
-        Body: {
-          message: string;
-        };
+        Body: FromSchema<typeof messageReverseBodySchema>;
       }>,
     ) {
       const message = request.body.message;
@@ -40,4 +42,4 @@ export default async function appRoute(app: FastifyInstance) {
       };
     },
   });
-}
+});

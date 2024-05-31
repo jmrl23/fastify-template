@@ -22,7 +22,7 @@ export default fastifyPlugin(async function setupPlugin(app) {
 
   const routeFilesDir = path.resolve(__dirname, '../routes');
   await app.register(routesPlugin, {
-    dir: path.resolve(__dirname, '../routes'),
+    dirPath: path.resolve(__dirname, '../routes'),
     callback(routeFiles) {
       for (const filePath of routeFiles) {
         logger.info(

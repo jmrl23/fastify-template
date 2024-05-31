@@ -1,27 +1,28 @@
 import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
-import fs from 'node:fs';
 import path from 'node:path';
+import getFileList from '../lib/utils/getFileList';
 
 export default fastifyPlugin(async function routesPlugin(
   app: FastifyInstance,
-  { dir, callback }: Options,
+  { dirPath, callback }: Options,
 ) {
-  const files = getFileList(dir);
-  const routeFiles = files.filter((fileName) => {
-    const isRouteFile = /\.route\.(ts|js|cjs|mjs)$/.test(fileName);
+  const files = getFileList(dirPath);
+  const routeFiles = files.filter((file) => {
+    const extensions = ['js', 'ts', 'cjs', 'mjs'];
+    const fileName = path.basename(file);
+    const isRouteFile = extensions.some((ext) =>
+      fileName.toLowerCase().endsWith(`.route.${ext}`),
+    );
     return isRouteFile;
   });
-
   for (const routeFile of routeFiles) {
     const route = await import(routeFile);
-    const _path = routeFile
-      .substring(dir.length)
-      .replace(/[\\\/]/g, '/')
-      .split('/');
-    _path.splice(-1);
-    const prefix = route.prefix ?? _path.join('/');
-
+    const _path = routeFile.replace(/[\\\/]/g, '/').substring(dirPath.length);
+    const fileName = path.basename(routeFile);
+    const prefix =
+      route.prefix ??
+      (_path.substring(0, _path.length - fileName.length - 1) || '/');
     app.register(route, {
       prefix,
     });
@@ -30,21 +31,8 @@ export default fastifyPlugin(async function routesPlugin(
   callback?.(routeFiles);
 });
 
-function getFileList(dir: string): string[] {
-  const files = fs
-    .readdirSync(dir)
-    .map((file) => {
-      const filePath = path.resolve(dir, file);
-      const stat = fs.statSync(filePath);
-      if (stat.isDirectory()) return getFileList(filePath);
-      return filePath;
-    })
-    .flat();
-  return files;
-}
-
 interface Options {
-  dir: string;
+  dirPath: string;
   callback?: Callback;
 }
 
