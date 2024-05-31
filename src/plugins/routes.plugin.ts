@@ -31,15 +31,19 @@ export default fastifyPlugin(async function routesPlugin(
 });
 
 function getFileList(dir: string): string[] {
-  const files = fs
-    .readdirSync(dir)
-    .map((file) => {
-      const filePath = path.resolve(dir, file);
-      const stat = fs.statSync(filePath);
-      if (stat.isDirectory()) return getFileList(filePath);
-      return filePath;
-    })
-    .flat();
+  const files: string[] = [];
+  const dirFiles = fs.readdirSync(dirPath);
+
+  for (const file of dirFiles) {
+    const filePath = path.resolve(dirPath, file);
+    const stat = fs.statSync(filePath);
+    if (stat.isDirectory()) {
+      files.push(...getFileList(filePath));
+      continue;
+    }
+    files.push(filePath);
+  }
+
   return files;
 }
 
