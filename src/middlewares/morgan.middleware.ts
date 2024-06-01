@@ -1,5 +1,5 @@
 import * as colorette from 'colorette';
-import logger from '../lib/utils/logger';
+import logger from '../lib/util/logger';
 import morgan from 'morgan';
 import type { NextHandleFunction } from '@fastify/middie';
 

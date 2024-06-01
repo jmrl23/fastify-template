@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import path from 'node:path';
-import getFileList from '../lib/utils/getFileList';
+import getFileList from '../lib/util/getFileList';
 
 export default fastifyPlugin(async function routesPlugin(
   app: FastifyInstance,

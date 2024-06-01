@@ -4,7 +4,7 @@ import fastifyPlugin from 'fastify-plugin';
 import fastifyCors from '@fastify/cors';
 import fastifyMiddie from '@fastify/middie';
 import fastifyStatic from '@fastify/static';
-import logger from '../lib/utils/logger';
+import logger from '../lib/util/logger';
 import swaggerPlugin from './swagger.plugin';
 import routesPlugin from './routes.plugin';
 import morganMiddleware from '../middlewares/morgan.middleware';

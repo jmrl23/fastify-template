@@ -1,7 +1,7 @@
 import type { FastifyRequest } from 'fastify';
 import type { FromSchema } from 'json-schema-to-ts';
 import AppService from '../services/app.service';
-import { asJsonSchema, asRoute } from '../lib/utils/fastify/typings';
+import { asJsonSchema, asRoute } from '../lib/util/fastify/typings';
 
 // export const prefix = '/';
 
