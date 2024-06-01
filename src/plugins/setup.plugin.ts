@@ -20,15 +20,18 @@ export default fastifyPlugin(async function setupPlugin(app) {
 
   await app.register(swaggerPlugin);
 
-  const routeFilesDir = path.resolve(__dirname, '../routes');
+  const routesDir = path.resolve(__dirname, '../routes');
   await app.register(routesPlugin, {
     dirPath: path.resolve(__dirname, '../routes'),
     callback(routeFiles) {
       for (const filePath of routeFiles) {
+        const file = filePath
+          .replace(/[\\\/]/g, '/')
+          .substring(routesDir.length + 1);
         logger.info(
           `Route %s {%s}`,
           colorette.yellow('Registered'),
-          colorette.magentaBright(filePath.substring(routeFilesDir.length + 1)),
+          colorette.magentaBright(file),
         );
       }
     },
