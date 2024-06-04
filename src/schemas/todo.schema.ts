@@ -16,7 +16,7 @@ export const todoCreateSchema = asJsonSchema({
 
 export const todoGetAllSchema = asJsonSchema({
   type: 'object',
-  description: 'Get all todo item',
+  description: 'Get todo items',
   additionalProperties: false,
 } as const);
 
