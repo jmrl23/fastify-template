@@ -1,8 +1,16 @@
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyPlugin from 'fastify-plugin';
+import type { OpenAPIV3_1 } from 'openapi-types';
 
 export default fastifyPlugin(async function swaggerPlugin(app) {
+  const servers: OpenAPIV3_1.ServerObject[] = [
+    {
+      url: 'http://localhost:3001',
+      description: 'Default local development server',
+    },
+  ];
+
   app.register(fastifySwagger, {
     openapi: {
       info: {
@@ -10,12 +18,7 @@ export default fastifyPlugin(async function swaggerPlugin(app) {
         version: '1.0.0',
         description: 'App API docs',
       },
-      servers: [
-        {
-          url: 'http://localhost:3001',
-          description: 'Default local development server',
-        },
-      ],
+      servers,
       components: {
         securitySchemes: {
           bearerAuth: {

@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "strictPropertyInitialization": false
   },
-  "include": ["./src/**/*.ts", "./src/**/*.js", "./src/**/*.json"],
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.json"],
   "ts-node": {
     "swc": true
   }
