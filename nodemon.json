@@ -7,6 +7,6 @@
     "./.env.development.local"
   ],
   "exec": "dotenv -v NODE_ENV=development -- ts-node src/main.ts",
-  "ext": "ts,js,json,mjs,cjs",
+  "ext": "ts,js,json",
   "delay": 1000
 }
