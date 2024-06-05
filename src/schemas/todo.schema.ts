@@ -1,4 +1,4 @@
-import { asJsonSchema } from '../lib/util/fastify/typings';
+import { asJsonSchema } from '../lib/util/typings';
 
 export const todoCreateSchema = asJsonSchema({
   type: 'object',

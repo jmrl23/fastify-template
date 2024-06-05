@@ -1,5 +1,5 @@
 import type { FromSchema } from 'json-schema-to-ts';
-import { asRoute } from '../lib/util/fastify/typings';
+import { asRoute } from '../lib/util/typings';
 import {
   todoCreateSchema,
   todoDeleteSchema,

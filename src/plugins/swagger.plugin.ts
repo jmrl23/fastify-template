@@ -14,9 +14,8 @@ export default fastifyPlugin(async function swaggerPlugin(app) {
   app.register(fastifySwagger, {
     openapi: {
       info: {
-        title: 'App API',
+        title: 'Sample API',
         version: '1.0.0',
-        description: 'App API docs',
       },
       servers,
       components: {
