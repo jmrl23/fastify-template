@@ -7,8 +7,7 @@
     "start": "node .",
     "start:dev": "nodemon -q",
     "start:prod": "dotenv -v NODE_ENV=production -- node .",
-    "format": "prettier --write \"src/**/*.{ts,cjs,mjs,js}\"",
-    "lint": "eslint -c .eslintrc.js ."
+    "format": "prettier --write \"src/**/*.{ts,cjs,mjs,js}\""
   },
   "devDependencies": {
     "@swc/core": "^1.5.7",
@@ -16,13 +15,7 @@
     "@types/http-errors": "^2.0.4",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.12.12",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
     "dotenv-cli": "^7.4.2",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-typescript": "^3.0.0",
-    "eslint-plugin-prettier": "^5.1.2",
     "nodemon": "^3.0.2",
     "prettier": "^3.1.1",
     "ts-node": "^10.9.2",
