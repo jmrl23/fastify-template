@@ -5,17 +5,17 @@ import logger from './lib/util/logger';
 
 const app = fastify();
 
-app.register(setupPlugin);
+app.register(setupPlugin, { prefix: '/' });
 
-app.setNotFoundHandler((request) => {
+app.setNotFoundHandler(async function notFoundHandler(request) {
   throw new NotFound(`Cannot ${request.method} ${request.url}`);
 });
 
-app.setErrorHandler(async function (error, request) {
-  if (!error.statusCode || error.statusCode > 399) {
-    console.error(error);
-  }
+app.setErrorHandler(async function errorHandler(error) {
   logger.error(error.message);
+  if (!error.statusCode || error.statusCode > 499) {
+    logger.error(error.stack);
+  }
   return error;
 });
 
