@@ -1,5 +1,5 @@
 export declare module 'fastify' {
-  // declare interface Foo {
+  // interface Foo {
   //   bar: unknown;
   // }
 }

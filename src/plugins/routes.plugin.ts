@@ -11,7 +11,7 @@ export default fastifyPlugin(
   ) {
     const files = getFileList(dirPath);
     const routeFiles = files.filter((file) => {
-      const extensions = ['js', 'ts', 'cjs', 'mjs'];
+      const extensions = ['js', 'ts'];
       const fileName = path.basename(file);
       const isRouteFile = extensions.some((ext) =>
         fileName.toLowerCase().endsWith(`.route.${ext}`),

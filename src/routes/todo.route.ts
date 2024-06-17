@@ -1,3 +1,4 @@
+import { memoryStore } from 'cache-manager';
 import type { FromSchema } from 'json-schema-to-ts';
 import { asRoute } from '../lib/util/typings';
 import {
@@ -8,7 +9,6 @@ import {
   todoUpdateSchema,
 } from '../schemas/todo.schema';
 import TodoService from '../services/todo.service';
-import { memoryStore } from 'cache-manager';
 
 export const prefix = '/todo';
 
@@ -38,7 +38,7 @@ export default asRoute(async function todoRoute(app) {
 
     .route({
       method: 'GET',
-      url: '/',
+      url: '',
       schema: {
         description: todoGetAllSchema.description,
         security: [],
