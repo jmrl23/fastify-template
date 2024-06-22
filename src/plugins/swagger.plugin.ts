@@ -16,7 +16,7 @@ export default fastifyPlugin(
       prefix: '/docs',
       openapi: {
         info: {
-          title: 'Appliction API',
+          title: 'Application API',
           version: '0.0.1',
         },
         servers,
