@@ -12,13 +12,13 @@ export const todoCreateSchema = asJsonSchema({
       examples: ['Walk the dog'],
     },
   },
-} as const);
+});
 
 export const todoGetAllSchema = asJsonSchema({
   type: 'object',
   description: 'Get todo items',
   additionalProperties: false,
-} as const);
+});
 
 export const todoGetSchema = asJsonSchema({
   type: 'object',
@@ -31,7 +31,7 @@ export const todoGetSchema = asJsonSchema({
       format: 'uuid',
     },
   },
-} as const);
+});
 
 export const todoUpdateSchema = asJsonSchema({
   type: 'object',
@@ -53,7 +53,7 @@ export const todoUpdateSchema = asJsonSchema({
       examples: [false],
     },
   },
-} as const);
+});
 
 export const todoDeleteSchema = asJsonSchema({
   type: 'object',
@@ -66,4 +66,4 @@ export const todoDeleteSchema = asJsonSchema({
       format: 'uuid',
     },
   },
-} as const);
+});
