@@ -1,8 +1,8 @@
 import fastifyMiddie from '@fastify/middie';
+import * as c from 'colorette';
 import fastifyPlugin from 'fastify-plugin';
 import morgan from 'morgan';
 import logger from '../lib/util/logger';
-import * as colorette from 'colorette';
 
 export default fastifyPlugin(
   async function middlewaresPlugin(app) {
@@ -14,7 +14,7 @@ export default fastifyPlugin(
         {
           stream: {
             write(message) {
-              logger.http(colorette.gray(message.trim()));
+              logger.http(`${c.bold('morgan')} ${message.trim()}`);
             },
           },
         },

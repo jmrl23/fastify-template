@@ -1,12 +1,12 @@
-import * as colorette from 'colorette';
-import path from 'node:path';
-import fastifyPlugin from 'fastify-plugin';
 import fastifyCors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
+import * as c from 'colorette';
+import fastifyPlugin from 'fastify-plugin';
+import path from 'node:path';
 import logger from '../lib/util/logger';
-import swaggerPlugin from './swagger.plugin';
-import routesPlugin from './routes.plugin';
 import middlewaresPlugin from './middlewares.plugin';
+import routesPlugin from './routes.plugin';
+import swaggerPlugin from './swagger.plugin';
 
 export default fastifyPlugin(
   async function setupPlugin(app) {
@@ -25,14 +25,7 @@ export default fastifyPlugin(
       dirPath: routesDir,
       callback(routeFiles) {
         for (const filePath of routeFiles) {
-          const file = filePath
-            .replace(/[\\\/]/g, '/')
-            .substring(routesDir.length + 1);
-          logger.info(
-            `Route %s {%s}`,
-            colorette.yellow('Registered'),
-            colorette.magentaBright(file),
-          );
+          logger.info(`${c.bold('registered route')} ${filePath}`);
         }
       },
     });
