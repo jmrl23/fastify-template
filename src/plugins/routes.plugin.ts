@@ -2,24 +2,18 @@ import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import path from 'node:path';
 import util from 'node:util';
-import getFileList from '../lib/util/getFileList';
+import { glob } from 'glob';
 
 export default fastifyPlugin(
   async function routesPlugin(
     app: FastifyInstance,
     { dirPath, callback }: Options,
   ) {
-    const files = getFileList(dirPath);
-    const routeFiles = files.filter((file) => {
-      const extensions = ['js', 'ts'];
-      const fileName = path.basename(file);
-      const isRouteFile = extensions.some((ext) =>
-        fileName.toLowerCase().endsWith(`.route.${ext}`),
-      );
-      return isRouteFile;
+    const files = await glob([`${dirPath}/**/*.route.{ts,js}`], {
+      absolute: true,
     });
     const registeredRouteFiles = [];
-    for (const routeFile of routeFiles) {
+    for (const routeFile of files) {
       const route = await import(routeFile);
       if (!util.types.isAsyncFunction(route.default)) continue;
       const _path = routeFile.replace(/[\\\/]/g, '/').substring(dirPath.length);
