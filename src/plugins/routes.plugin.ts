@@ -16,7 +16,7 @@ export default fastifyPlugin(
     for (const routeFile of files) {
       const route = await import(routeFile);
       if (!util.types.isAsyncFunction(route.default)) continue;
-      const _path = routeFile.replace(/[\\\/]/g, '/').substring(dirPath.length);
+      const _path = routeFile.replace(/[\\/]/g, '/').substring(dirPath.length);
       const fileName = path.basename(routeFile);
       if ('prefix' in route && typeof route.prefix !== 'string')
         throw new Error('Invalid route prefix');
