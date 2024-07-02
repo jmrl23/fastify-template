@@ -21,26 +21,18 @@ export default fastifyPlugin(
         },
         servers,
         components: {
-          securitySchemes: {
-            bearerAuth: {
-              type: 'http',
-              scheme: 'bearer',
-            },
-          },
+          // securitySchemes: {
+          //   bearerAuth: {
+          //     type: 'http',
+          //     scheme: 'bearer',
+          //     bearerFormat: 'JWT',
+          //   },
+          // },
         },
-        security: [
-          {
-            bearerAuth: [],
-          },
-        ],
       },
     });
 
-    await app.register(fastifySwaggerUi, {
-      routePrefix: '/docs',
-    });
+    await app.register(fastifySwaggerUi, { routePrefix: '/docs' });
   },
-  {
-    name: 'swagger',
-  },
+  { name: 'swagger' },
 );
