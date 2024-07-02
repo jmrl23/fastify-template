@@ -123,7 +123,7 @@ export const responseTodosOKSchema = asJsonSchema({
   properties: {
     todos: {
       type: 'array',
-      items: { ...todoSchema, nullable: true },
+      items: todoSchema,
     },
   },
 });
