@@ -4,14 +4,11 @@ import fastifyPlugin from 'fastify-plugin';
 import morgan from 'morgan';
 import logger from '../lib/util/logger';
 
-export default fastifyPlugin(
-  async function middleware(app) {
-    await app.register(fastifyMiddie, { prefix: '/' });
+export default fastifyPlugin(async function middleware(app) {
+  await app.register(fastifyMiddie, { prefix: '/' });
 
-    app.use(morganMiddleware);
-  },
-  { name: 'middleware' },
-);
+  app.use(morganMiddleware);
+});
 
 const morganMiddleware = morgan(
   ':remote-addr :method :url :status :res[content-length] - :response-time ms',
