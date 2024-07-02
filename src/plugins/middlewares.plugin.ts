@@ -14,7 +14,7 @@ export default fastifyPlugin(
         {
           stream: {
             write(message) {
-              logger.http(`${c.bold('morgan')} ${message.trim()}`);
+              logger.http(`${c.bold('morgan')} ${c.gray(message.trim())}`);
             },
           },
         },
