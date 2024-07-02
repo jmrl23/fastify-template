@@ -8,18 +8,18 @@ export default fastifyPlugin(
   async function middleware(app) {
     await app.register(fastifyMiddie, { prefix: '/' });
 
-    app.use(
-      morgan(
-        ':remote-addr :method :url :status :res[content-length] - :response-time ms',
-        {
-          stream: {
-            write(message) {
-              logger.http(`${c.bold('morgan')} ${c.gray(message.trim())}`);
-            },
-          },
-        },
-      ),
-    );
+    app.use(morganMiddleware);
   },
   { name: 'middleware' },
+);
+
+const morganMiddleware = morgan(
+  ':remote-addr :method :url :status :res[content-length] - :response-time ms',
+  {
+    stream: {
+      write(message) {
+        logger.http(`${c.bold('morgan')} ${c.gray(message.trim())}`);
+      },
+    },
+  },
 );
