@@ -4,7 +4,7 @@ import fastifyPlugin from 'fastify-plugin';
 import type { OpenAPIV3_1 } from 'openapi-types';
 
 export default fastifyPlugin(
-  async function swaggerPlugin(app) {
+  async function swagger(app) {
     const servers: OpenAPIV3_1.ServerObject[] = [
       {
         url: 'http://localhost:3001',
@@ -41,6 +41,6 @@ export default fastifyPlugin(
     });
   },
   {
-    name: 'swaggerPlugin',
+    name: 'swagger',
   },
 );

@@ -50,7 +50,7 @@ export const todoUpdateSchema = asJsonSchema({
     },
     done: {
       type: 'boolean',
-      examples: [false],
+      examples: [true],
     },
   },
 });

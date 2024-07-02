@@ -9,6 +9,8 @@ async function main() {
   const host = SERVER_HOST;
   const port = await detectPort(PORT);
 
+  await app.ready();
+
   app.listen({ host, port }, function (error) {
     if (error) return logger.error(error.stack ?? error.message);
     logger.info(`${c.bold('server port')} ${port}`);

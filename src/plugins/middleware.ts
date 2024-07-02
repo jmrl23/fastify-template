@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import logger from '../lib/util/logger';
 
 export default fastifyPlugin(
-  async function middlewaresPlugin(app) {
+  async function middleware(app) {
     await app.register(fastifyMiddie, { prefix: '/' });
 
     app.use(
@@ -21,7 +21,5 @@ export default fastifyPlugin(
       ),
     );
   },
-  {
-    name: 'middlewaresPlugin',
-  },
+  { name: 'middleware' },
 );

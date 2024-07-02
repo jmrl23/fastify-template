@@ -1,4 +1,4 @@
-import CacheService from './cache.service';
+import CacheService from './CacheService';
 import crypto from 'node:crypto';
 import { NotFound } from 'http-errors';
 

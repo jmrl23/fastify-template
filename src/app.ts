@@ -1,11 +1,11 @@
 import fastify from 'fastify';
 import { NotFound } from 'http-errors';
 import logger from './lib/util/logger';
-import setupPlugin from './plugins/setup.plugin';
+import setup from './plugins/setup';
 
 const app = fastify();
 
-app.register(setupPlugin, { prefix: '/' });
+app.register(setup, { prefix: '/' });
 
 app.setNotFoundHandler(async function notFoundHandler(request) {
   throw new NotFound(`Cannot ${request.method} ${request.url}`);

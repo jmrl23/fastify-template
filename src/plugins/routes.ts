@@ -1,14 +1,11 @@
 import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
+import { glob } from 'glob';
 import path from 'node:path';
 import util from 'node:util';
-import { glob } from 'glob';
 
 export default fastifyPlugin(
-  async function routesPlugin(
-    app: FastifyInstance,
-    { dirPath, callback }: Options,
-  ) {
+  async function routes(app: FastifyInstance, { dirPath, callback }: Options) {
     const files = await glob([`${dirPath}/**/*.route.{ts,js}`], {
       absolute: true,
     });
@@ -32,9 +29,7 @@ export default fastifyPlugin(
 
     callback?.(registeredRouteFiles);
   },
-  {
-    name: 'routesPlugin',
-  },
+  { name: 'routes' },
 );
 
 interface Options {
