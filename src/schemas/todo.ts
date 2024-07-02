@@ -1,3 +1,4 @@
+import type { FromSchema } from 'json-schema-to-ts';
 import { asJsonSchema } from '../lib/util/typings';
 
 export const todoCreateSchema = asJsonSchema({
@@ -13,12 +14,14 @@ export const todoCreateSchema = asJsonSchema({
     },
   },
 });
+export type TodoCreateSchema = FromSchema<typeof todoCreateSchema>;
 
 export const todoGetAllSchema = asJsonSchema({
   type: 'object',
   description: 'Get todo items',
   additionalProperties: false,
 });
+export type TodoGetAllSchema = FromSchema<typeof todoGetAllSchema>;
 
 export const todoGetSchema = asJsonSchema({
   type: 'object',
@@ -32,6 +35,7 @@ export const todoGetSchema = asJsonSchema({
     },
   },
 });
+export type TodoGetSchema = FromSchema<typeof todoGetSchema>;
 
 export const todoUpdateSchema = asJsonSchema({
   type: 'object',
@@ -54,6 +58,7 @@ export const todoUpdateSchema = asJsonSchema({
     },
   },
 });
+export type TodoUpdateSchema = FromSchema<typeof todoUpdateSchema>;
 
 export const todoDeleteSchema = asJsonSchema({
   type: 'object',
@@ -67,3 +72,4 @@ export const todoDeleteSchema = asJsonSchema({
     },
   },
 });
+export type TodoDeleteSchema = FromSchema<typeof todoDeleteSchema>;
