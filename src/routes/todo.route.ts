@@ -2,16 +2,16 @@ import { caching, memoryStore } from 'cache-manager';
 import type { FastifyRequest } from 'fastify';
 import { asRoute } from '../lib/util/typings';
 import {
-  TodoCreateSchema,
+  TodoCreate,
   todoCreateSchema,
-  TodoDeleteSchema,
+  TodoDelete,
   todoDeleteSchema,
   todoGetAllSchema,
-  TodoGetSchema,
+  TodoGet,
   todoGetSchema,
-  todoResponse200,
-  todosResponse200,
-  TodoUpdateSchema,
+  responseTodoOKSchema,
+  responseTodosOKSchema,
+  TodoUpdate,
   todoUpdateSchema,
 } from '../schemas/todo';
 import CacheService from '../services/CacheService';
@@ -34,10 +34,10 @@ export default asRoute(async function todoRoute(app) {
         tags: ['todo'],
         body: todoCreateSchema,
         response: {
-          200: todoResponse200,
+          200: responseTodoOKSchema,
         },
       },
-      async handler(request: FastifyRequest<{ Body: TodoCreateSchema }>) {
+      async handler(request: FastifyRequest<{ Body: TodoCreate }>) {
         const { content } = request.body;
         const todo = await todoService.createTodo(content);
         return {
@@ -53,7 +53,7 @@ export default asRoute(async function todoRoute(app) {
         description: todoGetAllSchema.description,
         tags: ['todo'],
         response: {
-          200: todosResponse200,
+          200: responseTodosOKSchema,
         },
       },
       async handler() {
@@ -72,10 +72,10 @@ export default asRoute(async function todoRoute(app) {
         tags: ['todo'],
         params: todoGetSchema,
         response: {
-          200: todoResponse200,
+          200: responseTodoOKSchema,
         },
       },
-      async handler(request: FastifyRequest<{ Params: TodoGetSchema }>) {
+      async handler(request: FastifyRequest<{ Params: TodoGet }>) {
         const { id } = request.params;
         const todo = await todoService.getTodo(id);
         return {
@@ -92,10 +92,10 @@ export default asRoute(async function todoRoute(app) {
         tags: ['todo'],
         body: todoUpdateSchema,
         response: {
-          200: todoResponse200,
+          200: responseTodoOKSchema,
         },
       },
-      async handler(request: FastifyRequest<{ Body: TodoUpdateSchema }>) {
+      async handler(request: FastifyRequest<{ Body: TodoUpdate }>) {
         const { id, content, done } = request.body;
         const todo = await todoService.updateTodo(id, content, done);
         return {
@@ -112,10 +112,10 @@ export default asRoute(async function todoRoute(app) {
         tags: ['todo'],
         params: todoDeleteSchema,
         response: {
-          200: todoResponse200,
+          200: responseTodoOKSchema,
         },
       },
-      async handler(request: FastifyRequest<{ Params: TodoDeleteSchema }>) {
+      async handler(request: FastifyRequest<{ Params: TodoDelete }>) {
         const { id } = request.params;
         const todo = await todoService.deleteTodo(id);
         return {
