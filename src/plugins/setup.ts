@@ -35,10 +35,10 @@ export default fastifyPlugin(async function setup(app) {
     prefix: '/',
   });
 
-  await initialize(app);
+  await configure(app);
 });
 
-async function initialize(app: FastifyInstance) {
+async function configure(app: FastifyInstance) {
   app.setNotFoundHandler(async function notFoundHandler(request) {
     throw new NotFound(`Cannot ${request.method} ${request.url}`);
   });
