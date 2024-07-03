@@ -1,0 +1,58 @@
+import fastifyCors from '@fastify/cors';
+import fastifyStatic from '@fastify/static';
+import * as c from 'colorette';
+import type { FastifyInstance } from 'fastify';
+import fastifyPlugin from 'fastify-plugin';
+import { NotFound } from 'http-errors';
+import path from 'node:path';
+import logger from './lib/util/logger';
+import middleware from './plugins/middleware';
+import routes from './plugins/routes';
+import swagger from './plugins/swagger';
+
+/**
+ * bootstraps all plugins and configurations
+ *
+ * this serves as the main entrypoint for plugins and
+ * configurations of the main app instance.
+ */
+export default fastifyPlugin(async function bootstrap(app) {
+  await app.register(middleware);
+
+  await app.register(fastifyCors, {
+    origin: '*',
+  });
+
+  await app.register(swagger);
+
+  await app.register(routes, {
+    dirPath: path.resolve(__dirname, './routes'),
+    callback(routes) {
+      for (const route of routes) {
+        logger.info(`${c.bold('registered route')} ${route}`);
+      }
+    },
+  });
+
+  await app.register(fastifyStatic, {
+    root: path.resolve(__dirname, '../public'),
+  });
+
+  await postConfigurations(app);
+});
+
+/**
+ * should only be applied **after** everything else
+ */
+async function postConfigurations(app: FastifyInstance) {
+  app.setNotFoundHandler(async function notFoundHandler(request) {
+    throw new NotFound(`Cannot ${request.method} ${request.url}`);
+  });
+
+  app.setErrorHandler(async function errorHandler(error) {
+    if (!error.statusCode || error.statusCode > 499) {
+      logger.error(error.stack ?? error.message);
+    }
+    return error;
+  });
+}
