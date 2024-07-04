@@ -15,7 +15,7 @@ export default fastifyPlugin(async function swagger(app) {
     prefix: '/docs',
     openapi: {
       info: {
-        title: 'Application API',
+        title: 'Rest API',
         version: '0.0.1',
       },
       servers,
