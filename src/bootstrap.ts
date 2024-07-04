@@ -13,8 +13,8 @@ import swagger from './plugins/swagger';
 /**
  * bootstraps all plugins and configurations
  *
- * this serves as the main entrypoint for plugins and
- * configurations of the main app instance.
+ * this serves as the main entry point of every core plugins and
+ * configurations in main app instance.
  */
 export default fastifyPlugin(async function bootstrap(app) {
   await app.register(middleware);
