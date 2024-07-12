@@ -31,7 +31,7 @@ export default asRoute(async function todosRoute(app) {
       url: '/create',
       schema: {
         description: todoCreateSchema.description,
-        tags: ['todo'],
+        tags: ['todos'],
         body: todoCreateSchema,
         response: {
           200: responseTodoOKSchema,
@@ -51,7 +51,7 @@ export default asRoute(async function todosRoute(app) {
       url: '',
       schema: {
         description: todoGetAllSchema.description,
-        tags: ['todo'],
+        tags: ['todos'],
         response: {
           200: responseTodosOKSchema,
         },
@@ -69,7 +69,7 @@ export default asRoute(async function todosRoute(app) {
       url: '/:id',
       schema: {
         description: todoGetSchema.description,
-        tags: ['todo'],
+        tags: ['todos'],
         params: todoGetSchema,
         response: {
           200: responseTodoOKSchema,
@@ -89,7 +89,7 @@ export default asRoute(async function todosRoute(app) {
       url: '/update',
       schema: {
         description: todoUpdateSchema.description,
-        tags: ['todo'],
+        tags: ['todos'],
         body: todoUpdateSchema,
         response: {
           200: responseTodoOKSchema,
@@ -109,7 +109,7 @@ export default asRoute(async function todosRoute(app) {
       url: '/delete/:id',
       schema: {
         description: todoDeleteSchema.description,
-        tags: ['todo'],
+        tags: ['todos'],
         params: todoDeleteSchema,
         response: {
           200: responseTodoOKSchema,
