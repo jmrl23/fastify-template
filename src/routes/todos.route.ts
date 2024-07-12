@@ -17,9 +17,9 @@ import {
 import CacheService from '../services/CacheService';
 import TodoService from '../services/TodoService';
 
-export const prefix = '/todo';
+export const prefix = '/todos';
 
-export default asRoute(async function todoRoute(app) {
+export default asRoute(async function todosRoute(app) {
   const cache = await caching(memoryStore({ ttl: 0 }));
   const cacheService = new CacheService(cache);
   const todoService = new TodoService(cacheService);
