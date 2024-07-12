@@ -10,12 +10,6 @@ import middleware from './plugins/middleware';
 import routes from './plugins/routes';
 import swagger from './plugins/swagger';
 
-/**
- * bootstraps all plugins and configurations
- *
- * this serves as the main entry point of every core plugins and
- * configurations in main app instance.
- */
 export default fastifyPlugin(async function bootstrap(app) {
   await app.register(middleware);
 
@@ -41,9 +35,6 @@ export default fastifyPlugin(async function bootstrap(app) {
   await postConfigurations(app);
 });
 
-/**
- * should only be applied **after** everything else
- */
 async function postConfigurations(app: FastifyInstance) {
   app.setNotFoundHandler(async function notFoundHandler(request) {
     throw new NotFound(`Cannot ${request.method} ${request.url}`);

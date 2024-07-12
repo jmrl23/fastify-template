@@ -8,13 +8,15 @@ import util from 'node:util';
  * route file rules:
  * - name must ends with `.route.{ts,js}`
  * - must export default a route function
- * - prefix can be alter by exporting a prefix
+ * - prefix can be alter by exporting a prefix variable,
+ *   example: `export const prefix = '/example'`
  */
 
 export default fastifyPlugin(async function routes(
   app: FastifyInstance,
-  { dirPath, callback }: Options,
+  options: Options,
 ) {
+  const { dirPath, callback } = options;
   const files = await glob([`${dirPath}/**/*.route.{ts,js}`], {
     absolute: true,
   });
