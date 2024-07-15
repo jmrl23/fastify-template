@@ -1,6 +1,6 @@
 # Fastify Application Template
 
-Simple starter template for fastify application.
+template for building fastify application
 
 <picture>
   <source srcset="https://fastify.dev/img/logos/fastify-white.svg" media="(prefers-color-scheme: dark)" />
