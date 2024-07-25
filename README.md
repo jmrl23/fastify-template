@@ -9,7 +9,7 @@ template for building fastify application
 
 ## Installation
 
-```bash
+```sh
 yarn # or npm install
 ```
 
