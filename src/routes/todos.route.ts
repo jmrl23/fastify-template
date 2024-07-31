@@ -1,16 +1,16 @@
 import { caching, memoryStore } from 'cache-manager';
 import type { FastifyRequest } from 'fastify';
-import { asRoute } from '../lib/util/typings';
+import { asRoute } from '../lib/common';
 import {
+  responseTodoOKSchema,
+  responseTodosOKSchema,
   TodoCreate,
   todoCreateSchema,
   TodoDelete,
   todoDeleteSchema,
-  todoGetAllSchema,
   TodoGet,
+  todoGetAllSchema,
   todoGetSchema,
-  responseTodoOKSchema,
-  responseTodosOKSchema,
   TodoUpdate,
   todoUpdateSchema,
 } from '../schemas/todo';

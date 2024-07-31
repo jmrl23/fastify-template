@@ -5,7 +5,7 @@ import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { NotFound } from 'http-errors';
 import path from 'node:path';
-import logger from './lib/util/logger';
+import { logger } from './lib/common';
 import middleware from './plugins/middleware';
 import routes from './plugins/routes';
 import swagger from './plugins/swagger';
