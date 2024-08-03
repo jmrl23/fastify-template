@@ -1,7 +1,7 @@
 import fastifyCors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import * as c from 'colorette';
-import type { FastifyInstance } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { NotFound } from 'http-errors';
 import path from 'node:path';

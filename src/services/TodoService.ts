@@ -1,7 +1,7 @@
-import CacheService from './CacheService';
-import crypto from 'node:crypto';
-import { NotFound } from 'http-errors';
-import type { Todo } from '../schemas/todo';
+import { NotFound } from 'http-errors'
+import crypto from 'node:crypto'
+import { Todo } from '../schemas/todos'
+import CacheService from './CacheService'
 
 export default class TodoService {
   constructor(private readonly cacheService: CacheService) {}

@@ -1,5 +1,5 @@
 import { caching, memoryStore } from 'cache-manager';
-import type { FastifyRequest } from 'fastify';
+import { FastifyRequest } from 'fastify';
 import { asRoute } from '../lib/common';
 import {
   responseTodoOKSchema,
@@ -13,7 +13,7 @@ import {
   todoGetSchema,
   TodoUpdate,
   todoUpdateSchema,
-} from '../schemas/todo';
+} from '../schemas/todos';
 import CacheService from '../services/CacheService';
 import TodoService from '../services/TodoService';
 

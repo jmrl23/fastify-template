@@ -1,4 +1,4 @@
-import type { FastifyInstance } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { glob } from 'glob';
 import path from 'node:path';
