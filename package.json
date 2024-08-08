@@ -1,6 +1,7 @@
 {
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "build/main.js",
+  "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "tsc --build",
@@ -8,7 +9,7 @@
     "start": "node .",
     "start:dev": "nodemon -q",
     "start:prod": "dotenv -v NODE_ENV=production -- node .",
-    "format": "prettier --write \"src/**/*.{ts,cjs,mjs,js}\""
+    "format": "prettier --write \"src/**/*.{ts,js}\""
   },
   "devDependencies": {
     "@swc/core": "^1.7.6",
