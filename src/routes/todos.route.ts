@@ -48,7 +48,7 @@ export default asRoute(async function todosRoute(app) {
 
     .route({
       method: 'GET',
-      url: '',
+      url: '/',
       schema: {
         description: todoGetAllSchema.description,
         tags: ['todos'],
