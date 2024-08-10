@@ -1,17 +1,13 @@
 import { caching, memoryStore } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
-import { asRoute } from '../lib/common';
+import { FromSchema } from 'json-schema-to-ts';
+import { asJsonSchema, asRoute } from '../lib/common';
 import {
-  responseTodoOKSchema,
-  responseTodosOKSchema,
-  TodoCreate,
   todoCreateSchema,
-  TodoDelete,
   todoDeleteSchema,
-  TodoGet,
-  todoGetAllSchema,
   todoGetSchema,
-  TodoUpdate,
+  todoSchema,
+  todosGetSchema,
   todoUpdateSchema,
 } from '../schemas/todos';
 import CacheService from '../services/CacheService';
@@ -20,7 +16,11 @@ import TodoService from '../services/TodoService';
 export const prefix = '/todos';
 
 export default asRoute(async function todosRoute(app) {
-  const cache = await caching(memoryStore({ ttl: 0 }));
+  const cache = await caching(
+    // check compatible stores at https://www.npmjs.com/package/cache-manager#store-engines
+    // or implement your own
+    memoryStore({ ttl: 0 }),
+  );
   const cacheService = new CacheService(cache);
   const todoService = new TodoService(cacheService);
 
@@ -30,14 +30,23 @@ export default asRoute(async function todosRoute(app) {
       method: 'POST',
       url: '/create',
       schema: {
-        description: todoCreateSchema.description,
+        description: 'create a todo',
         tags: ['todos'],
         body: todoCreateSchema,
         response: {
-          200: responseTodoOKSchema,
+          200: asJsonSchema({
+            type: 'object',
+            description: 'todo',
+            required: ['todo'],
+            properties: {
+              todo: todoSchema,
+            },
+          }),
         },
       },
-      async handler(request: FastifyRequest<{ Body: TodoCreate }>) {
+      async handler(
+        request: FastifyRequest<{ Body: FromSchema<typeof todoCreateSchema> }>,
+      ) {
         const { content } = request.body;
         const todo = await todoService.createTodo(content);
         return {
@@ -50,14 +59,30 @@ export default asRoute(async function todosRoute(app) {
       method: 'GET',
       url: '/',
       schema: {
-        description: todoGetAllSchema.description,
+        description: 'get todos by query',
         tags: ['todos'],
+        querystring: todosGetSchema,
         response: {
-          200: responseTodosOKSchema,
+          200: asJsonSchema({
+            type: 'object',
+            description: 'todos',
+            required: ['todos'],
+            properties: {
+              todos: {
+                type: 'array',
+                items: todoSchema,
+              },
+            },
+          }),
         },
       },
-      async handler() {
-        const todos = await todoService.getTodos();
+      async handler(
+        request: FastifyRequest<{
+          Querystring: FromSchema<typeof todosGetSchema>;
+        }>,
+      ) {
+        const query = request.query;
+        const todos = await todoService.getTodos(query);
         return {
           todos,
         };
@@ -68,14 +93,23 @@ export default asRoute(async function todosRoute(app) {
       method: 'GET',
       url: '/:id',
       schema: {
-        description: todoGetSchema.description,
+        description: 'get a todo',
         tags: ['todos'],
         params: todoGetSchema,
         response: {
-          200: responseTodoOKSchema,
+          200: asJsonSchema({
+            type: 'object',
+            description: 'todo',
+            required: ['todo'],
+            properties: {
+              todo: todoSchema,
+            },
+          }),
         },
       },
-      async handler(request: FastifyRequest<{ Params: TodoGet }>) {
+      async handler(
+        request: FastifyRequest<{ Params: FromSchema<typeof todoGetSchema> }>,
+      ) {
         const { id } = request.params;
         const todo = await todoService.getTodo(id);
         return {
@@ -88,14 +122,23 @@ export default asRoute(async function todosRoute(app) {
       method: 'PATCH',
       url: '/update',
       schema: {
-        description: todoUpdateSchema.description,
+        description: 'update a todo',
         tags: ['todos'],
         body: todoUpdateSchema,
         response: {
-          200: responseTodoOKSchema,
+          200: asJsonSchema({
+            type: 'object',
+            description: 'todo',
+            required: ['todo'],
+            properties: {
+              todo: todoSchema,
+            },
+          }),
         },
       },
-      async handler(request: FastifyRequest<{ Body: TodoUpdate }>) {
+      async handler(
+        request: FastifyRequest<{ Body: FromSchema<typeof todoUpdateSchema> }>,
+      ) {
         const { id, content, done } = request.body;
         const todo = await todoService.updateTodo(id, content, done);
         return {
@@ -108,14 +151,25 @@ export default asRoute(async function todosRoute(app) {
       method: 'DELETE',
       url: '/delete/:id',
       schema: {
-        description: todoDeleteSchema.description,
+        description: 'delete a todo',
         tags: ['todos'],
         params: todoDeleteSchema,
         response: {
-          200: responseTodoOKSchema,
+          200: asJsonSchema({
+            type: 'object',
+            description: 'todo',
+            required: ['todo'],
+            properties: {
+              todo: todoSchema,
+            },
+          }),
         },
       },
-      async handler(request: FastifyRequest<{ Params: TodoDelete }>) {
+      async handler(
+        request: FastifyRequest<{
+          Params: FromSchema<typeof todoDeleteSchema>;
+        }>,
+      ) {
         const { id } = request.params;
         const todo = await todoService.deleteTodo(id);
         return {
