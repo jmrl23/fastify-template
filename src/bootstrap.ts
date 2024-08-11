@@ -6,12 +6,12 @@ import fastifyPlugin from 'fastify-plugin';
 import { NotFound } from 'http-errors';
 import path from 'node:path';
 import { logger } from './lib/common';
-import middleware from './plugins/middleware';
+import middlewares from './plugins/middlewares';
 import routes from './plugins/routes';
 import swagger from './plugins/swagger';
 
-export default fastifyPlugin(async function bootstrap(app) {
-  await app.register(middleware);
+export default fastifyPlugin(async function (app) {
+  await app.register(middlewares);
 
   await app.register(fastifyCors, {
     origin: '*',

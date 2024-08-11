@@ -22,7 +22,7 @@ interface Callback {
  *   example: `export const prefix = '/example'`
  */
 
-export default fastifyPlugin(async function routes(
+export default fastifyPlugin(async function (
   app: FastifyInstance,
   options: Options,
 ) {

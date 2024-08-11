@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { OpenAPIV3_1 } from 'openapi-types';
 
-export default fastifyPlugin(async function swagger(app) {
+export default fastifyPlugin(async function (app) {
   const packageJson: Record<string, unknown> = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, '../../package.json')).toString(),
   );
