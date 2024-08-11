@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "tsc --build",
-    "test": "ts-node ./src/test.ts",
+    "test": "ts-node src/test.ts",
     "start": "node .",
     "start:dev": "nodemon -q",
     "start:prod": "dotenv -v NODE_ENV=production -- node .",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.7.6",
+    "@tsconfig/recommended": "^1.0.7",
     "@types/detect-port": "^1.3.5",
     "@types/http-errors": "^2.0.4",
     "@types/morgan": "^1.9.9",
