@@ -1,6 +1,5 @@
 import fastifyCors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
-import * as c from 'colorette';
 import { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { NotFound } from 'http-errors';
@@ -23,7 +22,7 @@ export default fastifyPlugin(async function (app) {
     dirPath: path.resolve(__dirname, './routes'),
     callback(routes) {
       for (const route of routes) {
-        logger.info(`${c.bold('registered route')} ${route}`);
+        logger.info(`registered route {${route}}`);
       }
     },
   });

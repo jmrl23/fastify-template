@@ -16,10 +16,10 @@
     "@tsconfig/recommended": "^1.0.7",
     "@types/detect-port": "^1.3.5",
     "@types/http-errors": "^2.0.4",
-    "@types/morgan": "^1.9.9",
     "@types/node": "^22.1.0",
     "json-schema-to-ts": "^3.1.0",
     "nodemon": "^3.1.4",
+    "pino-pretty": "^11.2.2",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
@@ -31,7 +31,6 @@
     "@fastify/swagger": "^8.15.0",
     "@fastify/swagger-ui": "^4.0.1",
     "cache-manager": "^5.7.6",
-    "colorette": "^2.0.20",
     "detect-port": "^1.6.1",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.4.2",
@@ -39,8 +38,6 @@
     "fastify": "^4.28.1",
     "fastify-plugin": "^4.5.1",
     "glob": "^11.0.0",
-    "http-errors": "^2.0.0",
-    "morgan": "^1.10.0",
-    "winston": "^3.13.1"
+    "http-errors": "^2.0.0"
   }
 }
