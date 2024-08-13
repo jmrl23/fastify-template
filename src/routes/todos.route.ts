@@ -120,11 +120,12 @@ export default asRoute(async function (app) {
 
     .route({
       method: 'PATCH',
-      url: '/update',
+      url: '/update/:id',
       schema: {
         description: 'update a todo',
         tags: ['todos'],
-        body: todoUpdateSchema,
+        params: todoUpdateSchema.properties.params,
+        body: todoUpdateSchema.properties.body,
         response: {
           200: asJsonSchema({
             type: 'object',
@@ -137,9 +138,13 @@ export default asRoute(async function (app) {
         },
       },
       async handler(
-        request: FastifyRequest<{ Body: FromSchema<typeof todoUpdateSchema> }>,
+        request: FastifyRequest<{
+          Params: FromSchema<typeof todoUpdateSchema.properties.params>;
+          Body: FromSchema<typeof todoUpdateSchema.properties.body>;
+        }>,
       ) {
-        const { id, content, done } = request.body;
+        const id = request.params.id;
+        const { content, done } = request.body;
         const todo = await todoService.updateTodo(id, content, done);
         return {
           todo,
