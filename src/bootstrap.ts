@@ -8,8 +8,10 @@ import { logger } from './lib/common';
 import middlewares from './plugins/middlewares';
 import routes from './plugins/routes';
 import swagger from './plugins/swagger';
+import fastifyEtag from '@fastify/etag';
 
 export default fastifyPlugin(async function (app) {
+  await app.register(fastifyEtag);
   await app.register(middlewares);
 
   await app.register(fastifyCors, {
