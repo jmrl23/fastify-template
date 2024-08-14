@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import pino, { Logger } from 'pino';
+import 'pino-pretty';
 
 const loggers = new Map<NodeEnv, Logger>();
 
