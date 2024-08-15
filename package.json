@@ -9,7 +9,8 @@
     "start": "node .",
     "start:dev": "nodemon -q",
     "start:prod": "dotenv -v NODE_ENV=production -- node .",
-    "format": "prettier --write \"src/**/*.{ts,js}\""
+    "format": "prettier --write \"src/**/*.{ts,js}\"",
+    "lint": "eslint src"
   },
   "devDependencies": {
     "@swc/core": "^1.7.6",
@@ -17,11 +18,14 @@
     "@types/detect-port": "^1.3.5",
     "@types/http-errors": "^2.0.4",
     "@types/node": "^22.1.0",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
     "json-schema-to-ts": "^3.1.0",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.1.0"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
