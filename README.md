@@ -31,9 +31,9 @@ Core files and folders
 
 ```
 src/
-├── app.ts
-├── bootstrap.ts
-├── init.ts
+├── app.ts                        # main fastify instance
+├── bootstrap.ts                  # main plugins entrypoint
+├── init.ts                       # initialization file
 ├── lib/                          # libraries
 │   ├── common/
 │   │   ├── index.ts
