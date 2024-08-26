@@ -22,7 +22,7 @@ export default fastifyPlugin(async function (app) {
   await app.register(swagger);
 
   await app.register(routes, {
-    dirPath: path.resolve(__dirname, './routes'),
+    dirPath: path.resolve(__dirname, './modules'),
     callback(routes) {
       for (const route of routes) {
         logger.info(`registered route {${route}}`);

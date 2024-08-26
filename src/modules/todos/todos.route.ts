@@ -1,7 +1,8 @@
 import { caching, memoryStore } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema, asRoute } from '../lib/common';
+import { asJsonSchema, asRoute } from '../../lib/common';
+import { CacheService } from '../cache/cacheService';
 import {
   todoCreateSchema,
   todoDeleteSchema,
@@ -9,11 +10,8 @@ import {
   todoSchema,
   todosGetSchema,
   todoUpdateSchema,
-} from '../schemas/todos';
-import CacheService from '../services/CacheService';
-import TodoService from '../services/TodoService';
-
-export const prefix = '/todos';
+} from './todosSchema';
+import { TodosService } from './todosService';
 
 export default asRoute(async function (app) {
   const cache = await caching(
@@ -22,7 +20,7 @@ export default asRoute(async function (app) {
     memoryStore({ ttl: 0 }),
   );
   const cacheService = new CacheService(cache);
-  const todoService = new TodoService(cacheService);
+  const todosService = new TodosService(cacheService);
 
   app
 
@@ -48,7 +46,7 @@ export default asRoute(async function (app) {
         request: FastifyRequest<{ Body: FromSchema<typeof todoCreateSchema> }>,
       ) {
         const { content } = request.body;
-        const todo = await todoService.createTodo(content);
+        const todo = await todosService.createTodo(content);
         return {
           data: todo,
         };
@@ -82,7 +80,7 @@ export default asRoute(async function (app) {
         }>,
       ) {
         const query = request.query;
-        const todos = await todoService.getTodos(query);
+        const todos = await todosService.getTodos(query);
         return {
           data: todos,
         };
@@ -111,7 +109,7 @@ export default asRoute(async function (app) {
         request: FastifyRequest<{ Params: FromSchema<typeof todoGetSchema> }>,
       ) {
         const { id } = request.params;
-        const todo = await todoService.getTodo(id);
+        const todo = await todosService.getTodo(id);
         return {
           data: todo,
         };
@@ -145,7 +143,7 @@ export default asRoute(async function (app) {
       ) {
         const id = request.params.id;
         const { content, done } = request.body;
-        const todo = await todoService.updateTodo(id, content, done);
+        const todo = await todosService.updateTodo(id, content, done);
         return {
           data: todo,
         };
@@ -176,7 +174,7 @@ export default asRoute(async function (app) {
         }>,
       ) {
         const { id } = request.params;
-        const todo = await todoService.deleteTodo(id);
+        const todo = await todosService.deleteTodo(id);
         return {
           data: todo,
         };

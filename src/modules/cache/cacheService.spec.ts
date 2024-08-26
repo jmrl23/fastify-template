@@ -1,13 +1,13 @@
 import { caching } from 'cache-manager';
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import CacheService from './CacheService';
+import { CacheService } from './cacheService';
 
 async function delay(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-describe('test cache service', async function testCacheService() {
+describe('test cache service', async function () {
   const cache = await caching('memory');
   const cacheService = new CacheService(cache);
 
