@@ -44,5 +44,8 @@
     "glob": "^11.0.0",
     "http-errors": "^2.0.0",
     "pino-pretty": "^11.2.2"
-  }
+  },
+  "name": "fastify-template",
+  "repository": "https://github.com/jmrl23/fastify-template",
+  "author": "Jomariel Gaitera <gaiterajomariel@gmail.com>"
 }
