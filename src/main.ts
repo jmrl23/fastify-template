@@ -1,12 +1,12 @@
 import './init';
-import detectPort from 'detect-port';
+import { detect } from 'detect-port';
 import app from './app';
 import bootstrap from './bootstrap';
 import { PORT } from './lib/constant/env';
 
 async function main() {
   const host = '0.0.0.0';
-  const port = await detectPort(PORT);
+  const port = await detect(PORT);
 
   await app.register(bootstrap);
 

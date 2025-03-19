@@ -1,8 +1,7 @@
-import { caching, memoryStore } from 'cache-manager';
+import { createCache } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
 import { asJsonSchema, asRoute } from '../../lib/common';
-import { CacheService } from '../cache/cacheService';
 import {
   todoCreateSchema,
   todoDeleteSchema,
@@ -12,15 +11,13 @@ import {
   todoUpdateSchema,
 } from './todosSchema';
 import { TodosService } from './todosService';
+import Keyv from 'keyv';
 
 export default asRoute(async function (app) {
-  const cache = await caching(
-    // check compatible stores at https://www.npmjs.com/package/cache-manager#store-engines
-    // or implement your own
-    memoryStore({ ttl: 0 }),
-  );
-  const cacheService = new CacheService(cache);
-  const todosService = new TodosService(cacheService);
+  const cache = createCache({
+    stores: [new Keyv({ namespace: 'todos' })],
+  });
+  const todosService = new TodosService(cache);
 
   app
 
