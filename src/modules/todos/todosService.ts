@@ -1,10 +1,11 @@
 import { NotFound } from 'http-errors';
 import { FromSchema } from 'json-schema-to-ts';
 import crypto from 'node:crypto';
-import { todoSchema, todosGetSchema } from './todosSchema';
 import { Cache } from 'cache-manager';
+import { TodoSchema } from './schemas/todo.schema';
+import { GetTodosSchema } from './schemas/getTodos.schema';
 
-export interface Todo extends FromSchema<typeof todoSchema> {}
+export interface Todo extends FromSchema<typeof TodoSchema> {}
 
 /**
  * This is just an example, just imagine we're
@@ -31,7 +32,7 @@ export class TodosService {
   }
 
   public async getTodos(
-    query: FromSchema<typeof todosGetSchema> = {},
+    query: FromSchema<typeof GetTodosSchema> = {},
   ): Promise<Todo[]> {
     const cacheKey = `todos#query:(${JSON.stringify([query.content, query.done, query.skip, query.take])})`;
 

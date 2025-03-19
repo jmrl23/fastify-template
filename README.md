@@ -31,24 +31,30 @@ Default folder structure
 
 ```
 src
-├── app.ts                        # app entrypoint (main fastify isntance)
-├── bootstrap.ts                  # plugins entrypoint
+├── app.ts                            # main fastify instance
+├── bootstrap.ts                      # plugins entrypoint
 ├── common
 │   ├── index.ts
 │   ├── logger.ts
 │   └── typings.ts
 ├── config
 │   └── env.ts
-├── init.ts                       # initialization file
-├── main.ts                       # main entrypoint
+├── init.ts                           # initialization file
+├── main.ts                           # main entrypoint
 ├── modules
 │   └── todos
+│       ├── schemas
+│       │   ├── createTodo.schema.ts
+│       │   ├── deleteTodo.schema.ts
+│       │   ├── getTodo.schema.ts
+│       │   ├── getTodos.schema.ts
+│       │   ├── todo.schema.ts
+│       │   └── updateTodo.schema.ts
 │       ├── todos.route.ts
-│       ├── todosSchema.ts
 │       ├── todosService.spec.ts
 │       └── todosService.ts
 ├── plugin
 │   ├── routes.ts
 │   └── swagger.ts
-└── test.ts                       # test entrypoint
+└── test.ts                           # test entrypoint
 ```

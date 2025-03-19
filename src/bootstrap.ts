@@ -8,8 +8,8 @@ import { NotFound } from 'http-errors';
 import path from 'node:path';
 import { logger } from './common';
 import { CORS_ORIGIN } from './config/env';
-import routes from './plugins/routes';
-import swagger from './plugins/swagger';
+import routes from './plugin/routes';
+import swagger from './plugin/swagger';
 
 export default fastifyPlugin(async function (app) {
   await app.register(fastifyEtag);

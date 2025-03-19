@@ -2,16 +2,14 @@ import { createCache } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
 import { asJsonSchema, asRoute } from '../../common';
-import {
-  todoCreateSchema,
-  todoDeleteSchema,
-  todoGetSchema,
-  todoSchema,
-  todosGetSchema,
-  todoUpdateSchema,
-} from './todosSchema';
 import { TodosService } from './todosService';
 import Keyv from 'keyv';
+import { CreateTodoSchema } from './schemas/createTodo.schema';
+import { TodoSchema } from './schemas/todo.schema';
+import { GetTodosSchema } from './schemas/getTodos.schema';
+import { GetTodoSchema } from './schemas/getTodo.schema';
+import { UpdateTodoSchema } from './schemas/updateTodo.schema';
+import { DeleteTodoSchema } from './schemas/deleteTodo.schema';
 
 export default asRoute(async function (app) {
   const cache = createCache({
@@ -27,20 +25,20 @@ export default asRoute(async function (app) {
       schema: {
         description: 'create a todo',
         tags: ['todos'],
-        body: todoCreateSchema,
+        body: CreateTodoSchema,
         response: {
           200: asJsonSchema({
             type: 'object',
             description: 'todo',
             required: ['data'],
             properties: {
-              data: todoSchema,
+              data: TodoSchema,
             },
           }),
         },
       },
       async handler(
-        request: FastifyRequest<{ Body: FromSchema<typeof todoCreateSchema> }>,
+        request: FastifyRequest<{ Body: FromSchema<typeof CreateTodoSchema> }>,
       ) {
         const { content } = request.body;
         const todo = await todosService.createTodo(content);
@@ -56,7 +54,7 @@ export default asRoute(async function (app) {
       schema: {
         description: 'get todos by query',
         tags: ['todos'],
-        querystring: todosGetSchema,
+        querystring: GetTodosSchema,
         response: {
           200: asJsonSchema({
             type: 'object',
@@ -65,7 +63,7 @@ export default asRoute(async function (app) {
             properties: {
               data: {
                 type: 'array',
-                items: todoSchema,
+                items: TodoSchema,
               },
             },
           }),
@@ -73,7 +71,7 @@ export default asRoute(async function (app) {
       },
       async handler(
         request: FastifyRequest<{
-          Querystring: FromSchema<typeof todosGetSchema>;
+          Querystring: FromSchema<typeof GetTodosSchema>;
         }>,
       ) {
         const query = request.query;
@@ -90,20 +88,20 @@ export default asRoute(async function (app) {
       schema: {
         description: 'get a todo',
         tags: ['todos'],
-        params: todoGetSchema,
+        params: GetTodoSchema,
         response: {
           200: asJsonSchema({
             type: 'object',
             description: 'todo',
             required: ['data'],
             properties: {
-              data: todoSchema,
+              data: TodoSchema,
             },
           }),
         },
       },
       async handler(
-        request: FastifyRequest<{ Params: FromSchema<typeof todoGetSchema> }>,
+        request: FastifyRequest<{ Params: FromSchema<typeof GetTodoSchema> }>,
       ) {
         const { id } = request.params;
         const todo = await todosService.getTodo(id);
@@ -119,23 +117,23 @@ export default asRoute(async function (app) {
       schema: {
         description: 'update a todo',
         tags: ['todos'],
-        params: todoUpdateSchema.properties.params,
-        body: todoUpdateSchema.properties.body,
+        params: UpdateTodoSchema.properties.params,
+        body: UpdateTodoSchema.properties.body,
         response: {
           200: asJsonSchema({
             type: 'object',
             description: 'todo',
             required: ['data'],
             properties: {
-              data: todoSchema,
+              data: TodoSchema,
             },
           }),
         },
       },
       async handler(
         request: FastifyRequest<{
-          Params: FromSchema<typeof todoUpdateSchema.properties.params>;
-          Body: FromSchema<typeof todoUpdateSchema.properties.body>;
+          Params: FromSchema<typeof UpdateTodoSchema.properties.params>;
+          Body: FromSchema<typeof UpdateTodoSchema.properties.body>;
         }>,
       ) {
         const id = request.params.id;
@@ -153,21 +151,21 @@ export default asRoute(async function (app) {
       schema: {
         description: 'delete a todo',
         tags: ['todos'],
-        params: todoDeleteSchema,
+        params: DeleteTodoSchema,
         response: {
           200: asJsonSchema({
             type: 'object',
             description: 'todo',
             required: ['data'],
             properties: {
-              data: todoSchema,
+              data: TodoSchema,
             },
           }),
         },
       },
       async handler(
         request: FastifyRequest<{
-          Params: FromSchema<typeof todoDeleteSchema>;
+          Params: FromSchema<typeof DeleteTodoSchema>;
         }>,
       ) {
         const { id } = request.params;
