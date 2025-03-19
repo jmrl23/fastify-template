@@ -3,21 +3,21 @@ import fastifyPlugin from 'fastify-plugin';
 import { glob } from 'glob';
 import path from 'node:path';
 
-interface Options {
+export interface Options {
   dirPath: string;
   callback?: Callback;
 }
 
-interface Callback {
+export interface Callback {
   (routeFiles: string[]): void;
 }
 
 /**
  * routes
  * - filename must ends with `.route.{ts,js}`
- * - must export default a route function
- *   check `src/lib/common/typings.ts` line 10 to 15
- * - prefix can be alter by exporting a prefix variable,
+ * - must export default a [route function](src/common/typings.ts:#L10)
+ * - if prefix is not provided, the route prefix will be the directory path
+ * - if prefix is provided, it must be a string and will be used as the route prefix,
  *   example: `export const prefix = '/example'`
  */
 
