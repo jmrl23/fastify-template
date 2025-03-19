@@ -34,7 +34,6 @@ src
 ├── app.ts                            # main fastify instance
 ├── bootstrap.ts                      # plugins entrypoint
 ├── common
-│   ├── index.ts
 │   ├── logger.ts
 │   └── typings.ts
 ├── config
@@ -54,7 +53,7 @@ src
 │       ├── todosService.spec.ts
 │       └── todosService.ts
 ├── plugin
-│   ├── routes.ts
+│   ├── routesAutoload.ts
 │   └── swagger.ts
 └── test.ts                           # test entrypoint
 ```

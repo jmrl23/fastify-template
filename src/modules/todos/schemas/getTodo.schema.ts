@@ -1,4 +1,4 @@
-import { asJsonSchema } from '../../../common';
+import { asJsonSchema } from '../../../common/typings';
 
 export const GetTodoSchema = asJsonSchema({
   type: 'object',

@@ -34,6 +34,4 @@ loggers.set(
   }),
 );
 
-const logger = loggers.get(process.env.NODE_ENV) ?? pino();
-
-export default logger;
+export const logger = loggers.get(process.env.NODE_ENV) ?? pino();

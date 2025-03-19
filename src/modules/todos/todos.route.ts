@@ -1,15 +1,15 @@
 import { createCache } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema, asRoute } from '../../common';
+import { asJsonSchema, asRoute } from '../../common/typings';
 import { TodosService } from './todosService';
-import Keyv from 'keyv';
 import { CreateTodoSchema } from './schemas/createTodo.schema';
 import { TodoSchema } from './schemas/todo.schema';
 import { GetTodosSchema } from './schemas/getTodos.schema';
 import { GetTodoSchema } from './schemas/getTodo.schema';
 import { UpdateTodoSchema } from './schemas/updateTodo.schema';
 import { DeleteTodoSchema } from './schemas/deleteTodo.schema';
+import Keyv from 'keyv';
 
 export default asRoute(async function (app) {
   const cache = createCache({

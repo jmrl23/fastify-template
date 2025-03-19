@@ -1,7 +1,7 @@
 import './init';
 import { detect } from 'detect-port';
-import app from './app';
-import bootstrap from './bootstrap';
+import { app } from './app';
+import { bootstrap } from './bootstrap';
 import { PORT } from './config/env';
 
 async function main() {

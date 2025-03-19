@@ -3,15 +3,15 @@ import fastifyEtag from '@fastify/etag';
 import fastifyMiddie from '@fastify/middie';
 import fastifyStatic from '@fastify/static';
 import { FastifyInstance } from 'fastify';
-import fastifyPlugin from 'fastify-plugin';
+import { fastifyPlugin } from 'fastify-plugin';
 import { NotFound } from 'http-errors';
 import path from 'node:path';
-import { logger } from './common';
+import { logger } from './common/logger';
 import { CORS_ORIGIN } from './config/env';
-import routes from './plugin/routes';
-import swagger from './plugin/swagger';
+import { routesAutoloadPlugin } from './plugin/routesAutoload';
+import { swaggerPlugin } from './plugin/swagger';
 
-export default fastifyPlugin(async function (app) {
+export const bootstrap = fastifyPlugin(async function (app) {
   await app.register(fastifyEtag);
 
   await app.register(fastifyMiddie);
@@ -20,9 +20,9 @@ export default fastifyPlugin(async function (app) {
     origin: CORS_ORIGIN,
   });
 
-  await app.register(swagger);
+  await app.register(swaggerPlugin);
 
-  await app.register(routes, {
+  await app.register(routesAutoloadPlugin, {
     dirPath: path.resolve(__dirname, './modules'),
     callback(routes) {
       for (const route of routes) {
