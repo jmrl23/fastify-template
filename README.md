@@ -27,32 +27,28 @@ yarn # or npm install
 
 ## Structure
 
-Core files and folders
+Default folder structure
 
 ```
-src/
-├── app.ts                        # main fastify instance
-├── bootstrap.ts                  # main plugins entrypoint
+src
+├── app.ts                        # app entrypoint (main fastify isntance)
+├── bootstrap.ts                  # plugins entrypoint
+├── common
+│   ├── index.ts
+│   ├── logger.ts
+│   └── typings.ts
+├── config
+│   └── env.ts
 ├── init.ts                       # initialization file
-├── lib/                          # libraries
-│   ├── common/
-│   │   ├── index.ts
-│   │   ├── logger.ts
-│   │   └── typings.ts
-│   └── constant/
-│       └── env.ts
 ├── main.ts                       # main entrypoint
-├── modules/
-│   ├── cache/
-│   │   ├── cacheService.spec.ts
-│   │   └── cacheService.ts
-│   └── todos/                    # example module
+├── modules
+│   └── todos
 │       ├── todos.route.ts
 │       ├── todosSchema.ts
 │       ├── todosService.spec.ts
 │       └── todosService.ts
-├── plugins/
+├── plugin
 │   ├── routes.ts
 │   └── swagger.ts
-└── test.ts                       # test entrypoint (run all test files)
+└── test.ts                       # test entrypoint
 ```

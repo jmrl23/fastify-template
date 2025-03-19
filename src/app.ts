@@ -1,5 +1,5 @@
 import fastify from 'fastify';
-import logger from './lib/common/logger';
+import logger from './common/logger';
 
 const app = fastify({
   loggerInstance: logger,

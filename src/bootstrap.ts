@@ -6,8 +6,8 @@ import { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { NotFound } from 'http-errors';
 import path from 'node:path';
-import { logger } from './lib/common';
-import { CORS_ORIGIN } from './lib/constant/env';
+import { logger } from './common';
+import { CORS_ORIGIN } from './config/env';
 import routes from './plugins/routes';
 import swagger from './plugins/swagger';
 

@@ -1,7 +1,7 @@
 import { createCache } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema, asRoute } from '../../lib/common';
+import { asJsonSchema, asRoute } from '../../common';
 import {
   todoCreateSchema,
   todoDeleteSchema,

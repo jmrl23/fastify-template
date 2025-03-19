@@ -2,7 +2,7 @@ import './init';
 import { detect } from 'detect-port';
 import app from './app';
 import bootstrap from './bootstrap';
-import { PORT } from './lib/constant/env';
+import { PORT } from './config/env';
 
 async function main() {
   const host = '0.0.0.0';

@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { globSync } from 'glob';
 import path from 'node:path';
-import { logger } from './lib/common';
+import { logger } from './common';
 
 console.clear();
 
