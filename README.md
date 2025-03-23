@@ -52,7 +52,7 @@ src
 │       ├── todos.route.ts
 │       ├── todosService.spec.ts
 │       └── todosService.ts
-├── plugin
+├── plugins
 │   ├── routesAutoload.ts
 │   └── swagger.ts
 └── test.ts                           # test entrypoint

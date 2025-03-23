@@ -8,8 +8,8 @@ import { NotFound } from 'http-errors';
 import path from 'node:path';
 import { logger } from './common/logger';
 import { CORS_ORIGIN } from './config/env';
-import { routesAutoloadPlugin } from './plugin/routesAutoload';
-import { swaggerPlugin } from './plugin/swagger';
+import { routesAutoloadPlugin } from './plugins/routesAutoload';
+import { swaggerPlugin } from './plugins/swagger';
 
 export const bootstrap = fastifyPlugin(async function (app) {
   await app.register(fastifyEtag);
