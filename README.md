@@ -57,7 +57,3 @@ src
 │   └── swagger.ts
 └── test.ts                           # test entrypoint
 ```
-
-## Note
-
-You might see that `init.js` is being executed multiple times on start command, it is totally normal, learn more about the nodejs' [-r](https://nodejs.org/api/cli.html#-r---require-module) flag and [worker threads](https://nodejs.org/api/worker_threads.html).

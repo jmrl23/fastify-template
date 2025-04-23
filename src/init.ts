@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { globSync } from 'glob';
 import path from 'node:path';
 import { logger } from './common/logger';
+import { isMainThread } from 'node:worker_threads';
 
 console.clear();
 
@@ -43,7 +44,11 @@ for (const envPath of ENV_PATHS) {
   if (keys.length < 1) continue;
   if (keys.includes('NODE_ENV')) {
     process.env.NODE_ENV = NODE_ENV;
-    logger.warn(`Tried to alter \`NODE_ENV\` using a .env file: {${envPath}}`);
+    if (isMainThread) {
+      logger.warn(
+        `Tried to alter \`NODE_ENV\` using a .env file: {${envPath}}`,
+      );
+    }
   }
-  logger.info(`registered env {${envPath}}`);
+  if (isMainThread) logger.info(`registered env {${envPath}}`);
 }
