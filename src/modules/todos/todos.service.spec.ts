@@ -1,10 +1,10 @@
 import { createCache } from 'cache-manager';
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import { Todo, TodosService } from './todosService';
+import { Todo, TodosService } from './todos.service';
 import Keyv from 'keyv';
 
-describe('test todo service', async function () {
+describe('test todos service', async function () {
   const todos = new TodosService(
     createCache({
       stores: [new Keyv({ namespace: 'todos' })],

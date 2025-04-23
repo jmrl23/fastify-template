@@ -2,7 +2,7 @@ import { createCache } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
 import { asJsonSchema, asRoute } from '../../common/typings';
-import { TodosService } from './todosService';
+import { TodosService } from './todos.service';
 import { CreateTodoSchema } from './schemas/createTodo.schema';
 import { TodoSchema } from './schemas/todo.schema';
 import { GetTodosSchema } from './schemas/getTodos.schema';
