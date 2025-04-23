@@ -50,8 +50,9 @@ src
 │       │   ├── todo.schema.ts
 │       │   └── updateTodo.schema.ts
 │       ├── todos.route.ts
-│       ├── todosService.spec.ts
-│       └── todosService.ts
+│       ├── todos.route.spec.ts
+│       ├── todos.service.ts
+│       └── todos.service.spec.ts
 ├── plugins
 │   ├── routesAutoload.ts
 │   └── swagger.ts
