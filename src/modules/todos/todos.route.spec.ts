@@ -1,11 +1,8 @@
 import fastify from 'fastify';
-import { describe, it } from 'node:test';
-import todosRoute from './todos.route';
-import { FromSchema } from 'json-schema-to-ts';
-import { TodoSchema } from './schemas/todo.schema';
 import assert from 'node:assert';
-
-type Todo = FromSchema<typeof TodoSchema>;
+import { describe, it } from 'node:test';
+import { Todo } from './schemas/todo.schema';
+import todosRoute from './todos.route';
 
 describe('test todos route', async function () {
   const app = fastify();

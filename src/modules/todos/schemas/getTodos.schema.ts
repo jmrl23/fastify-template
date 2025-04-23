@@ -1,5 +1,7 @@
+import { FromSchema } from 'json-schema-to-ts';
 import { asJsonSchema } from '../../../common/typings';
 
+export type GetTodos = FromSchema<typeof GetTodosSchema>;
 export const GetTodosSchema = asJsonSchema({
   type: 'object',
   additionalProperties: false,

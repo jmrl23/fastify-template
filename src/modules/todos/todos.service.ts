@@ -1,11 +1,9 @@
+import { Cache } from 'cache-manager';
 import { NotFound } from 'http-errors';
 import { FromSchema } from 'json-schema-to-ts';
 import crypto from 'node:crypto';
-import { Cache } from 'cache-manager';
-import { TodoSchema } from './schemas/todo.schema';
 import { GetTodosSchema } from './schemas/getTodos.schema';
-
-export interface Todo extends FromSchema<typeof TodoSchema> {}
+import { Todo } from './schemas/todo.schema';
 
 /**
  * This is just an example, just imagine we're
