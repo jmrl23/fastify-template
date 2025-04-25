@@ -1,0 +1,10 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3001
+      - CORS_ORIGIN=http://localhost:3000 # Frontend URL
+    ports:
+      - '3001:3001'
