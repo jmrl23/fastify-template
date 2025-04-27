@@ -27,34 +27,29 @@ yarn # or npm install
 
 ## Structure
 
-Default folder structure
+Project structure
 
 ```
-src
-├── app.ts                            # main fastify instance
-├── bootstrap.ts                      # plugins entrypoint
-├── common
-│   ├── logger.ts
-│   └── typings.ts
-├── config
-│   └── env.ts
-├── init.ts                           # initialization file
-├── main.ts                           # main entrypoint
-├── modules
-│   └── todos
-│       ├── schemas
-│       │   ├── createTodo.schema.ts
-│       │   ├── deleteTodo.schema.ts
-│       │   ├── getTodo.schema.ts
-│       │   ├── getTodos.schema.ts
-│       │   ├── todo.schema.ts
-│       │   └── updateTodo.schema.ts
-│       ├── todos.route.ts
-│       ├── todos.route.spec.ts
-│       ├── todos.service.ts
-│       └── todos.service.spec.ts
-├── plugins
-│   ├── routesAutoload.ts
-│   └── swagger.ts
-└── test.ts                           # test entrypoint
+├── .vscode/                  # Editor settings
+├── public/                   # Static assets
+├── src/                      # Application source
+│   ├── app.ts                # Fastify instance
+│   ├── bootstrap.ts          # Plugin entrypoint
+│   ├── common/               # Shared utils (logger, typings)
+│   ├── config/               # Environment loaders
+│   ├── init.ts               # Initialization logic
+│   ├── main.ts               # Server startup
+│   ├── modules/              # Domain modules (e.g., todos)
+│   └── plugins/              # Autoload & Swagger setup
+├── test.ts                   # Test runner entrypoint
+├── Dockerfile                # Container image build
+├── docker-compose.yaml       # Multi-service development
+├── .dockerignore             # Files to ignore in images
+├── .prettierrc               # Formatting rules
+├── eslint.config.mjs         # Linting rules
+├── nodemon.json              # Dev server config
+├── package.json              # Scripts & dependencies
+├── tsconfig.json             # TypeScript compiler options
+└── yarn.lock                 # Exact dependency versions
+
 ```
