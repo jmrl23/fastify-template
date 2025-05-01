@@ -12,6 +12,7 @@ import { TodosService } from './todos.service';
 
 export default asRoute(async function (app) {
   const cache = createCache({
+    ttl: 30 * 1000,
     stores: [new Keyv({ namespace: 'todos' })],
   });
   const todosService = new TodosService(cache);

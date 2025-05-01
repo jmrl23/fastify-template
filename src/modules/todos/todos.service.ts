@@ -25,21 +25,21 @@ export class TodosService {
       done: false,
     };
     this.todos.push(todo);
-    await this.cache.set(`todo#id:${id}`, structuredClone(todo), 300 * 1000);
+    await this.cache.set(`todo:${id}`, structuredClone(todo), 300 * 1000);
     return todo;
   }
 
   public async getTodos(
     query: FromSchema<typeof GetTodosSchema> = {},
   ): Promise<Todo[]> {
-    const cacheKey = `todos#query:(${JSON.stringify([query.content, query.done, query.skip, query.take])})`;
+    const cacheKey = `todos:(${[query.content, query.done, query.skip, query.take].join(',')})`;
 
     if (query.revalidate === true) {
       await this.cache.del(cacheKey);
     }
 
-    const cachedtodos = await this.cache.get<Todo[]>(cacheKey);
-    if (cachedtodos) return cachedtodos;
+    const cachedTodos = await this.cache.get<Todo[]>(cacheKey);
+    if (cachedTodos) return cachedTodos;
 
     const todos = structuredClone(
       this.todos.filter((todo) => {
@@ -59,24 +59,20 @@ export class TodosService {
       }),
     ).slice(query.skip, query.take);
 
-    await this.cache.set(
-      cacheKey,
-      todos,
-      300 * 1000, // 5 mins.
-    );
+    await this.cache.set(cacheKey, todos);
 
     return todos;
   }
 
   public async getTodo(id: string): Promise<Todo> {
-    const cachedKey = `todo#id:${id}`;
+    const cachedKey = `todo:${id}`;
     const cachedTodo = await this.cache.get<Todo>(cachedKey);
     if (cachedTodo !== null) return cachedTodo;
 
     const todo = structuredClone(this.todos.find((todo) => todo.id === id));
     if (!todo) throw new NotFound('Todo not found');
 
-    await this.cache.set(cachedKey, todo, 300 * 1000);
+    await this.cache.set(cachedKey, todo);
     return todo;
   }
 

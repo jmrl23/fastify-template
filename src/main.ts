@@ -1,4 +1,5 @@
 import { detect } from 'detect-port';
+import { OpenAPIV3_1 } from 'openapi-types';
 import { app } from './app';
 import { bootstrap } from './bootstrap';
 import { PORT } from './config/env';
@@ -12,7 +13,16 @@ async function main() {
   app.listen({
     host,
     port,
-    listenTextResolver: (address) => `server listening at ${address}`,
+    listenTextResolver: (address) => {
+      // Swagger server listing
+      const swagger = app.swagger() as OpenAPIV3_1.Document;
+      swagger.servers?.push({
+        url: address,
+        description: 'Development server',
+      });
+
+      return `server listening at ${address}`;
+    },
   });
 }
 
