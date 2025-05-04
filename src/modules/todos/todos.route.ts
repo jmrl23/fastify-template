@@ -1,6 +1,4 @@
-import { createCache } from 'cache-manager';
 import { FastifyRequest } from 'fastify';
-import Keyv from 'keyv';
 import { asJsonSchema, asRoute } from '../../common/typings';
 import { CreateTodo, CreateTodoSchema } from './schemas/createTodo.schema';
 import { DeleteTodo, DeleteTodoSchema } from './schemas/deleteTodo.schema';
@@ -11,11 +9,7 @@ import { UpdateTodo, UpdateTodoSchema } from './schemas/updateTodo.schema';
 import { TodosService } from './todos.service';
 
 export default asRoute(async function (app) {
-  const cache = createCache({
-    ttl: 30 * 1000,
-    stores: [new Keyv({ namespace: 'todos' })],
-  });
-  const todosService = new TodosService(cache);
+  const todosService = new TodosService();
 
   app
 

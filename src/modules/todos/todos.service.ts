@@ -1,18 +1,13 @@
-import { Cache } from 'cache-manager';
 import { NotFound } from 'http-errors';
 import { FromSchema } from 'json-schema-to-ts';
 import crypto from 'node:crypto';
 import { GetTodosSchema } from './schemas/getTodos.schema';
 import { Todo } from './schemas/todo.schema';
 
-/**
- * This is just an example, just imagine we're
- * using database for todos and we actually need caching
- */
 export class TodosService {
   private readonly todos: Todo[] = [];
 
-  constructor(private readonly cache: Cache) {}
+  constructor() {}
 
   public async createTodo(content: string): Promise<Todo> {
     const id = crypto.randomUUID();
@@ -25,22 +20,12 @@ export class TodosService {
       done: false,
     };
     this.todos.push(todo);
-    await this.cache.set(`todo:${id}`, structuredClone(todo), 300 * 1000);
     return todo;
   }
 
   public async getTodos(
     query: FromSchema<typeof GetTodosSchema> = {},
   ): Promise<Todo[]> {
-    const cacheKey = `todos:(${[query.content, query.done, query.skip, query.take].join(',')})`;
-
-    if (query.revalidate === true) {
-      await this.cache.del(cacheKey);
-    }
-
-    const cachedTodos = await this.cache.get<Todo[]>(cacheKey);
-    if (cachedTodos) return cachedTodos;
-
     const todos = structuredClone(
       this.todos.filter((todo) => {
         let isIncluded = true;
@@ -59,20 +44,13 @@ export class TodosService {
       }),
     ).slice(query.skip, query.take);
 
-    await this.cache.set(cacheKey, todos);
-
     return todos;
   }
 
   public async getTodo(id: string): Promise<Todo> {
-    const cachedKey = `todo:${id}`;
-    const cachedTodo = await this.cache.get<Todo>(cachedKey);
-    if (cachedTodo !== null) return cachedTodo;
-
     const todo = structuredClone(this.todos.find((todo) => todo.id === id));
-    if (!todo) throw new NotFound('Todo not found');
 
-    await this.cache.set(cachedKey, todo);
+    if (!todo) throw new NotFound('Todo not found');
     return todo;
   }
 
@@ -81,14 +59,14 @@ export class TodosService {
     content?: string,
     done?: boolean,
   ): Promise<Todo> {
-    const todo = this.todos.find((todo) => todo.id);
+    const todo = this.todos.find((todo) => todo.id === id);
     if (!todo) throw new NotFound('Todo not found');
 
     if (content !== undefined) todo.content = content;
+
     if (done !== undefined) todo.done = done;
 
     const todoClone = structuredClone(todo);
-    await this.cache.set(`todo#id:${todo.id}`, todoClone, 300 * 1000);
     return todoClone;
   }
 
@@ -96,7 +74,6 @@ export class TodosService {
     const index = this.todos.findIndex((todo) => todo.id === id);
     if (index < 0) throw new NotFound('Todo not found');
 
-    await this.cache.del(`todo#id:${id}`);
     const todo = this.todos.splice(index, 1)[0];
     return todo;
   }

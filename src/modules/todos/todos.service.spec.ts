@@ -1,16 +1,10 @@
-import { createCache } from 'cache-manager';
-import Keyv from 'keyv';
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
 import { Todo } from './schemas/todo.schema';
 import { TodosService } from './todos.service';
 
 describe('test todos service', async function () {
-  const todos = new TodosService(
-    createCache({
-      stores: [new Keyv({ namespace: 'todos' })],
-    }),
-  );
+  const todos = new TodosService();
   let itemRef: Todo;
 
   it('create item', async () => {

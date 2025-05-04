@@ -6,9 +6,6 @@ export const GetTodosSchema = asJsonSchema({
   type: 'object',
   additionalProperties: false,
   properties: {
-    revalidate: {
-      type: 'boolean',
-    },
     content: {
       type: 'string',
       minLength: 1,
