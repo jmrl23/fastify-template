@@ -40,7 +40,7 @@ describe('test todos route', async function () {
     }>();
 
     assert.strictEqual(todos.length, 1);
-    assert.strictEqual(todos?.at(0)?.id, todoRef.id);
+    assert.strictEqual(todos[0]?.id, todoRef.id);
   });
 
   it('get todo', async () => {
