@@ -1,13 +1,23 @@
-FROM node:lts-slim
-
+FROM node:lts-slim AS builder
 WORKDIR /app
 
-COPY . .
+COPY ./package.json ./tsconfig.json ./yarn.lock ./
+COPY ./src ./src
 
 RUN yarn install
-RUN yarn run build
-RUN chmod +x /app/www
+RUN npx tsc --build
 
-ENTRYPOINT [ "/app/www" ]
+FROM node:lts-slim
+WORKDIR /app
+
+COPY --from=builder /app/build ./build
+COPY ./public ./public
+COPY ./package.json ./yarn.lock ./
+COPY ./www ./www
+
+RUN yarn install --production --immutable
+RUN chmod +x ./www
+
+ENTRYPOINT [ "./www" ]
 
 CMD [ "." ]
