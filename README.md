@@ -87,7 +87,7 @@ yarn run start:dev
 
 ```bash
 yarn run build
-yarn start
+yarn run start
 ```
 
 ---
