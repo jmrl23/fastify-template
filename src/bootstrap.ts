@@ -15,6 +15,7 @@ export const bootstrap = fastifyPlugin(async function (app) {
 
   await app.register(fastifyCors, {
     origin: CORS_ORIGIN,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   });
 
   await app.register(swaggerPlugin);

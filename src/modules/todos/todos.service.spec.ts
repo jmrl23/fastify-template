@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import { Todo } from './schemas/todo.schema';
+import { TodoSchema } from './schemas/todo.schema';
 import { TodosService } from './todos.service';
 
 describe('test todos service', async function () {
   const todos = new TodosService();
-  let itemRef: Todo;
+  let itemRef: TodoSchema;
 
   it('create item', async () => {
     const item = await todos.createTodo('Walk the dog');
@@ -20,7 +20,7 @@ describe('test todos service', async function () {
   });
 
   it('get items', async () => {
-    const items = await todos.getTodos();
+    const items = await todos.getTodos({});
     assert.strictEqual(items.length, 1);
   });
 

@@ -1,7 +1,7 @@
 import fastify from 'fastify';
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import { Todo } from './schemas/todo.schema';
+import { TodoSchema } from './schemas/todo.schema';
 import todosRoute from './todos.route';
 
 describe('test todos route', async function () {
@@ -9,7 +9,7 @@ describe('test todos route', async function () {
 
   await app.register(todosRoute);
 
-  let todoRef: Todo;
+  let todoRef: TodoSchema;
 
   it('create todo', async () => {
     const response = await app.inject({
@@ -20,7 +20,7 @@ describe('test todos route', async function () {
       },
     });
     const { data: todo } = response.json<{
-      data: Todo;
+      data: TodoSchema;
     }>();
 
     todoRef = todo;
@@ -36,7 +36,7 @@ describe('test todos route', async function () {
       url: '/',
     });
     const { data: todos } = response.json<{
-      data: Todo[];
+      data: TodoSchema[];
     }>();
 
     assert.strictEqual(todos.length, 1);
@@ -49,7 +49,7 @@ describe('test todos route', async function () {
       url: `/${todoRef.id}`,
     });
     const { data: todo } = response.json<{
-      data: Todo;
+      data: TodoSchema;
     }>();
 
     assert.strictEqual(todo.id, todoRef.id);
@@ -65,7 +65,7 @@ describe('test todos route', async function () {
       },
     });
     const { data: todo } = response.json<{
-      data: Todo;
+      data: TodoSchema;
     }>();
 
     assert.strictEqual(todo.id, todoRef.id);
@@ -81,7 +81,7 @@ describe('test todos route', async function () {
       url: `/delete/${todoRef.id}`,
     });
     const { data: todo } = response.json<{
-      data: Todo;
+      data: TodoSchema;
     }>();
 
     assert.deepStrictEqual(todo, todoRef);
