@@ -10,7 +10,7 @@ services:
       shared:
     environment:
       - PORT=3001
-      - CORS_ORIGIN=http://localhost:3001,http://localhost:3000
+      - CORS_ORIGIN=http://localhost:3000 # frontend
 
 networks:
   shared:

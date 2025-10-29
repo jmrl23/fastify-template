@@ -1,6 +1,5 @@
 import fastifyCors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
-import fastifyMiddie from '@fastify/middie';
 import fastifyStatic from '@fastify/static';
 import { FastifyInstance } from 'fastify';
 import { fastifyPlugin } from 'fastify-plugin';
@@ -13,8 +12,6 @@ import { swaggerPlugin } from './plugins/swagger';
 
 export const bootstrap = fastifyPlugin(async function (app) {
   await app.register(fastifyEtag);
-
-  await app.register(fastifyMiddie);
 
   await app.register(fastifyCors, {
     origin: CORS_ORIGIN,

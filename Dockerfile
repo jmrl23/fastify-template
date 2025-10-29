@@ -15,7 +15,7 @@ COPY ./public ./public
 COPY ./package.json ./yarn.lock ./
 COPY ./www ./www
 
-RUN yarn install --production --immutable
+RUN yarn install --production --frozen-lockfile
 RUN chmod +x ./www
 
 ENTRYPOINT [ "./www" ]
