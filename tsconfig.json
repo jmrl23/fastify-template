@@ -3,7 +3,8 @@
     "allowJs": true,
     "checkJs": true,
     "outDir": "./build",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "experimentalDecorators": true
   },
   "extends": "@tsconfig/recommended/tsconfig.json",
   "include": ["./src/**/*.ts", "./src/**/*.js", "./src/**/*.json"],
