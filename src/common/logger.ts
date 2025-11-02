@@ -1,37 +1,61 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import pino, { Logger } from 'pino';
-import 'pino-pretty';
+import pino, { LoggerOptions } from 'pino';
 
-const loggers = new Map<NodeEnv, Logger>();
+const developmentSerializer = {
+  req(request: FastifyRequest) {
+    return {
+      method: request.method,
+      url: request.url,
+      query: request.query,
+      params: request.params,
+    };
+  },
+  res(response: FastifyReply) {
+    return {
+      statusCode: response.statusCode,
+      headers:
+        typeof response.getHeaders === 'function' ? response.getHeaders() : {},
+    };
+  },
+};
 
-loggers.set(
-  'development',
-  pino({
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        ignore: 'pid,hostname',
-        translateTime: 'SYS:yyyy-mm-dd HH:MM:ss',
-      },
-    },
-    serializers: {
-      req(request: FastifyRequest) {
-        return {
-          method: request.method,
-          url: request.url,
-          params: request.params,
-          query: request.query,
-        };
-      },
-      res(response: FastifyReply) {
-        return {
-          statusCode: response.statusCode,
-          headers: response.getHeaders(),
-        };
-      },
-    },
-  }),
-);
+const productionSerializer = {
+  req(request: FastifyRequest) {
+    return {
+      method: request.method,
+      url: request.url,
+    };
+  },
+  res(response: FastifyReply) {
+    return {
+      statusCode: response.statusCode,
+      headers:
+        typeof response.getHeaders === 'function' ? response.getHeaders() : {},
+    };
+  },
+};
 
-export const logger = loggers.get(process.env.NODE_ENV) ?? pino();
+const baseLoggerOptions: LoggerOptions = {
+  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+  serializers:
+    process.env.NODE_ENV === 'production'
+      ? productionSerializer
+      : developmentSerializer,
+};
+
+const loggerOptions: LoggerOptions =
+  process.env.NODE_ENV === 'development'
+    ? {
+        ...baseLoggerOptions,
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            ignore: 'pid,hostname',
+            translateTime: 'SYS:yyyy-mm-dd HH:MM:ss',
+          },
+        },
+      }
+    : baseLoggerOptions;
+
+export const logger = pino(loggerOptions);
