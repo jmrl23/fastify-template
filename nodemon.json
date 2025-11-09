@@ -6,7 +6,10 @@
     ".env.development",
     "./.env.development.local"
   ],
-  "exec": "dotenv -v NODE_ENV=development -- ts-node -r ./src/init.ts src/main.ts",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "exec": "ts-node -r ./src/init.ts src/main.ts",
   "ext": "ts,js,json",
   "delay": 1000
 }
