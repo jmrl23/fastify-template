@@ -1,15 +1,9 @@
-import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema } from '../../../common/typings';
+import z from 'zod';
 
-export type DeleteTodoSchema = FromSchema<typeof deleteTodoSchema>;
-export const deleteTodoSchema = asJsonSchema({
-  type: 'object',
-  additionalProperties: false,
-  required: ['id'],
-  properties: {
-    id: {
-      type: 'string',
-      format: 'uuid',
-    },
-  },
+export const deleteTodo = z.object({
+  id: z.uuidv4(),
+});
+export type DeleteTodo = z.infer<typeof deleteTodo>;
+export const deleteTodoSchema = z.toJSONSchema(deleteTodo, {
+  target: 'draft-7',
 });

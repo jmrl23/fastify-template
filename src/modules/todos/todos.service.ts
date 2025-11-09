@@ -1,17 +1,17 @@
 import { NotFound } from 'http-errors';
 import crypto from 'node:crypto';
-import { GetTodosSchema } from './schemas/getTodos.schema';
-import { TodoSchema } from './schemas/todo.schema';
+import { GetTodos } from './schemas/getTodos.schema';
+import { Todo } from './schemas/todo.schema';
 
 export class TodosService {
-  private readonly todos: TodoSchema[] = [];
+  private readonly todos: Todo[] = [];
 
   constructor() {}
 
-  public async createTodo(content: string): Promise<TodoSchema> {
+  public async createTodo(content: string): Promise<Todo> {
     const id = crypto.randomUUID();
     const now = new Date();
-    const todo: TodoSchema = {
+    const todo: Todo = {
       id,
       createdAt: now.toISOString(),
       updatedAt: now.toISOString(),
@@ -22,7 +22,7 @@ export class TodosService {
     return todo;
   }
 
-  public async getTodos(query: GetTodosSchema): Promise<TodoSchema[]> {
+  public async getTodos(query: GetTodos): Promise<Todo[]> {
     const todos = structuredClone(
       this.todos.filter((todo) => {
         let isIncluded = true;
@@ -44,7 +44,7 @@ export class TodosService {
     return todos;
   }
 
-  public async getTodo(id: string): Promise<TodoSchema> {
+  public async getTodo(id: string): Promise<Todo> {
     const todo = structuredClone(this.todos.find((todo) => todo.id === id));
 
     if (!todo) throw new NotFound('Todo not found');
@@ -55,7 +55,7 @@ export class TodosService {
     id: string,
     content?: string,
     done?: boolean,
-  ): Promise<TodoSchema> {
+  ): Promise<Todo> {
     const todo = this.todos.find((todo) => todo.id === id);
     if (!todo) throw new NotFound('Todo not found');
 
@@ -67,7 +67,7 @@ export class TodosService {
     return todoClone;
   }
 
-  public async deleteTodo(id: string): Promise<TodoSchema> {
+  public async deleteTodo(id: string): Promise<Todo> {
     const index = this.todos.findIndex((todo) => todo.id === id);
     if (index < 0) throw new NotFound('Todo not found');
 

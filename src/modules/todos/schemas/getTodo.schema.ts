@@ -1,15 +1,9 @@
-import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema } from '../../../common/typings';
+import z from 'zod';
 
-export type GetTodoSchema = FromSchema<typeof getTodoSchema>;
-export const getTodoSchema = asJsonSchema({
-  type: 'object',
-  additionalProperties: false,
-  required: ['id'],
-  properties: {
-    id: {
-      type: 'string',
-      format: 'uuid',
-    },
-  },
+export const getTodo = z.object({
+  id: z.uuidv4(),
+});
+export type GetTodo = z.infer<typeof getTodo>;
+export const getTodoSchema = z.toJSONSchema(getTodo, {
+  target: 'draft-7',
 });

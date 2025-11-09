@@ -1,31 +1,13 @@
-import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema } from '../../../common/typings';
+import z from 'zod';
 
-export type TodoSchema = FromSchema<typeof todoSchema>;
-export const todoSchema = asJsonSchema({
-  type: 'object',
-  additionalProperties: false,
-  required: ['id', 'createdAt', 'updatedAt', 'content', 'done'],
-  properties: {
-    id: {
-      type: 'string',
-      format: 'uuid',
-    },
-    createdAt: {
-      type: 'string',
-      format: 'date-time',
-    },
-    updatedAt: {
-      type: 'string',
-      format: 'date-time',
-    },
-    content: {
-      type: 'string',
-      examples: ['Walk the dog'],
-    },
-    done: {
-      type: 'boolean',
-      examples: [false],
-    },
-  },
+export const todo = z.object({
+  id: z.uuidv4(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+  content: z.string().min(1),
+  done: z.boolean(),
+});
+export type Todo = z.infer<typeof todo>;
+export const todoSchema = z.toJSONSchema(todo, {
+  target: 'draft-7',
 });

@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import { TodoSchema } from './schemas/todo.schema';
+import { Todo } from './schemas/todo.schema';
 import { TodosService } from './todos.service';
 
 describe('test todos service', async function () {
   const todos = new TodosService();
-  let itemRef: TodoSchema;
+  let itemRef: Todo;
 
   it('create item', async () => {
     const item = await todos.createTodo('Walk the dog');

@@ -5,6 +5,7 @@ import fastifyPlugin from 'fastify-plugin';
 import fs from 'node:fs';
 import path from 'node:path';
 import { OpenAPIV3_1 } from 'openapi-types';
+import { logger } from '../common/logger';
 
 interface Options {}
 
@@ -39,6 +40,10 @@ export const swagger: FastifyPluginAsync<Options> = fastifyPlugin(
       },
     });
 
-    await app.register(fastifySwaggerUi, { routePrefix: '/docs' });
+    const routePrefix = '/docs';
+    await app.register(fastifySwaggerUi, {
+      routePrefix,
+    });
+    logger.info(`swagger documentation available at (${routePrefix})`);
   },
 );

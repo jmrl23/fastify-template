@@ -1,16 +1,9 @@
-import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema } from '../../../common/typings';
+import z from 'zod';
 
-export type CreateTodoSchema = FromSchema<typeof createTodoSchema>;
-export const createTodoSchema = asJsonSchema({
-  type: 'object',
-  additionalProperties: false,
-  required: ['content'],
-  properties: {
-    content: {
-      type: 'string',
-      minLength: 1,
-      examples: ['Walk the dog'],
-    },
-  },
+export const createTodo = z.object({
+  content: z.string().min(1),
+});
+export type CreateTodo = z.infer<typeof createTodo>;
+export const createTodoSchema = z.toJSONSchema(createTodo, {
+  target: 'draft-7',
 });

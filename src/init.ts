@@ -29,5 +29,6 @@ const ENV_PATHS = glob.globSync(
 
 dotenv.config({
   path: ENV_PATHS,
+  // Override is true to allow .env files precedence
   override: true,
 });

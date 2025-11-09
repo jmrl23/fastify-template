@@ -1,25 +1,12 @@
-import { FromSchema } from 'json-schema-to-ts';
-import { asJsonSchema } from '../../../common/typings';
+import z from 'zod';
 
-export type GetTodosSchema = FromSchema<typeof getTodosSchema>;
-export const getTodosSchema = asJsonSchema({
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    content: {
-      type: 'string',
-      minLength: 1,
-    },
-    done: {
-      type: 'boolean',
-    },
-    skip: {
-      type: 'number',
-      minimum: 0,
-    },
-    take: {
-      type: 'number',
-      minimum: 0,
-    },
-  },
+export const getTodos = z.object({
+  content: z.string().min(1).optional(),
+  done: z.boolean().optional(),
+  skip: z.number().min(0).optional(),
+  take: z.number().min(0).optional(),
+});
+export type GetTodos = z.infer<typeof getTodos>;
+export const getTodosSchema = z.toJSONSchema(getTodos, {
+  target: 'draft-7',
 });

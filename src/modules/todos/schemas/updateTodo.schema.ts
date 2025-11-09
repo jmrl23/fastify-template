@@ -1,37 +1,18 @@
-import { asJsonSchema } from '../../../common/typings';
-import { FromSchema } from 'json-schema-to-ts';
+import z from 'zod';
 
-export type UpdateTodoSchema = FromSchema<typeof updateTodoSchema>;
-export const updateTodoSchema = asJsonSchema({
-  type: 'object',
-  additionalProperties: false,
-  required: ['params', 'body'],
-  properties: {
-    params: {
-      type: 'object',
-      additionalProperties: false,
-      required: ['id'],
-      properties: {
-        id: {
-          type: 'string',
-          format: 'uuid',
-        },
-      },
-    },
-    body: {
-      type: 'object',
-      additionalProperties: false,
-      properties: {
-        content: {
-          type: 'string',
-          minLength: 1,
-          examples: ['Walk the dog'],
-        },
-        done: {
-          type: 'boolean',
-          examples: [true],
-        },
-      },
-    },
-  },
+export const updateTodoBody = z.object({
+  content: z.string().min(1).optional(),
+  done: z.boolean().optional(),
+});
+export type UpdateTodoBody = z.infer<typeof updateTodoBody>;
+export const updateTodoBodySchema = z.toJSONSchema(updateTodoBody, {
+  target: 'draft-7',
+});
+
+export const updateTodoParams = z.object({
+  id: z.uuidv4(),
+});
+export type UpdateTodoParams = z.infer<typeof updateTodoParams>;
+export const updateTodoParamsSchema = z.toJSONSchema(updateTodoParams, {
+  target: 'draft-7',
 });
