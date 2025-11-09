@@ -14,13 +14,13 @@ async function main() {
     host,
     port,
     listenTextResolver: (address) => {
-      // Swagger server listing
-      const swagger = app.swagger() as OpenAPIV3_1.Document;
-      swagger.servers?.push({
-        url: address,
-        description: 'Development server',
-      });
-
+      if (process.env.NODE_ENV === 'development') {
+        const swagger = app.swagger() as OpenAPIV3_1.Document;
+        swagger.servers?.push({
+          url: address,
+          description: 'Development server',
+        });
+      }
       return `server listening at ${address}`;
     },
   });

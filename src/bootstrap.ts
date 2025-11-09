@@ -3,7 +3,7 @@ import fastifyEtag from '@fastify/etag';
 import fastifyStatic from '@fastify/static';
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 import { fastifyPlugin } from 'fastify-plugin';
-import { NotFound } from 'http-errors';
+import { HttpError, NotFound } from 'http-errors';
 import path from 'node:path';
 import { logger } from './common/logger';
 import { CORS_ORIGIN } from './config/env';
@@ -13,21 +13,26 @@ import { swagger } from './plugins/swagger';
 interface Options {}
 
 export const bootstrap: FastifyPluginAsync<Options> = fastifyPlugin(
-  async function (app) {
+  async function bootstrap(app) {
     await app.register(fastifyEtag);
 
-    await app.register(fastifyCors, {
-      origin: CORS_ORIGIN,
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    });
+    if (CORS_ORIGIN) {
+      await app.register(fastifyCors, {
+        origin: CORS_ORIGIN,
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        credentials: true,
+      });
+    }
 
-    await app.register(swagger);
+    if (process.env.NODE_ENV === 'development') {
+      await app.register(swagger);
+    }
 
     await app.register(routesAutoload, {
       dirPath: path.resolve(__dirname, './modules'),
       callback(routes) {
         for (const route of routes) {
-          logger.info(`registered route {${route}}`);
+          logger.info(`loaded **route** (${route})`);
         }
       },
     });
@@ -46,7 +51,8 @@ async function postConfigurations(app: FastifyInstance) {
   });
 
   app.setErrorHandler(async function errorHandler(error) {
-    if (!error.statusCode || error.statusCode > 499) {
+    const isHttpError = error instanceof HttpError;
+    if (isHttpError && (!error.statusCode || error.statusCode > 499)) {
       logger.error(error.stack ?? error.message);
     }
     return error;

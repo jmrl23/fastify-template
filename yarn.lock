@@ -145,6 +145,14 @@
     "@fastify/forwarded" "^3.0.0"
     ipaddr.js "^2.1.0"
 
+"@fastify/proxy-addr@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@fastify/proxy-addr/-/proxy-addr-5.1.0.tgz#f5360b5dd83c7de3d41b415be4aab84ae44aa106"
+  integrity sha512-INS+6gh91cLUjB+PVHfu1UqcB76Sqtpyp7bnL+FYojhjygvOPA9ctiD/JDKsyD9Xgu4hUhCSJBPig/w7duNajw==
+  dependencies:
+    "@fastify/forwarded" "^3.0.0"
+    ipaddr.js "^2.1.0"
+
 "@fastify/send@^3.2.0":
   version "3.3.1"
   resolved "https://registry.npmjs.org/@fastify/send/-/send-3.3.1.tgz"
