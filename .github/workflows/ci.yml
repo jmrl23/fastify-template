@@ -128,3 +128,4 @@ jobs:
             --project=${{ env.GCP_PROJECT_ID }} \
             --version=$VERSION \
             --promote
+            --env-vars="NODE_ENV=production"
