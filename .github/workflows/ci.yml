@@ -121,11 +121,13 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Deploy to App Engine
+        env:
+          NODE_ENV: production
         run: |
           VERSION=v-$(git rev-parse --short HEAD)
           gcloud app deploy app.yaml \
             --quiet \
             --project=${{ env.GCP_PROJECT_ID }} \
             --version=$VERSION \
-            --promote
-            --env-vars="NODE_ENV=production"
+            --promote \
+            --set-env-vars="NODE_ENV=${{ env.NODE_ENV }}"
