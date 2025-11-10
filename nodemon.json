@@ -1,0 +1,15 @@
+{
+  "watch": [
+    "src/**/*",
+    ".env",
+    ".env.local",
+    ".env.development",
+    "./.env.development.local"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "exec": "ts-node -r ./src/init.ts src/main.ts",
+  "ext": "ts,js,json",
+  "delay": 1000
+}

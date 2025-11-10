@@ -1,0 +1,15 @@
+runtime: custom
+env: flexible
+instance_class: F1
+service: fastify-template
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 1
+
+handlers:
+  - url: /.*
+    script: auto
+
+env_variables:
+  NODE_ENV: 'production'

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "./build",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true
+  },
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": ["./src"],
+  "exclude": [],
+  "ts-node": {
+    "swc": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "name": "fastify-template",
+  "repository": "https://github.com/jmrl23/fastify-template",
+  "author": "Jomariel Gaitera <gaiterajomariel@gmail.com>",
+  "license": "MIT",
+  "main": "build/main.js",
+  "scripts": {
+    "build": "tsc --build",
+    "test": "dotenv -v NODE_ENV=test -- ts-node -r ./src/init.ts src/test.ts",
+    "start": "node -r ./build/init.js .",
+    "start:dev": "nodemon --inspect=9229 -q",
+    "start:prod": "dotenv -v NODE_ENV=production -- node -r ./build/init.js .",
+    "format": "prettier --write \"src/**/*.{ts,js}\"",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.1.0",
+    "@fastify/etag": "^6.1.0",
+    "@fastify/proxy-addr": "^5.1.0",
+    "@fastify/static": "^8.3.0",
+    "@fastify/swagger": "^9.6.0",
+    "@fastify/swagger-ui": "^5.2.3",
+    "detect-port": "^2.1.0",
+    "dotenv": "^17.2.3",
+    "dotenv-cli": "^11.0.0",
+    "env-var": "^7.5.0",
+    "fastify": "^5.6.2",
+    "fastify-plugin": "^5.1.0",
+    "glob": "^11.0.3",
+    "http-errors": "^2.0.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.15.1",
+    "@tsconfig/recommended": "^1.0.11",
+    "@types/http-errors": "^2.0.5",
+    "@types/node": "^24.10.0",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "nodemon": "^3.1.10",
+    "pino-pretty": "^13.1.2",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3"
+  }
+}
