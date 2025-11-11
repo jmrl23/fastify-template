@@ -1,7 +1,7 @@
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import tseslint, { Config } from 'typescript-eslint';
 
-export default [
+const config: Config = [
   {
     ignores: ['build/*'],
   },
@@ -19,3 +19,4 @@ export default [
     },
   },
 ];
+export default config;
