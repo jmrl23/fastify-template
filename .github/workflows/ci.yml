@@ -6,13 +6,7 @@ on:
   push:
     branches: [main]
 
-env:
-  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
-  SA_EMAIL: ${{ secrets.SA_EMAIL }}
-
 permissions:
-  contents: read
   id-token: write
 
 jobs:
@@ -99,13 +93,18 @@ jobs:
           push: false
           load: true
 
-  gcp-app-engine-deploy:
-    name: Deploy to App Engine
+  deploy:
+    name: Deploy
     needs: [build, validate-container-build]
     runs-on: ubuntu-latest
+    env:
+      REPO: ${{ github.repository }}
+      REPO_NAME: ${{ github.event.repository.name }}
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
+      SA_EMAIL: ${{ secrets.SA_EMAIL }}
     environment:
       name: "production"
-      url: https://fastify-template-dot-${{ env.GCP_PROJECT_ID }}.appspot.com
 
     steps:
       - name: Checkout repository
@@ -121,6 +120,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Deploy to App Engine
+        id: deploy_app
         run: |
           VERSION=v-$(git rev-parse --short HEAD)
           gcloud app deploy app.yaml \
