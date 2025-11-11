@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyPluginAsync } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { glob } from 'glob';
 import path from 'node:path';
@@ -30,8 +30,8 @@ export interface Callback {
  * @param {Options} options - Plugin options.
  * @returns {Promise<void>}
  */
-export const routesAutoload: FastifyPluginAsync<Options> = fastifyPlugin(
-  async function (app: FastifyInstance, options: Options) {
+export const routesAutoload = fastifyPlugin<Options>(
+  async function routesAutoload(app: FastifyInstance, options: Options) {
     const { dirPath, callback } = options;
     const files = await glob([`${dirPath}/**/*.route.{ts,js}`], {
       absolute: true,

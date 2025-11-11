@@ -1,18 +1,18 @@
 import { FastifyRequest } from 'fastify';
+import z from 'zod';
 import { asRoute } from '../../common/typings';
-import { CreateTodo, createTodoSchema } from './schemas/createTodo.schema';
-import { DeleteTodo, deleteTodoSchema } from './schemas/deleteTodo.schema';
-import { GetTodo, getTodoSchema } from './schemas/getTodo.schema';
-import { GetTodos, getTodosSchema } from './schemas/getTodos.schema';
+import { CreateTodo, createTodoSchema } from './schemas/create-todo.schema';
+import { DeleteTodo, deleteTodoSchema } from './schemas/delete-todo.schema';
+import { GetTodo, getTodoSchema } from './schemas/get-todo.schema';
+import { GetTodos, getTodosSchema } from './schemas/get-todos.schema';
 import { todo } from './schemas/todo.schema';
 import {
   UpdateTodoBody,
   updateTodoBodySchema,
   UpdateTodoParams,
   updateTodoParamsSchema,
-} from './schemas/updateTodo.schema';
+} from './schemas/update-todo.schema';
 import { TodosService } from './todos.service';
-import z from 'zod';
 
 export default asRoute(async function (app) {
   const todosService = new TodosService();

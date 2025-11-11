@@ -1,6 +1,6 @@
 import { NotFound } from 'http-errors';
 import crypto from 'node:crypto';
-import { GetTodos } from './schemas/getTodos.schema';
+import { GetTodos } from './schemas/get-todos.schema';
 import { Todo } from './schemas/todo.schema';
 
 export class TodosService {

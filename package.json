@@ -7,7 +7,7 @@
   "main": "build/main.js",
   "scripts": {
     "build": "tsc --build",
-    "test": "dotenv -v NODE_ENV=test -- ts-node -r ./src/init.ts src/test.ts",
+    "test": "jest",
     "start": "node -r ./build/init.js .",
     "start:dev": "nodemon --inspect=9229 -q",
     "start:prod": "dotenv -v NODE_ENV=production -- node -r ./build/init.js .",
@@ -33,11 +33,14 @@
   },
   "devDependencies": {
     "@swc/core": "^1.15.1",
+    "@swc/jest": "^0.2.39",
     "@tsconfig/recommended": "^1.0.11",
     "@types/http-errors": "^2.0.5",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.10.0",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
+    "jest": "^30.2.0",
     "nodemon": "^3.1.10",
     "pino-pretty": "^13.1.2",
     "prettier": "^3.6.2",

@@ -1,13 +1,14 @@
-import fastify from 'fastify';
-import assert from 'node:assert';
-import { describe, it } from 'node:test';
-import { Todo } from './schemas/todo.schema';
+import fastify, { FastifyInstance } from 'fastify';
+import { todo, Todo } from './schemas/todo.schema';
 import todosRoute from './todos.route';
 
-describe('test todos route', async function () {
-  const app = fastify();
+describe('test todos route', () => {
+  let app: FastifyInstance;
 
-  await app.register(todosRoute);
+  beforeAll(async () => {
+    app = fastify();
+    await app.register(todosRoute);
+  });
 
   let todoRef: Todo;
 
@@ -19,13 +20,11 @@ describe('test todos route', async function () {
         content: 'Test todos route',
       },
     });
-    const { data: todo } = response.json<{ data: Todo }>();
-
-    todoRef = todo;
-
-    assert.strictEqual(response.statusCode, 200);
-    assert.ok(todo);
-    assert.strictEqual(todo.content, 'Test todos route');
+    const { data: createdTodo } = response.json<{ data: Todo }>();
+    todoRef = createdTodo;
+    expect(createdTodo).toStrictEqual(todo.parse(createdTodo));
+    expect(response.statusCode).toStrictEqual(200);
+    expect(createdTodo.content).toStrictEqual('Test todos route');
   });
 
   it('list todos', async () => {
@@ -34,9 +33,8 @@ describe('test todos route', async function () {
       url: '/',
     });
     const { data: todos } = response.json<{ data: Todo[] }>();
-
-    assert.strictEqual(todos.length, 1);
-    assert.strictEqual(todos[0]?.id, todoRef.id);
+    expect(todos).toStrictEqual([todo.parse(todoRef)]);
+    expect(response.statusCode).toStrictEqual(200);
   });
 
   it('get todo', async () => {
@@ -44,9 +42,9 @@ describe('test todos route', async function () {
       method: 'GET',
       url: `/${todoRef.id}`,
     });
-    const { data: todo } = response.json<{ data: Todo }>();
-
-    assert.strictEqual(todo.id, todoRef.id);
+    const { data: item } = response.json<{ data: Todo }>();
+    expect(item).toStrictEqual(todo.parse(todoRef));
+    expect(response.statusCode).toStrictEqual(200);
   });
 
   it('update todo', async () => {
@@ -58,13 +56,16 @@ describe('test todos route', async function () {
         done: true,
       },
     });
-    const { data: todo } = response.json<{ data: Todo }>();
-
-    assert.strictEqual(todo.id, todoRef.id);
-    assert.strictEqual(todo.content, 'Updated todo content');
-    assert.strictEqual(todo.done, true);
-
-    todoRef = todo;
+    const { data: item } = response.json<{ data: Todo }>();
+    expect(item).toStrictEqual(
+      todo.parse({
+        ...todoRef,
+        content: 'Updated todo content',
+        done: true,
+      }),
+    );
+    expect(response.statusCode).toStrictEqual(200);
+    todoRef = item;
   });
 
   it('delete todo', async () => {
@@ -72,15 +73,13 @@ describe('test todos route', async function () {
       method: 'DELETE',
       url: `/delete/${todoRef.id}`,
     });
-    const { data: todo } = response.json<{ data: Todo }>();
-
-    assert.deepStrictEqual(todo, todoRef);
-
+    const { data: item } = response.json<{ data: Todo }>();
+    expect(item).toStrictEqual(todo.parse(todoRef));
+    expect(response.statusCode).toStrictEqual(200);
     const deleteAttempt = await app.inject({
       method: 'DELETE',
       url: `/delete/${todoRef.id}`,
     });
-
-    assert.strictEqual(deleteAttempt.statusCode, 404);
+    expect(deleteAttempt.statusCode).toStrictEqual(404);
   });
 });
