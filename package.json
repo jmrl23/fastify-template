@@ -10,11 +10,12 @@
     "test": "jest",
     "start": "node -r ./build/init.js .",
     "start:dev": "nodemon --inspect=9229 -q",
-    "start:prod": "dotenv -v NODE_ENV=production -- node -r ./build/init.js .",
+    "start:prod": "dotenvx --env NODE_ENV=production run -- node -r ./build/init.js .",
     "format": "prettier --write \"src/**/*.{ts,js}\"",
     "lint": "eslint"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.51.1",
     "@fastify/cors": "^11.1.0",
     "@fastify/etag": "^6.1.0",
     "@fastify/proxy-addr": "^5.1.0",
@@ -22,8 +23,6 @@
     "@fastify/swagger": "^9.6.0",
     "@fastify/swagger-ui": "^5.2.3",
     "detect-port": "^2.1.0",
-    "dotenv": "^17.2.3",
-    "dotenv-cli": "^11.0.0",
     "env-var": "^7.5.0",
     "fastify": "^5.6.2",
     "fastify-plugin": "^5.1.0",

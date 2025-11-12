@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenvx from '@dotenvx/dotenvx';
 import * as glob from 'glob';
 import path from 'node:path';
 
@@ -27,7 +27,7 @@ const ENV_PATHS = glob.globSync(
   },
 );
 
-dotenv.config({
+dotenvx.config({
   path: ENV_PATHS,
   encoding: 'utf8',
   quiet: process.env.NODE_ENV !== 'development',
