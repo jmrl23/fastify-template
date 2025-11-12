@@ -8,7 +8,7 @@
       "name": "Debug via start:dev",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "npm",
+      "runtimeExecutable": "yarn",
       "runtimeArgs": ["run", "start:dev"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
