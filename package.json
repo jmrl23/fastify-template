@@ -10,7 +10,7 @@
     "test": "jest",
     "start": "node -r ./build/init.js .",
     "start:dev": "nodemon --inspect=9229 -q",
-    "start:prod": "dotenvx --env NODE_ENV=production run -- node -r ./build/init.js .",
+    "start:prod": "dotenvx run --env NODE_ENV=production -- node -r ./build/init.js .",
     "format": "prettier --write \"src/**/*.{ts,js}\"",
     "lint": "eslint"
   },
