@@ -2,7 +2,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/jmrl23/fastify-template)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A clean, modular, and production-ready Fastify + TypeScript template designed to help you quickly build scalable APIs with minimal setup.
 
@@ -166,8 +166,8 @@ Common commands (may vary depending on your `package.json`):
 | `yarn build`      | Compiles the TypeScript source using `tsc --build`.                                                             |
 | `yarn test`       | Runs tests using Jest.                                                                                          |
 | `yarn start`      | Runs the compiled app from `build/main.js`, preloading environment setup from `build/init.js`.                  |
-| `yarn start:dev`  | Starts the development server with `nodemon` on port 9229 (for debugging) and automatically reloads on changes. |
-| `yarn start:prod` | Runs the app in production mode using `dotenv-cli` and the compiled output.                                     |
+| `yarn start:dev`  | Starts the development server |
+| `yarn start:prod` | Runs the built app in production mode (NODE_ENV=production)                                     |
 | `yarn format`     | Formats all `.ts` and `.js` files in `src/` using Prettier.                                                     |
 | `yarn lint`       | Runs ESLint to check code quality and style issues.                                                             |
 
@@ -185,5 +185,3 @@ Common commands (may vary depending on your `package.json`):
 ## License
 
 This project is licensed under the [**MIT License**](./LICENSE).
-
----
