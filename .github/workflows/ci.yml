@@ -100,7 +100,7 @@ jobs:
     env:
       REPO: ${{ github.repository }}
       REPO_NAME: ${{ github.event.repository.name }}
-      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
       WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
       SA_EMAIL: ${{ secrets.SA_EMAIL }}
     environment:
