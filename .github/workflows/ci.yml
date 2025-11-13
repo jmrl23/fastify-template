@@ -6,9 +6,6 @@ on:
   push:
     branches: [main]
 
-permissions:
-  id-token: write
-
 jobs:
   lint-and-test:
     name: Lint & Test
@@ -34,7 +31,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: Run Lint
         run: yarn run lint
@@ -91,24 +88,60 @@ jobs:
         with:
           context: .
           push: false
+          tags: "fastify-template:latest"
           load: true
+
+      - name: Validate build size
+        uses: wemake-services/docker-image-size-limit@2.2.0
+        with:
+          image: "fastify-template:latest"
+          show_current_size: true
+          size: "400MB"
 
   deploy:
     name: Deploy
     needs: [build, validate-container-build]
     runs-on: ubuntu-latest
+    environment:
+      name: "production"
+    permissions:
+      contents: write
+      id-token: write
     env:
       REPO: ${{ github.repository }}
       REPO_NAME: ${{ github.event.repository.name }}
+      GH_TOKEN: ${{ github.token }}
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
       WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
       SA_EMAIL: ${{ secrets.SA_EMAIL }}
-    environment:
-      name: "production"
+      SERVICE: fastify-template
+      NODE_ENV: production
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Create app.yaml and .gcloudignore
+        run: |
+          echo "runtime: custom" > app.yaml
+          echo "env: flexible" >> app.yaml
+          echo "service: ${{ env.SERVICE }}" >> app.yaml
+          echo "automatic_scaling:" >> app.yaml
+          echo "  min_num_instances: 1" >> app.yaml
+          echo "  max_num_instances: 1" >> app.yaml
+          echo "instance_class: F1" >> app.yaml
+          echo "handlers:" >> app.yaml
+          echo "  - url: /.*" >> app.yaml
+          echo "    script: auto" >> app.yaml
+          echo "env_variables:" >> app.yaml
+          echo "  NODE_ENV: '${{ env.NODE_ENV }}'" >> app.yaml
+          echo ".git" > .gcloudignore
+          echo ".github/" >> .gcloudignore
+          echo "node_modules/" >> .gcloudignore
+          echo "build/" >> .gcloudignore
+          echo ".env*.local" >> .gcloudignore
+          echo ".env.keys" >> .gcloudignore
+        shell: bash
 
       - id: auth
         uses: google-github-actions/auth@v2
@@ -128,3 +161,8 @@ jobs:
             --project=${{ env.GCP_PROJECT_ID }} \
             --version=$VERSION \
             --promote
+          echo "DEPLOYMENT_URL=http://${{ env.SERVICE }}-${{ env.GCP_PROJECT_ID }}.appspot.com" >> $GITHUB_OUTPUT
+
+      - name: Update repository homepage (URL)
+        run: |
+          gh repo edit ${{ env.REPO }} --homepage ${{ steps.deploy_app.outputs.DEPLOYMENT_URL }}
