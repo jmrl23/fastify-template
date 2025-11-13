@@ -6,11 +6,11 @@
   "license": "MIT",
   "main": "build/main.js",
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc --build && tsc-alias",
     "test": "jest",
     "start": "node -r ./build/init.js .",
     "start:dev": "nodemon --inspect=9229 -q",
-    "start:prod": "dotenvx run --env NODE_ENV=production -- node -r ./build/init.js .",
+    "start:prod": "dotenvx run --env NODE_ENV=production -- node -r tsconfig-paths/register -r ./build/init.js .",
     "format": "prettier --write \"src/**/*.{ts,js}\"",
     "lint": "eslint"
   },
@@ -28,6 +28,7 @@
     "fastify-plugin": "^5.1.0",
     "glob": "^11.0.3",
     "http-errors": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -44,7 +45,9 @@
     "nodemon": "^3.1.10",
     "pino-pretty": "^13.1.2",
     "prettier": "^3.6.2",
+    "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.3"
   }

@@ -1,6 +1,7 @@
 import dotenvx from '@dotenvx/dotenvx';
 import * as glob from 'glob';
 import path from 'node:path';
+import workerThreads from 'node:worker_threads';
 
 declare global {
   type NodeEnv = 'development' | 'production' | 'test';
@@ -27,11 +28,12 @@ const ENV_PATHS = glob.globSync(
   },
 );
 
-dotenvx.config({
-  path: ENV_PATHS,
-  encoding: 'utf8',
-  quiet: process.env.NODE_ENV !== 'development',
-  debug: process.env.NODE_ENV !== 'production',
-  // Override is true to allow .env files precedence
-  override: true,
-});
+if (workerThreads.isMainThread) {
+  dotenvx.config({
+    path: ENV_PATHS,
+    encoding: 'utf8',
+    quiet: process.env.NODE_ENV !== 'development',
+    // Override is true to allow .env files injection precedence
+    override: true,
+  });
+}

@@ -9,7 +9,7 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "exec": "ts-node -r ./src/init.ts src/main.ts",
+  "exec": "ts-node -r tsconfig-paths/register -r ./src/init.ts src/main.ts",
   "ext": "ts,js,json",
   "delay": 1000
 }

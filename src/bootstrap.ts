@@ -1,12 +1,12 @@
+import { logger } from '@common/logger';
+import { CORS_ORIGIN } from '@config/env';
 import fastifyCors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
 import fastifyStatic from '@fastify/static';
+import { routesAutoload } from '@plugins/routesAutoload';
+import { swagger } from '@plugins/swagger';
 import { fastifyPlugin } from 'fastify-plugin';
 import path from 'node:path';
-import { logger } from './common/logger';
-import { CORS_ORIGIN } from './config/env';
-import { routesAutoload } from './plugins/routesAutoload';
-import { swagger } from './plugins/swagger';
 
 interface Options {}
 

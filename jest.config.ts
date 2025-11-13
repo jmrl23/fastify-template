@@ -1,4 +1,8 @@
 import { Config } from 'jest';
+import fs from 'node:fs';
+import { pathsToModuleNameMapper } from 'ts-jest';
+
+const tsonfig = JSON.parse(fs.readFileSync('tsconfig.json', 'utf-8'));
 const config: Config = {
   testEnvironment: 'node',
   rootDir: './src',
@@ -6,6 +10,9 @@ const config: Config = {
   testPathIgnorePatterns: ['<rootDir>/test.ts'],
   testMatch: ['**/?(*.)+(spec|test).[jt]s'],
   moduleFileExtensions: ['ts', 'js'],
+  moduleNameMapper: pathsToModuleNameMapper(tsonfig.compilerOptions.paths, {
+    prefix: '<rootDir>/',
+  }),
   transform: {
     '^.+\\.(t|j)s?$': [
       '@swc/jest',

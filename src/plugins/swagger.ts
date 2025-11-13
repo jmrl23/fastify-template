@@ -4,7 +4,7 @@ import fastifyPlugin from 'fastify-plugin';
 import fs from 'node:fs';
 import path from 'node:path';
 import { OpenAPIV3_1 } from 'openapi-types';
-import { logger } from '../common/logger';
+import { logger } from '@common/logger';
 
 interface Options {
   servers?: OpenAPIV3_1.ServerObject[];

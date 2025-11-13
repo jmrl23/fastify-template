@@ -1,18 +1,27 @@
-import { FastifyRequest } from 'fastify';
-import z from 'zod';
-import { asRoute } from '../../common/typings';
-import { CreateTodo, createTodoSchema } from './schemas/create-todo.schema';
-import { DeleteTodo, deleteTodoSchema } from './schemas/delete-todo.schema';
-import { GetTodo, getTodoSchema } from './schemas/get-todo.schema';
-import { GetTodos, getTodosSchema } from './schemas/get-todos.schema';
-import { todo } from './schemas/todo.schema';
+import { asRoute } from '@common/typings';
+import {
+  CreateTodo,
+  createTodoSchema,
+} from '@modules/todos/schemas/create-todo.schema';
+import {
+  DeleteTodo,
+  deleteTodoSchema,
+} from '@modules/todos/schemas/delete-todo.schema';
+import { GetTodo, getTodoSchema } from '@modules/todos/schemas/get-todo.schema';
+import {
+  GetTodos,
+  getTodosSchema,
+} from '@modules/todos/schemas/get-todos.schema';
+import { todo } from '@modules/todos/schemas/todo.schema';
 import {
   UpdateTodoBody,
   updateTodoBodySchema,
   UpdateTodoParams,
   updateTodoParamsSchema,
-} from './schemas/update-todo.schema';
-import { TodosService } from './todos.service';
+} from '@modules/todos/schemas/update-todo.schema';
+import { TodosService } from '@modules/todos/todos.service';
+import { FastifyRequest } from 'fastify';
+import z from 'zod';
 
 export default asRoute(async function (app) {
   const todosService = new TodosService();

@@ -1,7 +1,7 @@
+import { GetTodos } from '@modules/todos/schemas/get-todos.schema';
+import { Todo } from '@modules/todos/schemas/todo.schema';
 import { NotFound } from 'http-errors';
 import crypto from 'node:crypto';
-import { GetTodos } from './schemas/get-todos.schema';
-import { Todo } from './schemas/todo.schema';
 
 export class TodosService {
   private readonly todos: Todo[] = [];

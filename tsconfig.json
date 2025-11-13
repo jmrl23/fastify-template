@@ -4,7 +4,14 @@
     "checkJs": true,
     "outDir": "./build",
     "resolveJsonModule": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@common/*": ["common/*"],
+      "@modules/*": ["modules/*"],
+      "@plugins/*": ["plugins/*"]
+    }
   },
   "extends": "@tsconfig/recommended/tsconfig.json",
   "include": ["./src"],
