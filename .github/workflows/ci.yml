@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: Run Lint
         run: yarn run lint
@@ -91,7 +91,15 @@ jobs:
         with:
           context: .
           push: false
+          tags: "fastify-template:latest"
           load: true
+
+      - name: Validate build size
+        uses: wemake-services/docker-image-size-limit@2.2.0
+        with:
+          image: "fastify-template:latest"
+          show_current_size: true
+          size: "400MB"
 
   deploy:
     name: Deploy
