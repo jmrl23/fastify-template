@@ -161,15 +161,15 @@ This project includes a `Dockerfile` and `.dockerignore` for containerized deplo
 
 Common commands (may vary depending on your `package.json`):
 
-| Script            | Description                                                                                                     |
-| ----------------- | --------------------------------------------------------------------------------------------------------------- |
-| `yarn build`      | Compiles the TypeScript source using `tsc --build`.                                                             |
-| `yarn test`       | Runs tests using Jest.                                                                                          |
-| `yarn start`      | Runs the compiled app from `build/main.js`, preloading environment setup from `build/init.js`.                  |
-| `yarn start:dev`  | Starts the development server |
-| `yarn start:prod` | Runs the built app in production mode (NODE_ENV=production)                                     |
-| `yarn format`     | Formats all `.ts` and `.js` files in `src/` using Prettier.                                                     |
-| `yarn lint`       | Runs ESLint to check code quality and style issues.                                                             |
+| Script            | Description                                                 |
+| ----------------- | ----------------------------------------------------------- |
+| `yarn build`      | Compiles the TypeScript                                     |
+| `yarn test`       | Runs tests using Jest.                                      |
+| `yarn start`      | Runs the compiled app                                       |
+| `yarn start:dev`  | Starts the development server                               |
+| `yarn start:prod` | Runs the built app in production mode (NODE_ENV=production) |
+| `yarn format`     | Formats all `.ts` and `.js` files in `src/` using Prettier. |
+| `yarn lint`       | Runs ESLint to check code quality and style issues.         |
 
 ---
 
