@@ -107,6 +107,7 @@ jobs:
     permissions:
       contents: write
       id-token: write
+      actions: write
     env:
       REPO: ${{ github.repository }}
       REPO_NAME: ${{ github.event.repository.name }}
