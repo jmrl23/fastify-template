@@ -1,10 +1,12 @@
 {
   "editor.acceptSuggestionOnEnter": "off",
   "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
   "editor.quickSuggestions": {
     "strings": true
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
   "json.schemas": [
     {
       "fileMatch": ["nodemon.json"],
@@ -15,8 +17,9 @@
       "url": "https://openapi.vercel.sh/vercel.json"
     }
   ],
-  "prettier.endOfLine": "lf",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "prettier.arrowParens": "always",
+  "prettier.endOfLine": "lf",
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
   "prettier.tabWidth": 2
