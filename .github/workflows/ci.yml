@@ -162,8 +162,10 @@ jobs:
             --project=${{ env.GCP_PROJECT_ID }} \
             --version=$VERSION \
             --promote
-          echo "DEPLOYMENT_URL=http://${{ env.SERVICE }}-${{ env.GCP_PROJECT_ID }}.appspot.com" >> $GITHUB_OUTPUT
 
-      - name: Update repository homepage (URL)
-        run: |
-          gh repo edit ${{ env.REPO }} --homepage ${{ steps.deploy_app.outputs.DEPLOYMENT_URL }}
+#    echo "DEPLOYMENT_URL=https://${{ env.SERVICE }}-${{ env.GCP_PROJECT_ID }}.appspot.com" >> $GITHUB_OUTPUT
+
+# TODO: Fix this
+# - name: Update repository homepage (URL)
+#   run: |
+#     gh repo edit ${{ env.REPO }} --homepage ${{ steps.deploy_app.outputs.DEPLOYMENT_URL }}
