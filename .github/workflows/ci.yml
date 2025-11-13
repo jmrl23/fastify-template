@@ -110,6 +110,7 @@ jobs:
     env:
       REPO: ${{ github.repository }}
       REPO_NAME: ${{ github.event.repository.name }}
+      GH_TOKEN: ${{ github.token }}
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
       WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
       SA_EMAIL: ${{ secrets.SA_EMAIL }}
