@@ -5,7 +5,7 @@ COPY ./package.json ./tsconfig.json ./yarn.lock ./
 COPY ./src ./src
 
 RUN yarn install
-RUN npx tsc --build
+RUN npx tsc --build && npx tsc-alias
 
 FROM node:lts-slim
 WORKDIR /app

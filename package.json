@@ -4,11 +4,11 @@
   "repository": "https://github.com/jmrl23/fastify-template",
   "author": "Jomariel Gaitera <gaiterajomariel@gmail.com>",
   "license": "MIT",
-  "main": "build/main.js",
+  "main": "./build/main.js",
   "scripts": {
     "build": "tsc --build && tsc-alias",
     "test": "jest",
-    "start": "node -r ./build/init.js .",
+    "start": "node -r ./build/init.js ./build/main.js",
     "start:dev": "nodemon --inspect=9229 -q",
     "start:prod": "dotenvx run --env NODE_ENV=production -- node -r tsconfig-paths/register -r ./build/init.js .",
     "format": "prettier --write \"src/**/*.{ts,js}\"",
