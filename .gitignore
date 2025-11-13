@@ -3,3 +3,6 @@ build/
 
 .env*.local
 .env.keys
+
+.gcloudignore
+app.yaml

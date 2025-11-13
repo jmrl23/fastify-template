@@ -111,12 +111,36 @@ jobs:
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
       WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
       SA_EMAIL: ${{ secrets.SA_EMAIL }}
+      SERVICE: fastify-template
+      NODE_ENV: production
     environment:
       name: "production"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Create app.yaml and .gcloudignore
+        run: |
+          echo "runtime: custom" > app.yaml
+          echo "env: flexible" >> app.yaml
+          echo "service: ${{ env.SERVICE }}" >> app.yaml
+          echo "automatic_scaling:" >> app.yaml
+          echo "  min_num_instances: 1" >> app.yaml
+          echo "  max_num_instances: 1" >> app.yaml
+          echo "instance_class: F1" >> app.yaml
+          echo "handlers:" >> app.yaml
+          echo "  - url: /.*" >> app.yaml
+          echo "    script: auto" >> app.yaml
+          echo "env_variables:" >> app.yaml
+          echo "  NODE_ENV: '${{ env.NODE_ENV }}'" >> app.yaml
+          echo ".git" > .gcloudignore
+          echo ".github/" >> .gcloudignore
+          echo "node_modules/" >> .gcloudignore
+          echo "build/" >> .gcloudignore
+          echo ".env*.local" >> .gcloudignore
+          echo ".env.keys" >> .gcloudignore
+        shell: bash
 
       - id: auth
         uses: google-github-actions/auth@v2

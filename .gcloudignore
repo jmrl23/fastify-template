@@ -1,7 +1,0 @@
-.git
-
-node_modules/
-build/
-
-.env*.local
-.env.keys
