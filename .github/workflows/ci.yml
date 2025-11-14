@@ -170,7 +170,7 @@ jobs:
             --project=${{ env.GCP_PROJECT_ID }} \
             --version=$VERSION \
             --promote
-          echo "DEPLOYMENT_URL=https://${{ env.SERVICE }}-${{ env.GCP_PROJECT_ID }}.appspot.com" >> $GITHUB_OUTPUT
+          echo "DEPLOYMENT_URL=https://${{ env.SERVICE }}-dot-${{ env.GCP_PROJECT_ID }}.appspot.com" >> $GITHUB_OUTPUT
 
       - name: Update repository homepage (URL)
         run: |
