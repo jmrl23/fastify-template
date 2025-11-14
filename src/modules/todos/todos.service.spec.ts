@@ -18,10 +18,20 @@ describe('todos service', () => {
   });
 
   it('get items', async () => {
-    const items = await todos.getTodos({});
-    expect(items).toStrictEqual([itemRef]);
-    const items2 = await todos.getTodos({ content: 'Walk' });
-    expect(items2).toStrictEqual([itemRef]);
+    expect(await todos.getTodos({})).toStrictEqual([itemRef]);
+    expect(await todos.getTodos({ content: 'Walk' })).toStrictEqual([itemRef]);
+    expect(await todos.getTodos({ done: true })).toStrictEqual([]);
+    expect(await todos.getTodos({ done: false })).toStrictEqual([itemRef]);
+    expect(
+      await todos.getTodos({ content: 'Walk the dog', done: false }),
+    ).toStrictEqual([itemRef]);
+    expect(
+      await todos.getTodos({ content: 'Walk the dog', done: true }),
+    ).toStrictEqual([]);
+    expect(await todos.getTodos({ skip: 1 })).toStrictEqual([]);
+    expect(await todos.getTodos({ take: 1 })).toStrictEqual([itemRef]);
+    expect(await todos.getTodos({ skip: 1, take: 1 })).toStrictEqual([]);
+    expect(await todos.getTodos({ skip: 0, take: 1 })).toStrictEqual([itemRef]);
   });
 
   it('update item', async () => {
