@@ -3,7 +3,7 @@ import tseslint, { Config } from 'typescript-eslint';
 
 const config: Config = [
   {
-    ignores: ['build/*'],
+    ignores: ['./build/', './src/coverage/'],
   },
   {
     languageOptions: {

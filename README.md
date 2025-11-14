@@ -3,6 +3,7 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/jmrl23/fastify-template)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![codecov](https://codecov.io/gh/jmrl23/fastify-template/graph/badge.svg?token=8IAJGFPPC9)](https://codecov.io/gh/jmrl23/fastify-template)
 
 A clean, modular, and production-ready Fastify + TypeScript template designed to help you quickly build scalable APIs with minimal setup.
 

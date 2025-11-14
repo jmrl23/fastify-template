@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { todo, Todo } from '@modules/todos/schemas/todo.schema';
-import todosRoute from './todos.route';
+import todosRoute from '@modules/todos/todos.route';
 
 describe('test todos route', () => {
   let app: FastifyInstance;
@@ -15,7 +15,7 @@ describe('test todos route', () => {
   it('create todo', async () => {
     const response = await app.inject({
       method: 'POST',
-      url: '/create',
+      url: '/',
       body: {
         content: 'Test todos route',
       },
