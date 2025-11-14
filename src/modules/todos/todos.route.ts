@@ -30,10 +30,10 @@ export default asRoute(async function (app) {
 
     .route({
       method: 'POST',
-      url: '/create',
+      url: '/',
       schema: {
         description: 'create a todo item',
-        tags: ['todos'],
+        tags: ['Todos'],
         body: createTodoSchema,
         response: {
           200: z.toJSONSchema(
@@ -56,7 +56,7 @@ export default asRoute(async function (app) {
       url: '/',
       schema: {
         description: 'get todos by query',
-        tags: ['todos'],
+        tags: ['Todos'],
         querystring: getTodosSchema,
         response: {
           200: z.toJSONSchema(
@@ -79,7 +79,7 @@ export default asRoute(async function (app) {
       url: '/:id',
       schema: {
         description: 'get a todo',
-        tags: ['todos'],
+        tags: ['Todos'],
         params: getTodoSchema,
         response: {
           200: z.toJSONSchema(z.object({ data: todo }).describe('todo item'), {
@@ -101,7 +101,7 @@ export default asRoute(async function (app) {
       url: '/update/:id',
       schema: {
         description: 'update a todo',
-        tags: ['todos'],
+        tags: ['Todos'],
         params: updateTodoParamsSchema,
         body: updateTodoBodySchema,
         response: {
@@ -130,7 +130,7 @@ export default asRoute(async function (app) {
       url: '/delete/:id',
       schema: {
         description: 'delete a todo',
-        tags: ['todos'],
+        tags: ['Todos'],
         params: deleteTodoSchema,
         response: {
           200: z.toJSONSchema(z.object({ data: todo }).describe('todo item'), {
