@@ -11,6 +11,8 @@ jobs:
     name: Lint & Test
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,7 +39,12 @@ jobs:
         run: yarn run lint
 
       - name: Run Tests
-        run: yarn run test
+        run: yarn run test --coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ env.CODECOV_TOKEN }}
 
   build:
     name: Build Project
@@ -140,6 +147,7 @@ jobs:
           echo ".github/" >> .gcloudignore
           echo "node_modules/" >> .gcloudignore
           echo "build/" >> .gcloudignore
+          echo "src/coverage/" >> .gcloudignore
           echo ".env*.local" >> .gcloudignore
           echo ".env.keys" >> .gcloudignore
         shell: bash

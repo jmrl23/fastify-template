@@ -7,7 +7,7 @@ const config: Config = {
   testEnvironment: 'node',
   rootDir: './src',
   globalSetup: '<rootDir>/test.ts',
-  testPathIgnorePatterns: ['<rootDir>/test.ts'],
+  testPathIgnorePatterns: ['<rootDir>/test.ts', '<rootDir>/coverage/'],
   testMatch: ['**/?(*.)+(spec|test).[jt]s'],
   moduleFileExtensions: ['ts', 'js'],
   moduleNameMapper: pathsToModuleNameMapper(tsonfig.compilerOptions.paths, {
