@@ -1,0 +1,33 @@
+name: Clean up
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+
+jobs:
+  delete_old_gae_versions:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GCP_WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
+      GCP_SA_EMAIL: ${{ secrets.SA_EMAIL }}
+      GAE_SERVICE: fastify-template
+    steps:
+      - id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ env.GCP_WIF_PROVIDER }}
+          service_account: ${{ env.GCP_SA_EMAIL }}
+      - name: "Delete old GAE versions"
+        run: |
+          VERSIONS=$(gcloud app versions list \
+            --format="value(version.id)" \
+            --sort-by="~version.createTime" \
+            --service="${{ env.GAE_SERVICE }}" \
+            | tail -n +2)
+
+          [ -n "$VERSIONS" ] && echo "$VERSIONS" | xargs gcloud app versions delete --quiet

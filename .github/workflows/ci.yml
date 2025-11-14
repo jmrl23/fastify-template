@@ -171,14 +171,4 @@ jobs:
           project_id: ${{ env.GCP_PROJECT_ID }}
       - name: Update repository homepage (URL)
         run: |
-          gh repo edit ${{ env.REPO }} --homepage ${{ steps.deploy_app.outputs.version_url }}
-
-      - name: Clean up old app previous versions
-        run: |
-          versions=$(gcloud app versions list \
-            --format="value(version.id)" \
-            --sort-by="~version.createTime" \
-            --service="${{ env.GAE_SERVICE }}" \
-            | tail -n +2)
-
-          [ -n "$versions" ] && echo "$versions" | xargs gcloud app versions delete --quiet
+          gh repo edit ${{ env.REPO }} --homepage "https://${{ env.GAE_SERVICE }}-dot-${{ env.GCP_PROJECT_ID }}.appspot.com"
