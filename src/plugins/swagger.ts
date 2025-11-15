@@ -4,7 +4,6 @@ import fastifyPlugin from 'fastify-plugin';
 import fs from 'node:fs';
 import path from 'node:path';
 import { OpenAPIV3_1 } from 'openapi-types';
-import { logger } from '@common/logger';
 
 interface Options {
   servers?: OpenAPIV3_1.ServerObject[];
@@ -51,6 +50,6 @@ export const swagger = fastifyPlugin<Options>(async function (app, options) {
   });
 
   app.ready().then(() => {
-    logger.info(`swagger documentation available at (${routePrefix})`);
+    app.log.info(`swagger documentation available at (${routePrefix})`);
   });
 });
