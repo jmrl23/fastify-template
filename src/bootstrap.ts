@@ -1,9 +1,8 @@
-import { logger } from '@common/logger';
 import { CORS_ORIGIN } from '@config/env';
 import fastifyCors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
 import fastifyStatic from '@fastify/static';
-import { routesAutoload } from '@plugins/routesAutoload';
+import { routes } from '@plugins/routes';
 import { swagger } from '@plugins/swagger';
 import { fastifyPlugin } from 'fastify-plugin';
 import path from 'node:path';
@@ -32,11 +31,11 @@ export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
     });
   }
 
-  await app.register(routesAutoload, {
-    dirPath: path.resolve(__dirname, './modules'),
-    callback(routes) {
+  await app.register(routes, {
+    location: path.resolve(__dirname, './modules'),
+    onRegistered(routes) {
       for (const route of routes) {
-        logger.info(`loaded route (${route})`);
+        app.log.info(`loaded route (${route})`);
       }
     },
   });

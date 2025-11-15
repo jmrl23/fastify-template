@@ -1,4 +1,3 @@
-import { asRoute } from '@common/typings';
 import {
   CreateTodo,
   createTodoSchema,
@@ -20,10 +19,15 @@ import {
   updateTodoParamsSchema,
 } from '@modules/todos/schemas/update-todo.schema';
 import { TodosService } from '@modules/todos/todos.service';
+import { asRouteFunction, asRouteOptions } from '@plugins/routes';
 import { FastifyRequest } from 'fastify';
 import z from 'zod';
 
-export default asRoute(async function (app) {
+export const options = asRouteOptions({
+  // prefix: '/cats',
+});
+
+export default asRouteFunction(async function (app) {
   const todosService = new TodosService();
 
   app
