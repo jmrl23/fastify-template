@@ -12,7 +12,7 @@ A clean, modular, and production-ready Fastify + TypeScript template designed to
 This template provides a maintainable backend structure using:
 
 - **Fastify** - fast and low-overhead web framework.
-- **TypeScript** - for type-safety and developer productivity (also supports native JavaScript).
+- **TypeScript** - for type-safety and developer productivity.
 - **Zod** - for powerful schema validation.
 - **Modular architecture** - modules with their own routes, services, and schemas.
 - **Autoloaded routes and Swagger documentation** - plug-and-play REST endpoints.
@@ -25,23 +25,18 @@ This template provides a maintainable backend structure using:
 
 ```text
 .
-├── public/               # Static assets (e.g., index.html, favicon.ico)
+├── public/         # Static assets
 ├── src/
-│   ├── app.ts              # Fastify instance creation and configuration
-│   ├── bootstrap.ts        # App bootstrapping (plugin registration, etc.)
-│   ├── common/             # Shared utilities, types, and logger
-│   ├── config/             # Environment variable configuration
-│   ├── init.ts             # Application initialization logic
-│   ├── main.ts             # Server entry point
-│   ├── modules/            # Business logic domains (e.g., todos)
-│   ├── plugins/            # Custom Fastify plugins
-│   └── test.ts             # Jest global setup
-├── .env                    # Environment variables for development
-├── .gitignore              # Files and folders to be ignored by Git
-├── Dockerfile              # Instructions for building a Docker image
-├── jest.config.ts          # Jest test runner configuration
-├── package.json            # Project dependencies and scripts
-└── tsconfig.json           # TypeScript compiler options
+│   ├── common/     # Shared utilities
+│   ├── config/     # Environment configuration
+│   ├── modules/    # Business logic domains (features)
+│   ├── plugins/    # Custom Fastify plugins
+│   ├── app.ts      # Core Fastify app setup
+│   └── main.ts     # Application entry point
+├── .env            # Environment variables
+├── Dockerfile      # Docker configuration
+├── package.json    # Project dependencies and scripts
+└── tsconfig.json   # TypeScript configuration
 ```
 
 ---
@@ -105,38 +100,34 @@ Configuration is loaded via `src/config/env.ts`.
 
 ---
 
-## Features in Detail
+## Technologies Used
 
-### `routesAutoload.ts`
+### Core
 
-Automatically scans the `modules/` folder and registers routes — no need for manual imports.
+- [Fastify](https://www.fastify.io/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Zod](https://zod.dev/)
 
-### `swagger.ts`
+### Development
 
-Enables interactive API documentation (Swagger UI) for all routes.  
-Great for testing and documenting your REST endpoints.
+- [Nodemon](https://nodemon.io/)
+- [Prettier](https://prettier.io/)
+- [ESLint](https://eslint.org/)
+- [Jest](https://jestjs.io/)
 
-### `schemas/`
+---
 
-Each schema defines request/response validation rules using **Zod**. This ensures type-safe and validated data throughout your application.
+## Scripts
 
-### Error Handling
-
-The template includes a centralized error handler in `src/app.ts` that catches unhandled exceptions and formats them into consistent HTTP responses.
-
-### CORS, ETag, and Static Files
-
-- **`@fastify/cors`** - handles Cross-Origin Resource Sharing.
-- **`@fastify/etag`** - automatically generates ETag headers for caching.
-- **`@fastify/static`** - serves static files from the `public/` directory.
-
-### Logging
-
-The `common/logger.ts` module sets up a unified logger for debugging and production logging.
-
-### Testing
-
-Test files (`*.spec.ts`/`*.test.ts`) are colocated with their source files for better context and maintainability.
+| Script            | Description                       |
+| ----------------- | --------------------------------- |
+| `yarn build`      | Build the project for production. |
+| `yarn test`       | Run unit tests.                   |
+| `yarn start`      | Start the production server.      |
+| `yarn start:dev`  | Start the development server.     |
+| `yarn start:prod` | Run the app in production mode.   |
+| `yarn format`     | Format code with Prettier.        |
+| `yarn lint`       | Lint code with ESLint.            |
 
 ---
 
@@ -155,31 +146,6 @@ This project includes a `Dockerfile` and `.dockerignore` for containerized deplo
    ```bash
    docker run -d -p 3001:3001 --name my-app app:latest
    ```
-
----
-
-## Scripts
-
-Common commands (may vary depending on your `package.json`):
-
-| Script            | Description                                                 |
-| ----------------- | ----------------------------------------------------------- |
-| `yarn build`      | Compiles the TypeScript                                     |
-| `yarn test`       | Runs tests using Jest.                                      |
-| `yarn start`      | Runs the compiled app                                       |
-| `yarn start:dev`  | Starts the development server                               |
-| `yarn start:prod` | Runs the built app in production mode (NODE_ENV=production) |
-| `yarn format`     | Formats all `.ts` and `.js` files in `src/` using Prettier. |
-| `yarn lint`       | Runs ESLint to check code quality and style issues.         |
-
----
-
-## Recommended Conventions
-
-- Keep each module self-contained (`routes`, `services`, `schemas`, `tests`).
-- Shared logic (e.g., DB client, cache, utilities) should live in `src/common/`.
-- Configuration and environment handling in `src/config/`.
-- Prefer Fastify plugins (`src/plugins/`) for reusable or custom features.
 
 ---
 
