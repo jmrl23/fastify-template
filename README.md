@@ -5,19 +5,18 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![codecov](https://codecov.io/gh/jmrl23/fastify-template/graph/badge.svg?token=8IAJGFPPC9)](https://codecov.io/gh/jmrl23/fastify-template)
 
-A clean, modular, and production-ready Fastify + TypeScript template designed to help you quickly build scalable APIs with minimal setup.
+A production-ready backend template for building scalable APIs quickly, featuring a modular architecture with automatic route loading, schema validation, and API documentation.
 
 ## Overview
 
-This template provides a maintainable backend structure using:
+This template provides a maintainable backend structure with a focus on developer experience and scalability. Key features include:
 
-- **Fastify** - fast and low-overhead web framework.
-- **TypeScript** - for type-safety and developer productivity.
-- **Zod** - for powerful schema validation.
-- **Modular architecture** - modules with their own routes, services, and schemas.
-- **Autoloaded routes and Swagger documentation** - plug-and-play REST endpoints.
-- **Integrated logging and configuration system**.
-- **Built-in CORS, ETag, and static file serving**.
+- **Modular Architecture**: Organize your code by feature domains for improved separation of concerns.
+- **Automatic Route Loading**: New routes are automatically registered, reducing boilerplate code.
+- **Schema Validation**: Enforce type safety and validate request data with ease.
+- **API Documentation**: Automatically generate interactive API documentation from your code.
+- **Integrated Tooling**: Comes with a pre-configured logging system, environment management, and more.
+- **Core Plugins**: Includes essential plugins for CORS, ETag, and static file serving out of the box.
 
 ---
 
@@ -25,33 +24,32 @@ This template provides a maintainable backend structure using:
 
 ```text
 .
-├── public/         # Static assets
+├── public/          # Publicly served static assets
 ├── src/
-│   ├── common/     # Shared utilities
-│   ├── config/     # Environment configuration
-│   ├── modules/    # Business logic domains (features)
-│   ├── plugins/    # Custom Fastify plugins
-│   ├── app.ts      # Core Fastify app setup
-│   └── main.ts     # Application entry point
-├── .env            # Environment variables
-├── Dockerfile      # Docker configuration
-├── package.json    # Project dependencies and scripts
-└── tsconfig.json   # TypeScript configuration
+│   ├── common/      # Shared utilities and helpers
+│   ├── config/      # Application configuration setup
+│   ├── modules/     # Domain-specific business logic
+│   ├── plugins/     # Fastify plugin integrations
+│   ├── app.ts       # Core application instance setup
+│   ├── bootstrap.ts # App startup and plugin registration
+│   ├── init.ts      # Pre-startup initializations
+│   └── main.ts      # Main application entry point
+├── Dockerfile       # Containerization setup for Docker
+├── jest.config.ts   # Configuration for Jest testing
+├── package.json     # Project metadata and dependencies
+└── tsconfig.json    # TypeScript compiler settings
 ```
 
 ---
 
 ## Architecture
 
-This template follows a **modular folder-based structure**, making it easy to scale:
+This template follows a modular, domain-driven structure to keep the codebase organized and scalable. The core principles are:
 
-- Each folder inside `modules/` represents a **feature domain**.
-- Each module includes its own:
-  - `route.ts` - defines endpoints.
-  - `service.ts` - contains business logic.
-  - `schemas/` - defines input/output validation schemas.
-- Common utilities and shared types are stored in `src/common/`.
-- Configuration is centralized under `src/config/`.
+- **Modular Features**: Each feature is self-contained in `src/modules/`, complete with its own routes, services, and schemas.
+- **Centralized Config**: All environment settings are managed in `src/config/` for consistency across the application.
+- **Shared Code**: Reusable utilities, like loggers, are stored in `src/common/` to avoid code duplication.
+- **Extensible Plugins**: Custom logic and integrations are cleanly handled as plugins in `src/plugins/`.
 
 ---
 
@@ -87,8 +85,7 @@ yarn run start
 
 ## Environment Variables
 
-Define your environment variables in a `.env` file.  
-Typical values may include:
+Define your environment variables in a `.env` file. The following are some of the most common variables to configure:
 
 ```bash
 PORT=3001
@@ -96,7 +93,7 @@ NODE_ENV=development
 DATABASE_URL=postgresql://user:password@localhost:5432/mydb
 ```
 
-Configuration is loaded via `src/config/env.ts`.
+Configuration is loaded from `src/config/env.ts`, which provides a centralized place to manage all environment-specific settings.
 
 ---
 
@@ -146,6 +143,8 @@ This project includes a `Dockerfile` and `.dockerignore` for containerized deplo
    ```bash
    docker run -d -p 3001:3001 --name my-app app:latest
    ```
+
+   **Note**: The Docker container does not include an `.env` file by default. You can use the `--env-file` flag to provide one, or pass environment variables directly with the `-e` flag.
 
 ---
 

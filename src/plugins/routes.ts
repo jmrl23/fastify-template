@@ -12,6 +12,17 @@ export interface RouteFunction {
   (router: FastifyInstance): Promise<void>;
 }
 
+/**
+ * A Fastify plugin that automatically loads and registers routes from a specified directory.
+ * It scans for files ending in `.route.ts` or `.route.js`, imports them,
+ * and registers them as plugins, deriving the route prefix from the file path.
+ *
+ * The default autoload behavior can be overridden by exporting an `options` variable
+ * from a route file using the `asRouteOptions` helper function.
+ *
+ * @param app The Fastify instance.
+ * @param options The plugin options, including the location of the routes directory.
+ */
 export const routes = fastifyPlugin<Options>(async function routes(
   app: FastifyInstance,
   options: Options,
@@ -74,9 +85,20 @@ export const routes = fastifyPlugin<Options>(async function routes(
   options.onRegistered?.(routes.map((route) => route.path));
 });
 
+/**
+ * A helper function to provide type inference for route functions.
+ * @param fn The route function to type.
+ * @returns The typed route function.
+ */
 export function asRouteFunction(fn: RouteFunction): RouteFunction {
   return fn;
 }
+
+/**
+ * A helper function to provide type inference for route options.
+ * @param options The route options to type.
+ * @returns The typed route options.
+ */
 export function asRouteOptions(options: RegisterOptions): RegisterOptions {
   return options;
 }

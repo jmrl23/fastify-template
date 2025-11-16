@@ -1,6 +1,6 @@
+import { todo, Todo } from '@/modules/todos/schemas/todo.schema';
+import todosRoute from '@/modules/todos/todos.route';
 import fastify, { FastifyInstance } from 'fastify';
-import { todo, Todo } from '@modules/todos/schemas/todo.schema';
-import todosRoute from '@modules/todos/todos.route';
 
 describe('test todos route', () => {
   let app: FastifyInstance;
@@ -23,7 +23,7 @@ describe('test todos route', () => {
     const { data: createdTodo } = response.json<{ data: Todo }>();
     todoRef = createdTodo;
     expect(createdTodo).toStrictEqual(todo.parse(createdTodo));
-    expect(response.statusCode).toStrictEqual(200);
+    expect(response.statusCode).toStrictEqual(201);
     expect(createdTodo.content).toStrictEqual('Test todos route');
   });
 

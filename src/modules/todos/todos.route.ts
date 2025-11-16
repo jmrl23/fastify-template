@@ -1,25 +1,28 @@
 import {
-  CreateTodo,
   createTodoSchema,
-} from '@modules/todos/schemas/create-todo.schema';
+  CreateTodo,
+} from '@/modules/todos/schemas/create-todo.schema';
 import {
-  DeleteTodo,
   deleteTodoSchema,
-} from '@modules/todos/schemas/delete-todo.schema';
-import { GetTodo, getTodoSchema } from '@modules/todos/schemas/get-todo.schema';
+  DeleteTodo,
+} from '@/modules/todos/schemas/delete-todo.schema';
 import {
-  GetTodos,
+  getTodoSchema,
+  GetTodo,
+} from '@/modules/todos/schemas/get-todo.schema';
+import {
   getTodosSchema,
-} from '@modules/todos/schemas/get-todos.schema';
-import { todo } from '@modules/todos/schemas/todo.schema';
+  GetTodos,
+} from '@/modules/todos/schemas/get-todos.schema';
+import { todo } from '@/modules/todos/schemas/todo.schema';
 import {
-  UpdateTodoBody,
+  updateTodoParamsSchema,
   updateTodoBodySchema,
   UpdateTodoParams,
-  updateTodoParamsSchema,
-} from '@modules/todos/schemas/update-todo.schema';
-import { TodosService } from '@modules/todos/todos.service';
-import { asRouteFunction, asRouteOptions } from '@plugins/routes';
+  UpdateTodoBody,
+} from '@/modules/todos/schemas/update-todo.schema';
+import { TodosService } from '@/modules/todos/todos.service';
+import { asRouteOptions, asRouteFunction } from '@/plugins/routes';
 import { FastifyRequest } from 'fastify';
 import z from 'zod';
 
@@ -40,15 +43,16 @@ export default asRouteFunction(async function (app) {
         tags: ['Todos'],
         body: createTodoSchema,
         response: {
-          200: z.toJSONSchema(
+          201: z.toJSONSchema(
             z.object({ data: todo }).describe('created item'),
             { target: 'draft-7' },
           ),
         },
       },
-      async handler(request: FastifyRequest<{ Body: CreateTodo }>) {
+      async handler(request: FastifyRequest<{ Body: CreateTodo }>, reply) {
         const { content } = request.body;
         const todo = await todosService.createTodo(content);
+        reply.code(201);
         return {
           data: todo,
         };

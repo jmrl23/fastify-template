@@ -7,15 +7,12 @@
     "experimentalDecorators": true,
     "baseUrl": "./src",
     "paths": {
-      "@config/*": ["config/*"],
-      "@common/*": ["common/*"],
-      "@modules/*": ["modules/*"],
-      "@plugins/*": ["plugins/*"]
+      "@/*": ["./*"]
     }
   },
   "extends": "@tsconfig/recommended/tsconfig.json",
   "include": ["./src"],
-  "exclude": [],
+  "exclude": ["./src/coverage"],
   "ts-node": {
     "swc": true
   }

@@ -1,9 +1,9 @@
-import { CORS_ORIGIN } from '@config/env';
+import { CORS_ORIGIN } from '@/config/env';
 import fastifyCors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
 import fastifyStatic from '@fastify/static';
-import { routes } from '@plugins/routes';
-import { swagger } from '@plugins/swagger';
+import { routes } from '@/plugins/routes';
+import { swagger } from '@/plugins/swagger';
 import { fastifyPlugin } from 'fastify-plugin';
 import path from 'node:path';
 

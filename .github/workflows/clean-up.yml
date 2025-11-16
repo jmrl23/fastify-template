@@ -2,10 +2,10 @@ name: Clean up
 
 on:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "* 0 * * *"
 
 jobs:
-  delete_old_gae_versions:
+  clear_old_versions:
     if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     permissions:
@@ -22,12 +22,20 @@ jobs:
         with:
           workload_identity_provider: ${{ env.GCP_WIF_PROVIDER }}
           service_account: ${{ env.GCP_SA_EMAIL }}
-      - name: "Delete old GAE versions"
+      - name: "Clear old apps"
         run: |
           VERSIONS=$(gcloud app versions list \
             --format="value(version.id)" \
             --sort-by="~version.createTime" \
-            --service="${{ env.GAE_SERVICE }}" \
-            | tail -n +2)
+            --service="fastify-template" \
+            2>/dev/null)
+            
+          VERSIONS_TO_DELETE=$(echo "$VERSIONS" | tail -n +2)
 
-          [ -n "$VERSIONS" ] && echo "$VERSIONS" | xargs gcloud app versions delete --quiet
+          if [ -n "$VERSIONS_TO_DELETE" ]; then
+              echo "Found versions to delete:"
+              echo "$VERSIONS_TO_DELETE"
+              echo "$VERSIONS_TO_DELETE" | xargs gcloud app versions delete --quiet
+          else
+              echo "No old versions found to delete for service fastify-template."
+          fi

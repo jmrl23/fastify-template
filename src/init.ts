@@ -13,8 +13,8 @@ if (workerThreads.isMainThread) {
     .globSync(
       [
         `.env.${process.env.NODE_ENV}.local`,
-        '.env.local',
         `.env.${process.env.NODE_ENV}`,
+        '.env.local',
         '.env',
       ].map((file) => path.resolve(__dirname, '../', file)),
       { absolute: true },

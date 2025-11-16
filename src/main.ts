@@ -2,7 +2,7 @@ import { detect } from 'detect-port';
 import { OpenAPIV3_1 } from 'openapi-types';
 import { app } from './app';
 import { bootstrap } from './bootstrap';
-import { PORT } from '@config/env';
+import { PORT } from '@/config/env';
 
 async function main() {
   const host = '0.0.0.0';

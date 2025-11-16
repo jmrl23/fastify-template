@@ -1,5 +1,5 @@
-import { todo, Todo } from '@modules/todos/schemas/todo.schema';
-import { TodosService } from '@modules/todos/todos.service';
+import { Todo, todo } from '@/modules/todos/schemas/todo.schema';
+import { TodosService } from '@/modules/todos/todos.service';
 
 describe('todos service', () => {
   const todos = new TodosService();
