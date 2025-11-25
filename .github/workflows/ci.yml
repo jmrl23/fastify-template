@@ -138,25 +138,32 @@ jobs:
 
       - name: Create app.yaml and .gcloudignore
         run: |
-          echo "runtime: custom" > app.yaml
-          echo "env: flexible" >> app.yaml
-          echo "service: ${{ env.GAE_SERVICE }}" >> app.yaml
-          echo "automatic_scaling:" >> app.yaml
-          echo "  min_num_instances: 1" >> app.yaml
-          echo "  max_num_instances: 1" >> app.yaml
-          echo "instance_class: F1" >> app.yaml
-          echo "handlers:" >> app.yaml
-          echo "  - url: /.*" >> app.yaml
-          echo "    script: auto" >> app.yaml
-          echo "env_variables:" >> app.yaml
-          echo "  NODE_ENV: '${{ env.NODE_ENV }}'" >> app.yaml
-          echo ".git" > .gcloudignore
-          echo ".github/" >> .gcloudignore
-          echo "node_modules/" >> .gcloudignore
-          echo "build/" >> .gcloudignore
-          echo "src/coverage/" >> .gcloudignore
-          echo ".env*.local" >> .gcloudignore
-          echo ".env.keys" >> .gcloudignore
+          echo "runtime: nodejs24"                   > app.yaml
+          echo "instance_class: F1"                 >> app.yaml
+          echo "service: ${{ env.GAE_SERVICE }}"    >> app.yaml
+          echo "automatic_scaling:"                 >> app.yaml
+          echo "  max_num_instances: 1"             >> app.yaml
+          echo "handlers:"                          >> app.yaml
+          echo "  - url: /.*"                       >> app.yaml
+          echo "    script: auto"                   >> app.yaml
+          echo "    secure: always"                 >> app.yaml
+          echo "env_variables:"                     >> app.yaml
+          echo "  NODE_ENV: '${{ env.NODE_ENV }}'"  >> app.yaml
+
+          echo ".git/"                               > .gcloudignore
+          echo ".github/"                           >> .gcloudignore
+          echo ".vscode/"                           >> .gcloudignore
+          echo "node_modules/"                      >> .gcloudignore
+          echo "src/"                               >> .gcloudignore
+          echo ".env*"                              >> .gcloudignore
+          echo ".gitignore"                         >> .gcloudignore
+          echo ".prettierrc"                        >> .gcloudignore
+          echo "Dockerfile"                         >> .gcloudignore
+          echo "eslint.config.ts"                   >> .gcloudignore
+          echo "jest.config.ts"                     >> .gcloudignore
+          echo "LICENSE"                            >> .gcloudignore
+          echo "nodemon.json"                       >> .gcloudignore
+          echo "README.md"                          >> .gcloudignore
         shell: bash
 
       - id: auth
