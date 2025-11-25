@@ -142,7 +142,7 @@ jobs:
           echo "instance_class: F1"                 >> app.yaml
           echo "service: ${{ env.GAE_SERVICE }}"    >> app.yaml
           echo "automatic_scaling:"                 >> app.yaml
-          echo "  max_num_instances: 1"             >> app.yaml
+          echo "  max_instances: 1"                 >> app.yaml
           echo "handlers:"                          >> app.yaml
           echo "  - url: /.*"                       >> app.yaml
           echo "    script: auto"                   >> app.yaml
