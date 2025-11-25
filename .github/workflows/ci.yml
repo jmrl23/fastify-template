@@ -59,10 +59,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: yarn
 
       - name: Restore node_modules cache
@@ -80,41 +80,16 @@ jobs:
       - name: Build project
         run: yarn run build
 
-  validate-container-build:
-    name: Validate Container Build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    needs: [build, lint-and-test]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Docker build validation
-        uses: docker/build-push-action@v6
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v5.0.0
         with:
-          context: .
-          push: false
-          tags: "fastify-template:latest"
-          load: true
-
-      - name: Validate build size
-        uses: wemake-services/docker-image-size-limit@2.2.0
-        with:
-          image: "fastify-template:latest"
-          show_current_size: true
-          size: "400MB"
+          name: build-artifact
+          path: build/
 
   deploy:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: Deploy
-    needs: [build, validate-container-build]
+    needs: [build]
     runs-on: ubuntu-latest
     environment:
       name: "production"
@@ -135,6 +110,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: build/
 
       - name: Create app.yaml and .gcloudignore
         run: |

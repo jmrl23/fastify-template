@@ -1,0 +1,38 @@
+name: Validate Container
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate-container:
+    name: Validate Container
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker build validation
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: "fastify-template:latest"
+          load: true
+
+      - name: Validate build size
+        uses: wemake-services/docker-image-size-limit@2.2.0
+        with:
+          image: "fastify-template:latest"
+          show_current_size: true
+          size: "400MB"
