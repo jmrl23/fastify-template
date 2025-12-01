@@ -1,8 +1,8 @@
-.git
-
+.git/
 node_modules/
 build/
-src/coverage/
+coverage/
 
 .env*
-.env.keys
+
+.gitignore

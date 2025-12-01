@@ -3,17 +3,11 @@
     "allowJs": true,
     "checkJs": true,
     "outDir": "./build",
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["./src"],
-  "exclude": ["./src/coverage"],
-  "ts-node": {
-    "swc": true
-  }
+  "extends": "@tsconfig/node-lts/tsconfig.json",
+  "include": ["./src"]
 }

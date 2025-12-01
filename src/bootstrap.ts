@@ -1,9 +1,9 @@
-import { CORS_ORIGIN } from '@/config/env';
+import { env } from '@/config/env';
+import { routes } from '@/plugins/routes';
+import { swagger } from '@/plugins/swagger';
 import fastifyCors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
 import fastifyStatic from '@fastify/static';
-import { routes } from '@/plugins/routes';
-import { swagger } from '@/plugins/swagger';
 import { fastifyPlugin } from 'fastify-plugin';
 import path from 'node:path';
 
@@ -12,19 +12,19 @@ interface Options {}
 export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
   await app.register(fastifyEtag);
 
-  if (CORS_ORIGIN) {
+  if (env.CORS_ORIGIN) {
     await app.register(fastifyCors, {
-      origin: CORS_ORIGIN,
+      origin: env.CORS_ORIGIN,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       credentials: true,
     });
   }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (env.NODE_ENV === 'development') {
     await app.register(swagger, {
       servers: [
         {
-          url: `http://localhost:${process.env.PORT}`,
+          url: `http://localhost:${env.PORT}`,
           description: 'Development server',
         },
       ],

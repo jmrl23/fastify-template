@@ -1,9 +1,6 @@
 node_modules/
 build/
-src/coverage/
+coverage/
 
 .env*.local
 .env.keys
-
-.gcloudignore
-app.yaml

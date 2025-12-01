@@ -1,6 +1,6 @@
 import { FastifyInstance, RegisterOptions } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
-import * as glob from 'glob';
+import { glob } from 'glob';
 import path from 'node:path';
 
 export interface Options extends RegisterOptions {
@@ -23,11 +23,11 @@ export interface RouteFunction {
  * @param app The Fastify instance.
  * @param options The plugin options, including the location of the routes directory.
  */
-export const routes = fastifyPlugin<Options>(async function routes(
+export const routes = fastifyPlugin(async function routes(
   app: FastifyInstance,
   options: Options,
 ) {
-  const files = await glob.glob([`${options.location}/**/*.route.{ts,js}`], {
+  const files = await glob([`${options.location}/**/*.route.{ts,js}`], {
     absolute: true,
   });
   const imports = await Promise.all(

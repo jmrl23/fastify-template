@@ -1,18 +1,23 @@
-import { Config } from 'jest';
+import type { Config } from 'jest';
 import fs from 'node:fs';
+import path from 'node:path';
 import { pathsToModuleNameMapper } from 'ts-jest';
 
-const tsonfig = JSON.parse(fs.readFileSync('tsconfig.json', 'utf-8'));
-const config: Config = {
+const tsconfig = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, 'tsconfig.json'), 'utf-8'),
+);
+
+export default {
   testEnvironment: 'node',
-  rootDir: './src',
-  globalSetup: '<rootDir>/test.ts',
-  testPathIgnorePatterns: ['<rootDir>/test.ts'],
-  testMatch: ['**/?(*.)+(spec|test).[jt]s'],
+  rootDir: path.resolve(process.cwd(), tsconfig.compilerOptions.baseUrl),
+  globalSetup: '<rootDir>/../jest.setup.ts',
+  testMatch: ['<rootDir>/**/?(*.)+(spec|test).[tj]s'],
   moduleFileExtensions: ['ts', 'js'],
-  moduleNameMapper: pathsToModuleNameMapper(tsonfig.compilerOptions.paths, {
-    prefix: '<rootDir>/',
-  }),
+  moduleNameMapper: {
+    ...pathsToModuleNameMapper(tsconfig.compilerOptions.paths, {
+      prefix: '<rootDir>',
+    }),
+  },
   transform: {
     '^.+\\.(t|j)s?$': [
       '@swc/jest',
@@ -21,7 +26,7 @@ const config: Config = {
           parser: {
             syntax: 'typescript',
           },
-          target: 'es2016',
+          target: 'es2024',
         },
         module: {
           type: 'commonjs',
@@ -29,7 +34,6 @@ const config: Config = {
       },
     ],
   },
-  coverageDirectory: '<rootDir>/coverage',
-  coveragePathIgnorePatterns: ['<rootDir>/test.ts', 'plugins', 'schemas'],
-};
-export default config;
+  coverageDirectory: '<rootDir>/../coverage',
+  coveragePathIgnorePatterns: ['plugins', 'schemas'],
+} satisfies Config;

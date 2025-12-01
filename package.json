@@ -6,19 +6,18 @@
   "license": "MIT",
   "main": "./build/main.js",
   "scripts": {
-    "build": "tsc --build && tsc-alias",
+    "build": "tsc -p ./tsconfig.json && tsc-alias -p ./tsconfig.json",
     "test": "jest",
-    "start": "node -r ./build/init.js ./build/main.js",
-    "start:dev": "nodemon --inspect=9229 -q",
-    "start:prod": "dotenvx run --env NODE_ENV=production -- node -r tsconfig-paths/register -r ./build/init.js .",
-    "format": "prettier --write \"src/**/*.{ts,js}\"",
+    "start": "node ./build/main.js",
+    "start:dev": "tsx watch --include \"./package.json\" ./src/main.ts -- --inspect=9229",
+    "start:prod": "dotenvx run --env NODE_ENV=production -- node ./build/main.js",
+    "format": "prettier --write \"./src/**/*.{ts,js}\"",
     "lint": "eslint"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.51.1",
     "@fastify/cors": "^11.1.0",
     "@fastify/etag": "^6.1.0",
-    "@fastify/proxy-addr": "^5.1.0",
     "@fastify/static": "^8.3.0",
     "@fastify/swagger": "^9.6.1",
     "@fastify/swagger-ui": "^5.2.3",
@@ -26,16 +25,15 @@
     "env-var": "^7.5.0",
     "fastify": "^5.6.2",
     "fastify-plugin": "^5.1.0",
-    "glob": "^11.1.0",
+    "glob": "^13.0.0",
     "http-errors": "^2.0.1",
-    "pino-pretty": "^13.1.2",
-    "tsconfig-paths": "^4.2.0",
-    "zod": "^4.1.12"
+    "pino-pretty": "^13.1.3",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@swc/core": "^1.15.3",
     "@swc/jest": "^0.2.39",
-    "@tsconfig/recommended": "^1.0.13",
+    "@tsconfig/node-lts": "^24.0.0",
     "@types/http-errors": "^2.0.5",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.1",
@@ -45,10 +43,11 @@
     "jiti": "^2.6.1",
     "nodemon": "^3.1.11",
     "prettier": "^3.6.2",
-    "ts-jest": "^29.4.5",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.47.0"
+    "typescript-eslint": "^8.48.1"
   }
 }

@@ -1,12 +1,11 @@
 import { logger } from '@/common/logger';
-import { TRUST_PROXY } from '@/config/env';
-import proxyAddr from '@fastify/proxy-addr';
+import { env } from '@/config/env';
 import fastify from 'fastify';
 import { HttpError, NotFound } from 'http-errors';
 
 export const app = fastify({
   loggerInstance: logger,
-  trustProxy: proxyAddr.compile(TRUST_PROXY),
+  trustProxy: env.TRUST_PROXY,
   routerOptions: {
     ignoreTrailingSlash: true,
   },

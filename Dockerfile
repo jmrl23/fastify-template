@@ -16,7 +16,7 @@ COPY ./public ./public
 COPY ./package.json ./yarn.lock ./
 COPY ./www ./www
 
-RUN yarn install --production --frozen-lockfile && \
+RUN yarn install --production && \
     yarn cache clean && \
     chmod +x ./www
 

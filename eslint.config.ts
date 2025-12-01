@@ -1,13 +1,26 @@
+import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
-import tseslint, { Config } from 'typescript-eslint';
+import fs from 'node:fs';
+import path from 'node:path';
+import tseslint from 'typescript-eslint';
 
-const config: Config = [
-  {
-    ignores: ['./build/', './src/coverage/'],
-  },
+const gitIngnorePath = path.resolve(__dirname, '.gitignore');
+const gitIgnoreContent = fs.existsSync(gitIngnorePath)
+  ? fs.readFileSync(gitIngnorePath, 'utf-8')
+  : '';
+const gitIgnored = gitIgnoreContent
+  .split('\n')
+  .map((line) => line.trim())
+  .filter((line) => Boolean(line));
+
+export default defineConfig([
+  globalIgnores([...gitIgnored]),
   {
     languageOptions: {
-      globals: { ...globals.node },
+      globals: {
+        ...globals.node,
+        ...globals.es2024,
+      },
     },
   },
   ...tseslint.configs.recommended,
@@ -18,5 +31,4 @@ const config: Config = [
       '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
-];
-export default config;
+]);
