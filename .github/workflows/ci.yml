@@ -62,7 +62,7 @@ jobs:
       - name: Setup Node.js LTS
         uses: actions/setup-node@v6
         with:
-          node-version: lts
+          node-version: "lts/*"
           check-latest: true
           architecture: x64
           cache: yarn
