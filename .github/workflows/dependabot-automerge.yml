@@ -17,7 +17,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // REST API is fine for creating reviews
             await github.rest.pulls.createReview({
               owner: context.repo.owner,
               repo: context.repo.repo,
