@@ -10,7 +10,7 @@
     "test": "jest",
     "start": "node ./build/main.js",
     "start:dev": "tsx watch --include \"./package.json\" ./src/main.ts -- --inspect=9229",
-    "start:prod": "dotenvx run --env NODE_ENV=production -- node ./build/main.js",
+    "start:prod": "dotenvx run --env NODE_ENV=production --ignore=MISSING_ENV_FILE -- node ./build/main.js",
     "format": "prettier --write \"./src/**/*.{ts,js}\"",
     "lint": "eslint"
   },
