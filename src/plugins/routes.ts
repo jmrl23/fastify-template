@@ -36,8 +36,14 @@ export const routes = fastifyPlugin(async function routes(
         new Promise<{
           path: string;
           module: {
-            options: RegisterOptions;
-            default: RouteFunction;
+            __esModule: true | undefined;
+            options?: RegisterOptions;
+            default:
+              | RouteFunction
+              | {
+                  options: RegisterOptions;
+                  default: RouteFunction;
+                };
           };
         }>(async (resolve) => {
           const module = await import(routeFile);
@@ -48,9 +54,15 @@ export const routes = fastifyPlugin(async function routes(
         }),
     ),
   );
-  const routes = imports.filter(
-    ({ module }) => module.default && typeof module.default === 'function',
-  );
+  const routes = imports.filter(({ module }) => {
+    const target =
+      module.__esModule === true
+        ? typeof module.default === 'object'
+          ? module.default.default
+          : module.default
+        : module.default;
+    return target && typeof target === 'function';
+  });
   await Promise.all(
     routes.map((route) => {
       const routeOptions = route.module.options || {};
@@ -79,7 +91,11 @@ export const routes = fastifyPlugin(async function routes(
       if (!prefix.startsWith('/')) {
         prefix = `/${prefix}`;
       }
-      return app.register(route.module.default, { ...routeOptions, prefix });
+      const routeFunction =
+        typeof route.module.default === 'function'
+          ? route.module.default
+          : route.module.default.default;
+      return app.register(routeFunction, { ...routeOptions, prefix });
     }),
   );
   options.onRegistered?.(routes.map((route) => route.path));
