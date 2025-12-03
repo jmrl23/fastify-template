@@ -11,12 +11,12 @@ A production-ready backend template for building scalable APIs quickly, featurin
 
 This template provides a maintainable backend structure with a focus on developer experience and scalability. Key features include:
 
-- **Modular Architecture**: Organize your code by feature domains for improved separation of concerns.
-- **Automatic Route Loading**: New routes are automatically registered, reducing boilerplate code.
-- **Schema Validation**: Enforce type safety and validate request data with ease.
-- **API Documentation**: Automatically generate interactive API documentation from your code.
-- **Integrated Tooling**: Comes with a pre-configured logging system, environment management, and more.
-- **Core Plugins**: Includes essential plugins for CORS, ETag, and static file serving out of the box.
+- **Modular Architecture**: Organize code by feature domains (`src/modules`) for better separation of concerns.
+- **Automatic Route Loading**: Files ending in `.route.ts` are automatically loaded and registered as routes based on the file structure.
+- **Zod Validation**: First-class support for Zod schemas to validate requests and responses, automatically generating JSON schemas for Fastify.
+- **Swagger/OpenAPI**: Interactive API documentation is automatically generated in development mode.
+- **Type-Safe Config**: Environment variables are strictly typed and validated using `env-var`.
+- **Docker Ready**: Includes production-optimized Dockerfile and docker-ignore settings.
 
 ---
 
@@ -26,30 +26,19 @@ This template provides a maintainable backend structure with a focus on develope
 .
 ├── public/          # Publicly served static assets
 ├── src/
-│   ├── common/      # Shared utilities and helpers
-│   ├── config/      # Application configuration setup
-│   ├── modules/     # Domain-specific business logic
-│   ├── plugins/     # Fastify plugin integrations
-│   ├── app.ts       # Core application instance setup
-│   ├── bootstrap.ts # App startup and plugin registration
-│   ├── init.ts      # Pre-startup initializations
-│   └── main.ts      # Main application entry point
-├── Dockerfile       # Containerization setup for Docker
-├── jest.config.ts   # Configuration for Jest testing
-├── package.json     # Project metadata and dependencies
-└── tsconfig.json    # TypeScript compiler settings
+│   ├── common/      # Shared utilities (logger, helpers)
+│   ├── config/      # Environment variables and configuration
+│   ├── modules/     # Domain-specific modules (e.g., todos)
+│   │   └── todos/   # Example module structure
+│   ├── plugins/     # Fastify plugins (routes, swagger)
+│   ├── app.ts       # Fastify instance configuration
+│   ├── bootstrap.ts # Plugin registration and app startup
+│   ├── init.ts      # Pre-startup initialization
+│   └── main.ts      # Application entry point
+├── Dockerfile       # Production Docker setup
+├── package.json     # Dependencies and scripts
+└── tsconfig.json    # TypeScript configuration
 ```
-
----
-
-## Architecture
-
-This template follows a modular, domain-driven structure to keep the codebase organized and scalable. The core principles are:
-
-- **Modular Features**: Each feature is self-contained in `src/modules/`, complete with its own routes, services, and schemas.
-- **Centralized Config**: All environment settings are managed in `src/config/` for consistency across the application.
-- **Shared Code**: Reusable utilities, like loggers, are stored in `src/common/` to avoid code duplication.
-- **Extensible Plugins**: Custom logic and integrations are cleanly handled as plugins in `src/plugins/`.
 
 ---
 
@@ -71,80 +60,69 @@ yarn install
 ### 3. Run in development
 
 ```bash
-yarn run start:dev
+yarn start:dev
 ```
+
+- Starts the server with `tsx watch` for hot-reloading.
+- Swagger UI available at `http://localhost:3001/docs` (if PORT is 3001).
 
 ### 4. Build and run
 
 ```bash
-yarn run build
-yarn run start
+yarn build
+yarn start:prod
 ```
 
 ---
 
 ## Environment Variables
 
-Define your environment variables in a `.env` file. The following are some of the most common variables to configure:
+Configuration is managed in `src/config/env.ts`. Define these in a `.env` file:
 
-```bash
-PORT=3001
-NODE_ENV=development
-DATABASE_URL=postgresql://user:password@localhost:5432/mydb
-```
-
-Configuration is loaded from `src/config/env.ts`, which provides a centralized place to manage all environment-specific settings.
-
----
-
-## Technologies Used
-
-### Core
-
-- [Fastify](https://www.fastify.io/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Zod](https://zod.dev/)
-
-### Development
-
-- [Nodemon](https://nodemon.io/)
-- [Prettier](https://prettier.io/)
-- [ESLint](https://eslint.org/)
-- [Jest](https://jestjs.io/)
+| Variable      | Description                                            | Default       |
+| :------------ | :----------------------------------------------------- | :------------ |
+| `NODE_ENV`    | Environment mode (`development`, `test`, `production`) | `development` |
+| `PORT`        | Port to listen on                                      | `3001`        |
+| `TRUST_PROXY` | Proxy trust configuration                              | `loopback`    |
+| `CORS_ORIGIN` | Comma-separated list of allowed origins                | `undefined`   |
 
 ---
 
 ## Scripts
 
-| Script            | Description                       |
-| ----------------- | --------------------------------- |
-| `yarn build`      | Build the project for production. |
-| `yarn test`       | Run unit tests.                   |
-| `yarn start`      | Start the production server.      |
-| `yarn start:dev`  | Start the development server.     |
-| `yarn start:prod` | Run the app in production mode.   |
-| `yarn format`     | Format code with Prettier.        |
-| `yarn lint`       | Lint code with ESLint.            |
+| Script            | Description                                                     |
+| :---------------- | :-------------------------------------------------------------- |
+| `yarn start:dev`  | Start development server with watch mode and inspector.         |
+| `yarn start:prod` | Start production server using `dotenvx` to load envs.           |
+| `yarn build`      | Compile TypeScript to JavaScript (using `tsc` and `tsc-alias`). |
+| `yarn test`       | Run tests using Jest.                                           |
+| `yarn format`     | Format code with Prettier.                                      |
+| `yarn lint`       | Lint code with ESLint.                                          |
 
 ---
 
-## Docker Support
+## Architecture Highlights
 
-This project includes a `Dockerfile` and `.dockerignore` for containerized deployment.
+### Automatic Route Loading
 
-1. Build the Docker image
+Routes are defined in `*.route.ts` files within `src/modules`. The `src/plugins/routes.ts` plugin automatically discovers these files. The URL path is derived from the file path relative to `src/modules`.
 
-   ```bash
-   docker build -t app:latest .
-   ```
+Example: `src/modules/todos/todos.route.ts` -> `/todos`
 
-1. Run the Docker container
+### Validation with Zod
 
-   ```bash
-   docker run -d -p 3001:3001 --name my-app app:latest
-   ```
+Schemas are defined using Zod in `src/modules/*/schemas/*.schema.ts`. These are used in route definitions to validate `body`, `querystring`, and `params`, and to type the request handlers.
 
-   **Note**: The Docker container does not include an `.env` file by default. You can use the `--env-file` flag to provide one, or pass environment variables directly with the `-e` flag.
+---
+
+## Docker
+
+Build and run the container:
+
+```bash
+docker build -t fastify-app .
+docker run -p 3001:3001 --env-file .env fastify-app
+```
 
 ---
 
