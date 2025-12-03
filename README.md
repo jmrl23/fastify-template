@@ -1,18 +1,18 @@
 # Fastify Template
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://raw.githubusercontent.com/jmrl23/fastify-template/refs/heads/main/LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/jmrl23/fastify-template)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![codecov](https://codecov.io/gh/jmrl23/fastify-template/graph/badge.svg?token=8IAJGFPPC9)](https://codecov.io/gh/jmrl23/fastify-template)
 
-A production-ready backend template for building scalable APIs quickly, featuring a modular architecture with automatic route loading, schema validation, and API documentation.
+A scalable backend template featuring modular architecture, automatic route loading, type-safe validation, and interactive API documentation.
 
 ## Overview
 
 This template provides a maintainable backend structure with a focus on developer experience and scalability. Key features include:
 
 - **Modular Architecture**: Organize code by feature domains (`src/modules`) for better separation of concerns.
-- **Automatic Route Loading**: Files ending in `.route.ts` are automatically loaded and registered as routes based on the file structure.
+- **Automatic Route Loading**: Files ending in `.route.ts` (or `.route.js`) are automatically loaded and registered as routes based on the file structure.
 - **Zod Validation**: First-class support for Zod schemas to validate requests and responses, automatically generating JSON schemas for Fastify.
 - **Swagger/OpenAPI**: Interactive API documentation is automatically generated in development mode.
 - **Type-Safe Config**: Environment variables are strictly typed and validated using `env-var`.
@@ -60,7 +60,7 @@ yarn install
 ### 3. Run in development
 
 ```bash
-yarn start:dev
+yarn run start:dev
 ```
 
 - Starts the server with `tsx watch` for hot-reloading.
@@ -69,8 +69,8 @@ yarn start:dev
 ### 4. Build and run
 
 ```bash
-yarn build
-yarn start:prod
+yarn run build
+yarn run start
 ```
 
 ---
@@ -90,14 +90,15 @@ Configuration is managed in `src/config/env.ts`. Define these in a `.env` file:
 
 ## Scripts
 
-| Script            | Description                                                     |
-| :---------------- | :-------------------------------------------------------------- |
-| `yarn start:dev`  | Start development server with watch mode and inspector.         |
-| `yarn start:prod` | Start production server using `dotenvx` to load envs.           |
-| `yarn build`      | Compile TypeScript to JavaScript (using `tsc` and `tsc-alias`). |
-| `yarn test`       | Run tests using Jest.                                           |
-| `yarn format`     | Format code with Prettier.                                      |
-| `yarn lint`       | Lint code with ESLint.                                          |
+| Script                | Description                                                     |
+| :-------------------- | :-------------------------------------------------------------- |
+| `yarn run start`      | Start server.                                                   |
+| `yarn run start:dev`  | Start server in development mode with watch mode and inspector. |
+| `yarn run start:prod` | Start server in production mode (`NODE_ENV=production`).        |
+| `yarn run build`      | Compile TypeScript to JavaScript.                               |
+| `yarn run test`       | Run tests using Jest.                                           |
+| `yarn run format`     | Format code with Prettier.                                      |
+| `yarn run lint`       | Lint code with ESLint.                                          |
 
 ---
 
@@ -105,7 +106,7 @@ Configuration is managed in `src/config/env.ts`. Define these in a `.env` file:
 
 ### Automatic Route Loading
 
-Routes are defined in `*.route.ts` files within `src/modules`. The `src/plugins/routes.ts` plugin automatically discovers these files. The URL path is derived from the file path relative to `src/modules`.
+Routes are defined in `*.route.ts` (or `*.route.js`) files within `src/modules`. The `src/plugins/routes.ts` plugin automatically discovers these files. The URL path is derived from the file path relative to `src/modules`.
 
 Example: `src/modules/todos/todos.route.ts` -> `/todos`
 
