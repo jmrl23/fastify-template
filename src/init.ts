@@ -5,11 +5,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export async function init() {
-  if (env.NODE_ENV === undefined) {
+  await loadEnv();
+}
+
+async function loadEnv() {
+  if (process.env.NODE_ENV === undefined) {
     process.env.NODE_ENV = 'development';
   }
 
-  const ENV_PATHS = await glob(
+  const entries = await glob(
     [
       `.env.${env.NODE_ENV}.local`,
       `.env.${env.NODE_ENV}`,
@@ -17,11 +21,11 @@ export async function init() {
       '.env',
     ].map((file) => path.resolve(__dirname, '../', file)),
     { absolute: true },
-  ).then((envPaths) => envPaths.filter((envPath) => fs.existsSync(envPath)));
+  ).then((entries) => entries.filter((entry) => fs.existsSync(entry)));
 
-  if (ENV_PATHS.length > 0) {
+  if (entries.length > 0) {
     dotenvx.config({
-      path: ENV_PATHS,
+      path: entries,
       encoding: 'utf8',
       quiet: env.NODE_ENV !== 'development',
     });
