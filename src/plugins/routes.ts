@@ -65,7 +65,10 @@ export const routes = fastifyPlugin(async function routes(
   });
   await Promise.all(
     routes.map((route) => {
-      const routeOptions = route.module.options || {};
+      const routeOptions =
+        (typeof route.module.default === 'object'
+          ? route.module.default.options
+          : route.module.options) || {};
       if (routeOptions.prefix && typeof routeOptions.prefix !== 'string') {
         throw new Error(
           `Route ${route.path} has invalid prefix ${routeOptions.prefix}`,
