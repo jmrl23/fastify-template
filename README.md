@@ -14,7 +14,7 @@ This template provides a maintainable backend structure with a focus on develope
 - **Modular Architecture**: Organize code by feature domains (`src/modules`) for better separation of concerns.
 - **Automatic Route Loading**: Files ending in `.route.ts` (or `.route.js`) are automatically loaded and registered as routes based on the file structure.
 - **Zod Validation**: First-class support for Zod schemas to validate requests and responses, automatically generating JSON schemas for Fastify.
-- **Swagger/OpenAPI**: Interactive API documentation is automatically generated in development mode.
+- **Swagger/OpenAPI**: Interactive API documentation is automatically generated.
 - **Type-Safe Config**: Environment variables are strictly typed and validated using `env-var`.
 - **Docker Ready**: Includes production-optimized Dockerfile and docker-ignore settings.
 

@@ -15,6 +15,8 @@ const env = {
   TRUST_PROXY: () => get('TRUST_PROXY').default('loopback').asString(),
 
   CORS_ORIGIN: () => get('CORS_ORIGIN').asArray(','),
+
+  SWAGGER_SERVERS: () => get('SWAGGER_SERVERS').asArray(','),
 };
 
 /**

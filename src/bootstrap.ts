@@ -20,16 +20,7 @@ export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
     });
   }
 
-  if (env.NODE_ENV === 'development') {
-    await app.register(swagger, {
-      servers: [
-        {
-          url: `http://localhost:${env.PORT}`,
-          description: 'Development server',
-        },
-      ],
-    });
-  }
+  await app.register(swagger);
 
   await app.register(routes, {
     location: path.resolve(__dirname, './modules'),
