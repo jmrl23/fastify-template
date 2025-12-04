@@ -79,12 +79,13 @@ yarn run start
 
 Configuration is managed in `src/config/env.ts`. Define these in a `.env` file:
 
-| Variable      | Description                                            | Default       |
-| :------------ | :----------------------------------------------------- | :------------ |
-| `NODE_ENV`    | Environment mode (`development`, `test`, `production`) | `development` |
-| `PORT`        | Port to listen on                                      | `3001`        |
-| `TRUST_PROXY` | Proxy trust configuration                              | `loopback`    |
-| `CORS_ORIGIN` | Comma-separated list of allowed origins                | `undefined`   |
+| Variable          | Description                                            | Default       |
+| :---------------- | :----------------------------------------------------- | :------------ |
+| `NODE_ENV`        | Environment mode (`development`, `test`, `production`) | `development` |
+| `PORT`            | Port to listen on                                      | `3001`        |
+| `TRUST_PROXY`     | Proxy trust configuration                              | `loopback`    |
+| `CORS_ORIGIN`     | Comma-separated list of allowed origins                | `undefined`   |
+| `SWAGGER_SERVERS` | Comma-separated list of urls                           | `undefined`   |
 
 ---
 

@@ -16,7 +16,7 @@ async function main() {
     host,
     port,
     listenTextResolver(address) {
-      return `server listening at ${address}`;
+      return `listening at ${address}`;
     },
   });
 }

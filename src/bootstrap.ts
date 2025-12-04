@@ -20,7 +20,9 @@ export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
     });
   }
 
-  await app.register(swagger);
+  await app.register(swagger, {
+    servers: env.SWAGGER_SERVERS?.map((url) => ({ url })),
+  });
 
   await app.register(routes, {
     location: path.resolve(__dirname, './modules'),
