@@ -93,7 +93,7 @@ jobs:
       - name: Save build artifacts
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: build-${{github.repository}}
+          name: build-${{github.repository_id}}
           path: |
             ./build
             ./package.json
@@ -131,10 +131,10 @@ jobs:
           size: "400MB"
 
       - name: Save image to file
-        run: docker save ${{ github.repository }}:latest -o ./${{ github.repository_id }}.tar
+        run: docker save ${{ github.repository }}:latest -o ./image-${{ github.repository_id }}.tar
 
       - name: Upload image artifacts
         uses: actions/upload-artifact@v5.0.0
         with:
           name: docker-image
-          path: ./${{ github.repository }}.tar
+          path: ./image-${{ github.repository_id }}.tar
