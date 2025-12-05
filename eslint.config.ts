@@ -1,20 +1,14 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
-import fs from 'node:fs';
-import path from 'node:path';
 import tseslint from 'typescript-eslint';
 
-const gitIngnorePath = path.resolve(__dirname, '.gitignore');
-const gitIgnoreContent = fs.existsSync(gitIngnorePath)
-  ? fs.readFileSync(gitIngnorePath, 'utf-8')
-  : '';
-const gitIgnored = gitIgnoreContent
-  .split('\n')
-  .map((line) => line.trim())
-  .filter((line) => Boolean(line));
-
 export default defineConfig([
-  globalIgnores([...gitIgnored]),
+  globalIgnores([
+    './build/',
+    './coverage/',
+    './jest.global-setup.ts',
+    './jest.global-teardown.ts',
+  ]),
   {
     languageOptions: {
       globals: {

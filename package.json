@@ -30,6 +30,7 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@jest/types": "^30.2.0",
     "@swc/core": "^1.15.3",
     "@swc/jest": "^0.2.39",
     "@tsconfig/node-lts": "^24.0.0",
