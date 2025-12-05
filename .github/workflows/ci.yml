@@ -45,6 +45,12 @@ jobs:
       - name: Run Tests
         run: yarn run test --coverage
 
+      - name: Save coverage reports artifacts
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: coverage-reports
+          path: ./coverage
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
