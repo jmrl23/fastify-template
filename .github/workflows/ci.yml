@@ -96,6 +96,7 @@ jobs:
           name: build-${{github.repository_id}}
           path: |
             ./build
+            ./public
             ./package.json
             ./yarn.lock
 
