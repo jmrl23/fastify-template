@@ -48,7 +48,7 @@ jobs:
       - name: Save coverage reports artifacts
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: coverage-reports
+          name: coverage-${{github.run_id}}
           path: ./coverage
 
       - name: Upload coverage reports to Codecov
