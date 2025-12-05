@@ -1,36 +1,36 @@
 import {
-  createTodoSchema,
   CreateTodo,
+  createTodoSchema,
 } from '@/modules/todos/schemas/create-todo.schema';
 import {
-  deleteTodoSchema,
   DeleteTodo,
+  deleteTodoSchema,
 } from '@/modules/todos/schemas/delete-todo.schema';
 import {
-  getTodoSchema,
   GetTodo,
+  getTodoSchema,
 } from '@/modules/todos/schemas/get-todo.schema';
 import {
-  getTodosSchema,
   GetTodos,
+  getTodosSchema,
 } from '@/modules/todos/schemas/get-todos.schema';
 import { todo } from '@/modules/todos/schemas/todo.schema';
 import {
-  updateTodoParamsSchema,
+  UpdateTodoBody,
   updateTodoBodySchema,
   UpdateTodoParams,
-  UpdateTodoBody,
+  updateTodoParamsSchema,
 } from '@/modules/todos/schemas/update-todo.schema';
 import { TodosService } from '@/modules/todos/todos.service';
-import { asRouteOptions, asRouteFunction } from '@/plugins/routes';
+import { asRouteFunction, asRouteOptions } from '@/plugins/routes';
 import { FastifyRequest } from 'fastify';
 import z from 'zod';
 
 export const options = asRouteOptions({
-  // prefix: '/cats',
+  // prefix: '/tasks',
 });
 
-export default asRouteFunction(async function (app) {
+export default asRouteFunction(async function todosRoute(app) {
   const todosService = new TodosService();
 
   app

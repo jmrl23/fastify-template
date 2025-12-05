@@ -1,6 +1,6 @@
+import { env } from '@/config/env';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import pino, { LoggerOptions } from 'pino';
-import { env } from '@/config/env';
 
 const developmentSerializer = {
   req(request: FastifyRequest) {

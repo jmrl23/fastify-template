@@ -5,7 +5,7 @@ import path from 'node:path';
 
 export interface Options extends RegisterOptions {
   location: string;
-  onRegistered?(files: string[]): void;
+  onRegister?(files: string[]): void;
 }
 
 export interface RouteFunction {
@@ -101,7 +101,7 @@ export const routes = fastifyPlugin(async function routes(
       return app.register(routeFunction, { ...routeOptions, prefix });
     }),
   );
-  options.onRegistered?.(routes.map((route) => route.path));
+  options.onRegister?.(routes.map((route) => route.path));
 });
 
 /**

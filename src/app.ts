@@ -18,7 +18,7 @@ app.setNotFoundHandler(async function notFoundHandler(request) {
 app.setErrorHandler(async function errorHandler(error) {
   const isHttpError = error instanceof HttpError;
   if (isHttpError && (!error.statusCode || error.statusCode > 499)) {
-    logger.error(error.stack ?? error.message);
+    app.log.error(error.stack ?? error.message);
   }
   return error;
 });

@@ -1,4 +1,3 @@
-import { env } from '@/config/env';
 import dotenvx from '@dotenvx/dotenvx';
 import { glob } from 'glob';
 import fs from 'node:fs';
@@ -13,13 +12,12 @@ async function loadEnv() {
     process.env.NODE_ENV = 'development';
   }
 
+  const NODE_ENV = process.env.NODE_ENV;
+
   const entries = await glob(
-    [
-      `.env.${env.NODE_ENV}.local`,
-      `.env.${env.NODE_ENV}`,
-      '.env.local',
-      '.env',
-    ].map((file) => path.resolve(__dirname, '../', file)),
+    [`.env.${NODE_ENV}.local`, `.env.${NODE_ENV}`, '.env.local', '.env'].map(
+      (file) => path.resolve(__dirname, '../', file),
+    ),
     { absolute: true },
   ).then((entries) => entries.filter((entry) => fs.existsSync(entry)));
 
@@ -27,7 +25,7 @@ async function loadEnv() {
     dotenvx.config({
       path: entries,
       encoding: 'utf8',
-      quiet: env.NODE_ENV !== 'development',
+      quiet: NODE_ENV !== 'development',
     });
   }
 }

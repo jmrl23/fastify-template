@@ -26,7 +26,7 @@ export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
 
   await app.register(routes, {
     location: path.resolve(__dirname, './modules'),
-    onRegistered(routes) {
+    onRegister(routes) {
       for (const route of routes) {
         app.log.info(`loaded route (${route})`);
       }
