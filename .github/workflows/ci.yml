@@ -39,10 +39,10 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run Lint
+      - name: Run lint
         run: yarn run lint
 
-      - name: Run Tests
+      - name: Run tests
         run: yarn run test --coverage
 
       - name: Save coverage reports artifacts
@@ -90,10 +90,10 @@ jobs:
       - name: Build project
         run: yarn run build
 
-      - name: Upload build artifacts
+      - name: Save build artifacts
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: build
+          name: build-${{github.repository}}
           path: |
             ./build
             ./package.json
@@ -115,7 +115,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build docker container
+      - name: Build docker image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -123,7 +123,7 @@ jobs:
           tags: "${{ github.repository }}:latest"
           load: true
 
-      - name: Validate container size
+      - name: Validate image size
         uses: wemake-services/docker-image-size-limit@2.2.0
         with:
           image: "${{ github.repository }}:latest"
@@ -131,9 +131,9 @@ jobs:
           size: "400MB"
 
       - name: Save image to file
-        run: docker save ${{ github.repository }}:latest -o ./${{ github.repository }}.tar
+        run: docker save ${{ github.repository }}:latest -o ./${{ github.repository_id }}.tar
 
-      - name: Upload container artifacts
+      - name: Upload image artifacts
         uses: actions/upload-artifact@v5.0.0
         with:
           name: docker-image
