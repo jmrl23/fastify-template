@@ -84,13 +84,14 @@ jobs:
       - name: Build project
         run: yarn run build
 
-      - name: Cache build
-        id: cache-build
-        uses: actions/cache@v4.3.0
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v5.0.0
         with:
+          name: build
           path: |
-            build
-          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+            ./build
+            ./package.json
+            ./yarn.lock
 
   validate-container:
     needs: [build]
@@ -108,38 +109,26 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Docker build validation
+      - name: Build docker container
         uses: docker/build-push-action@v6
         with:
           context: .
           push: false
-          tags: "fastify-template:latest"
+          tags: "${{ github.repository }}:latest"
           load: true
 
-      - name: Validate build size
+      - name: Validate container size
         uses: wemake-services/docker-image-size-limit@2.2.0
         with:
-          image: "fastify-template:latest"
+          image: "${{ github.repository }}:latest"
           show_current_size: true
           size: "400MB"
 
-  Deploy:
-    name: Deploy
-    needs: [build, validate-container]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - name: Save image to file
+        run: docker save ${{ github.repository }}:latest -o ./${{ github.repository }}.tar
 
-      - name: Restore build
-        uses: actions/cache@v4.3.0
+      - name: Upload container artifacts
+        uses: actions/upload-artifact@v5.0.0
         with:
-          path: |
-            build
-          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Show build
-        if: ${{steps.cache-build.outputs.cache-hit == 'true'}}
-        run: |
-          echo 'CI is working'
-          tree ./build
+          name: docker-image
+          path: ./${{ github.repository }}.tar
