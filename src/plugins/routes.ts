@@ -23,86 +23,88 @@ export interface RouteFunction {
  * @param app The Fastify instance.
  * @param options The plugin options, including the location of the routes directory.
  */
-export const routes = fastifyPlugin(async function routes(
-  app: FastifyInstance,
-  options: Options,
-) {
-  const files = await glob([`${options.location}/**/*.route.{ts,js}`], {
-    absolute: true,
-  });
-  const imports = await Promise.all(
-    files.map(
-      (routeFile) =>
-        new Promise<{
-          path: string;
-          module: {
-            __esModule: true | undefined;
-            options?: RegisterOptions;
-            default:
-              | RouteFunction
-              | {
-                  options: RegisterOptions;
-                  default: RouteFunction;
-                };
-          };
-        }>(async (resolve) => {
-          const module = await import(routeFile);
-          resolve({
-            path: routeFile,
-            module,
-          });
-        }),
-    ),
-  );
-  const routes = imports.filter(({ module }) => {
-    const target =
-      module.__esModule === true
-        ? typeof module.default === 'object'
-          ? module.default.default
-          : module.default
-        : module.default;
-    return target && typeof target === 'function';
-  });
-  await Promise.all(
-    routes.map((route) => {
-      const routeOptions =
-        (typeof route.module.default === 'object'
-          ? route.module.default.options
-          : route.module.options) || {};
-      if (routeOptions.prefix && typeof routeOptions.prefix !== 'string') {
-        throw new Error(
-          `Route ${route.path} has invalid prefix ${routeOptions.prefix}`,
-        );
-      } else if (!routeOptions.prefix) {
-        const filepath = route.path
-          .replace(/[\\/]/g, '/')
-          .substring(options.location.length);
-        const filename = path.basename(filepath);
-        routeOptions.prefix = filepath.substring(
-          0,
-          filepath.length - filename.length - 1,
-        );
-      }
-      if (!routeOptions.prefix?.startsWith('/')) {
-        routeOptions.prefix = `/${routeOptions.prefix}`;
-      }
-      const prefixes = [options.prefix, routeOptions.prefix];
-      let prefix = prefixes.join('');
-      if (!routeOptions.prefix?.startsWith('/')) {
-        routeOptions.prefix = `/${routeOptions.prefix}`;
-      }
-      if (!prefix.startsWith('/')) {
-        prefix = `/${prefix}`;
-      }
-      const routeFunction =
-        typeof route.module.default === 'function'
-          ? route.module.default
-          : route.module.default.default;
-      return app.register(routeFunction, { ...routeOptions, prefix });
-    }),
-  );
-  options.onRegister?.(routes.map((route) => route.path));
-});
+export const routes = fastifyPlugin(
+  async function routes(app: FastifyInstance, options: Options) {
+    const files = await glob([`${options.location}/**/*.route.{ts,js}`], {
+      absolute: true,
+    });
+    const imports = await Promise.all(
+      files.map(
+        (routeFile) =>
+          new Promise<{
+            path: string;
+            module: {
+              __esModule: true | undefined;
+              options?: RegisterOptions;
+              default:
+                | RouteFunction
+                | {
+                    options: RegisterOptions;
+                    default: RouteFunction;
+                  };
+            };
+          }>(async (resolve) => {
+            const module = await import(routeFile);
+            resolve({
+              path: routeFile,
+              module,
+            });
+          }),
+      ),
+    );
+    const routes = imports.filter(({ module }) => {
+      const target =
+        module.__esModule === true
+          ? typeof module.default === 'object'
+            ? module.default.default
+            : module.default
+          : module.default;
+      return target && typeof target === 'function';
+    });
+    await Promise.all(
+      routes.map((route) => {
+        const routeOptions =
+          (typeof route.module.default === 'object'
+            ? route.module.default.options
+            : route.module.options) || {};
+        if (routeOptions.prefix && typeof routeOptions.prefix !== 'string') {
+          throw new Error(
+            `Route ${route.path} has invalid prefix ${routeOptions.prefix}`,
+          );
+        } else if (!routeOptions.prefix) {
+          const filepath = route.path
+            .replace(/[\\/]/g, '/')
+            .substring(options.location.length);
+          const filename = path.basename(filepath);
+          routeOptions.prefix = filepath.substring(
+            0,
+            filepath.length - filename.length - 1,
+          );
+        }
+        if (!routeOptions.prefix?.startsWith('/')) {
+          routeOptions.prefix = `/${routeOptions.prefix}`;
+        }
+        const prefixes = [options.prefix, routeOptions.prefix];
+        let prefix = prefixes.join('');
+        if (!routeOptions.prefix?.startsWith('/')) {
+          routeOptions.prefix = `/${routeOptions.prefix}`;
+        }
+        if (!prefix.startsWith('/')) {
+          prefix = `/${prefix}`;
+        }
+        const routeFunction =
+          typeof route.module.default === 'function'
+            ? route.module.default
+            : route.module.default.default;
+        return app.register(routeFunction, { ...routeOptions, prefix });
+      }),
+    );
+    options.onRegister?.(routes.map((route) => route.path));
+  },
+  {
+    name: 'fastify-template-router',
+  },
+);
 
 /**
  * A helper function to provide type inference for route functions.
