@@ -1,8 +1,9 @@
-import { app } from '@/app';
-import { init } from '@/init';
-
-async function main() {
-  await init();
-  await app();
-}
-void main();
+import('init.js').then((mod) => {
+  /**
+   * Initialize before
+   * running the server
+   */
+  mod.init().then(() => {
+    import('server.js').then((mod) => mod.run());
+  });
+});

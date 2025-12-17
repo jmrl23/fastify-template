@@ -46,11 +46,20 @@ describe('todos service', () => {
   });
 
   it('update item', async () => {
-    const content = 'Walk the cat';
-    const task = await todosService.updateTodo(state.todo!.id, content);
-    expect(task).toStrictEqual({ ...state.todo, content });
-    expect(todosService.updateTodo('1')).rejects.toThrow();
-    state.todo = task;
+    expect(todosService.updateTodo('random-id')).rejects.toThrow();
+    expect(
+      await todosService.updateTodo(state.todo!.id, 'Walk the cat'),
+    ).toStrictEqual({ ...state.todo, content: 'Walk the cat' });
+    expect(
+      await todosService.updateTodo(state.todo!.id, undefined),
+    ).toStrictEqual({ ...state.todo, content: 'Walk the cat' });
+    expect(
+      await todosService.updateTodo(state.todo!.id, undefined, undefined),
+    ).toStrictEqual({ ...state.todo, content: 'Walk the cat' });
+    expect(
+      await todosService.updateTodo(state.todo!.id, undefined, true),
+    ).toStrictEqual({ ...state.todo, content: 'Walk the cat', done: true });
+    state.todo = await todosService.getTodo(state.todo!.id);
   });
 
   it('delete item', async () => {

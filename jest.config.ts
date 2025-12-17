@@ -37,5 +37,5 @@ export default {
     ],
   },
   coverageDirectory: '<rootDir>/../coverage',
-  coveragePathIgnorePatterns: ['plugins', 'schema.[tj]s'],
+  coveragePathIgnorePatterns: ['plugins'],
 } satisfies Config.InitialOptions;

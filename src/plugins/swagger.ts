@@ -62,6 +62,8 @@ export const swagger = fastifyPlugin<Options>(
         return;
       }
 
+      swagger.servers?.push({ url: `http://localhost:${port}` });
+
       const networkInterfaces = os.networkInterfaces();
       for (const name in networkInterfaces) {
         const networkInterface = networkInterfaces[name];

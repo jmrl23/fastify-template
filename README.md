@@ -31,10 +31,9 @@ This template provides a maintainable backend structure with a focus on develope
 │   ├── modules/     # Domain-specific modules (e.g., todos)
 │   │   └── todos/   # Example module structure
 │   ├── plugins/     # Fastify plugins (routes, swagger)
-│   ├── app.ts       # Application configuration
 │   ├── bootstrap.ts # Plugin registration and app startup
 │   ├── init.ts      # Pre-startup initialization
-│   ├── server.ts    # Fastify instance configuration
+│   ├── server.ts    # Fastify instance and server configuration
 │   └── main.ts      # Application entry point
 ├── Dockerfile       # Production Docker setup
 ├── package.json     # Dependencies and scripts
