@@ -1,24 +1,19 @@
-import { logger } from '@/common/logger';
-import { env } from '@/config/env';
-import fastify from 'fastify';
-import { HttpError, NotFound } from 'http-errors';
+import { bootstrap } from '@/bootstrap';
+import { PORT } from '@/common/env';
+import { server } from '@/server';
+import { detect } from 'detect-port';
 
-export const app = fastify({
-  loggerInstance: logger,
-  trustProxy: env.TRUST_PROXY,
-  routerOptions: {
-    ignoreTrailingSlash: true,
-  },
-});
+export async function app() {
+  const host = '0.0.0.0';
+  const port = await detect(PORT);
 
-app.setNotFoundHandler(async function notFoundHandler(request) {
-  throw new NotFound(`Cannot ${request.method} ${request.url}`);
-});
+  await server.register(bootstrap);
 
-app.setErrorHandler(async function errorHandler(error) {
-  const isHttpError = error instanceof HttpError;
-  if (isHttpError && (!error.statusCode || error.statusCode > 499)) {
-    app.log.error(error.stack ?? error.message);
-  }
-  return error;
-});
+  server.listen({
+    host,
+    port,
+    listenTextResolver(address) {
+      return `listening at ${address}`;
+    },
+  });
+}

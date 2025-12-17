@@ -1,4 +1,4 @@
-import { env } from '@/config/env';
+import { CORS_ORIGIN, SWAGGER_SERVERS } from '@/common/env';
 import { routes } from '@/plugins/routes';
 import { swagger } from '@/plugins/swagger';
 import fastifyCors from '@fastify/cors';
@@ -12,16 +12,16 @@ interface Options {}
 export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
   await app.register(fastifyEtag);
 
-  if (env.CORS_ORIGIN) {
+  if (CORS_ORIGIN) {
     await app.register(fastifyCors, {
-      origin: env.CORS_ORIGIN,
+      origin: CORS_ORIGIN,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       credentials: true,
     });
   }
 
   await app.register(swagger, {
-    servers: env.SWAGGER_SERVERS?.map((url) => ({ url })),
+    servers: SWAGGER_SERVERS?.map((url) => ({ url })),
   });
 
   await app.register(routes, {

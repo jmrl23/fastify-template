@@ -31,9 +31,10 @@ This template provides a maintainable backend structure with a focus on develope
 │   ├── modules/     # Domain-specific modules (e.g., todos)
 │   │   └── todos/   # Example module structure
 │   ├── plugins/     # Fastify plugins (routes, swagger)
-│   ├── app.ts       # Fastify instance configuration
+│   ├── app.ts       # Application configuration
 │   ├── bootstrap.ts # Plugin registration and app startup
 │   ├── init.ts      # Pre-startup initialization
+│   ├── server.ts    # Fastify instance configuration
 │   └── main.ts      # Application entry point
 ├── Dockerfile       # Production Docker setup
 ├── package.json     # Dependencies and scripts
@@ -113,7 +114,7 @@ Example: `src/modules/todos/todos.route.ts` -> `/todos`
 
 ### Validation with Zod
 
-Schemas are defined using Zod in `src/modules/*/schemas/*.schema.ts`. These are used in route definitions to validate `body`, `querystring`, and `params`, and to type the request handlers.
+Schemas are defined using Zod as `*.schema.ts`. These are used in route definitions to validate `body`, `querystring`, and `params`, and to type the request handlers.
 
 ---
 

@@ -1,4 +1,4 @@
-import { env } from '@/config/env';
+import { NODE_ENV } from '@/common/env';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import pino, { LoggerOptions } from 'pino';
 
@@ -37,15 +37,13 @@ const productionSerializer = {
 };
 
 const baseLoggerOptions: LoggerOptions = {
-  level: env.NODE_ENV === 'production' ? 'info' : 'debug',
+  level: NODE_ENV === 'production' ? 'info' : 'debug',
   serializers:
-    env.NODE_ENV === 'production'
-      ? productionSerializer
-      : developmentSerializer,
+    NODE_ENV === 'production' ? productionSerializer : developmentSerializer,
 };
 
 const loggerOptions: LoggerOptions =
-  env.NODE_ENV === 'development'
+  NODE_ENV === 'development'
     ? {
         ...baseLoggerOptions,
         transport: {

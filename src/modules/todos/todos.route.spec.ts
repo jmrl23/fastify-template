@@ -1,5 +1,5 @@
-import { todo, Todo } from '@/modules/todos/schemas/todo.schema';
 import todosRoute from '@/modules/todos/todos.route';
+import { todo, Todo } from '@/modules/todos/todos.schema';
 import fastify, { FastifyInstance } from 'fastify';
 
 describe('test todos route', () => {
@@ -10,7 +10,7 @@ describe('test todos route', () => {
     await app.register(todosRoute);
   });
 
-  let todoRef: Todo;
+  const state: { todo?: Todo } = {};
 
   it('create todo', async () => {
     const response = await app.inject({
@@ -20,11 +20,11 @@ describe('test todos route', () => {
         content: 'Test todos route',
       },
     });
-    const { data: createdTodo } = response.json<{ data: Todo }>();
-    todoRef = createdTodo;
-    expect(createdTodo).toStrictEqual(todo.parse(createdTodo));
+    const { data } = response.json<{ data: Todo }>();
+    state.todo = data;
+    expect(data).toStrictEqual(todo.parse(data));
     expect(response.statusCode).toStrictEqual(201);
-    expect(createdTodo.content).toStrictEqual('Test todos route');
+    expect(data.content).toStrictEqual('Test todos route');
   });
 
   it('list todos', async () => {
@@ -32,53 +32,53 @@ describe('test todos route', () => {
       method: 'GET',
       url: '/',
     });
-    const { data: todos } = response.json<{ data: Todo[] }>();
-    expect(todos).toStrictEqual([todo.parse(todoRef)]);
+    const { data } = response.json<{ data: Todo[] }>();
+    expect(data).toStrictEqual([todo.parse(state.todo)]);
     expect(response.statusCode).toStrictEqual(200);
   });
 
   it('get todo', async () => {
     const response = await app.inject({
       method: 'GET',
-      url: `/${todoRef.id}`,
+      url: `/${state.todo?.id}`,
     });
-    const { data: item } = response.json<{ data: Todo }>();
-    expect(item).toStrictEqual(todo.parse(todoRef));
+    const { data } = response.json<{ data: Todo }>();
+    expect(data).toStrictEqual(todo.parse(state.todo));
     expect(response.statusCode).toStrictEqual(200);
   });
 
   it('update todo', async () => {
     const response = await app.inject({
       method: 'PATCH',
-      url: `/update/${todoRef.id}`,
+      url: `/update/${state.todo?.id}`,
       body: {
         content: 'Updated todo content',
         done: true,
       },
     });
-    const { data: item } = response.json<{ data: Todo }>();
-    expect(item).toStrictEqual(
+    const { data } = response.json<{ data: Todo }>();
+    expect(data).toStrictEqual(
       todo.parse({
-        ...todoRef,
+        ...state.todo,
         content: 'Updated todo content',
         done: true,
       }),
     );
     expect(response.statusCode).toStrictEqual(200);
-    todoRef = item;
+    state.todo = data;
   });
 
   it('delete todo', async () => {
     const response = await app.inject({
       method: 'DELETE',
-      url: `/delete/${todoRef.id}`,
+      url: `/delete/${state.todo?.id}`,
     });
-    const { data: item } = response.json<{ data: Todo }>();
-    expect(item).toStrictEqual(todo.parse(todoRef));
+    const { data } = response.json<{ data: Todo }>();
+    expect(data).toStrictEqual(todo.parse(state.todo));
     expect(response.statusCode).toStrictEqual(200);
     const deleteAttempt = await app.inject({
       method: 'DELETE',
-      url: `/delete/${todoRef.id}`,
+      url: `/delete/${state.todo?.id}`,
     });
     expect(deleteAttempt.statusCode).toStrictEqual(404);
   });

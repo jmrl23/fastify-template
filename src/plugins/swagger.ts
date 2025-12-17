@@ -1,4 +1,4 @@
-import { env } from '@/config/env';
+import { PORT } from '@/common/env';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyPlugin from 'fastify-plugin';
@@ -51,7 +51,7 @@ export const swagger = fastifyPlugin<Options>(
     app.addHook('onListen', async function () {
       const swagger = app.swagger() as OpenAPIV3_1.Document;
       const addresses = app.addresses().map(({ address }) => address);
-      const port = env.PORT;
+      const port = PORT;
 
       app.log.info(`swagger documentation available at (${routePrefix})`);
 

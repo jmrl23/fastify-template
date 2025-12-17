@@ -1,37 +1,31 @@
 import {
   CreateTodo,
   createTodoSchema,
-} from '@/modules/todos/schemas/create-todo.schema';
-import {
   DeleteTodo,
   deleteTodoSchema,
-} from '@/modules/todos/schemas/delete-todo.schema';
-import {
   GetTodo,
-  getTodoSchema,
-} from '@/modules/todos/schemas/get-todo.schema';
-import {
   GetTodos,
+  getTodoSchema,
   getTodosSchema,
-} from '@/modules/todos/schemas/get-todos.schema';
-import { todo } from '@/modules/todos/schemas/todo.schema';
-import {
+  todo,
   UpdateTodoBody,
   updateTodoBodySchema,
   UpdateTodoParams,
   updateTodoParamsSchema,
-} from '@/modules/todos/schemas/update-todo.schema';
+} from '@/modules/todos/todos.schema';
 import { TodosService } from '@/modules/todos/todos.service';
-import { asRouteFunction, asRouteOptions } from '@/plugins/routes';
+import { asRouteFunction } from '@/plugins/routes';
 import { FastifyRequest } from 'fastify';
 import z from 'zod';
 
-export const options = asRouteOptions({
-  // prefix: '/tasks',
-});
+// export const options = asRouteOptions({
+//   prefix: '/tasks',
+// });
 
 export default asRouteFunction(async function todosRoute(app) {
-  const todosService = new TodosService();
+  const todosService = new TodosService('fastify-app-db.json');
+
+  await todosService.initialize();
 
   app
 

@@ -102,7 +102,7 @@ export const routes = fastifyPlugin(
     options.onRegister?.(routes.map((route) => route.path));
   },
   {
-    name: 'fastify-template-router',
+    name: 'fastify-template-routes',
   },
 );
 
