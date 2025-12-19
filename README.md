@@ -76,7 +76,7 @@ yarn run start
 
 ## Environment Variables
 
-Configuration is managed in `src/config/env.ts`. Define these in a `.env` file:
+Configuration is managed in `src/common/env.ts`. Define these in a `.env` file:
 
 | Variable          | Description                                            | Default       |
 | :---------------- | :----------------------------------------------------- | :------------ |
