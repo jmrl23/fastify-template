@@ -6,7 +6,8 @@ COPY ./src ./src
 
 RUN yarn install && \
     yarn cache clean && \
-    npx tsc --build && npx tsc-alias
+    npx tsc -p ./tsconfig.json && \
+    npx tsc-alias -p ./tsconfig.json
 
 FROM node:lts-alpine
 WORKDIR /app
