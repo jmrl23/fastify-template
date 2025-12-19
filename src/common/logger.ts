@@ -36,13 +36,11 @@ const productionSerializer = {
   },
 };
 
-const baseLoggerOptions: LoggerOptions = {
+const loggerOptions: LoggerOptions = {
   level: NODE_ENV === 'production' ? 'info' : 'debug',
   serializers:
     NODE_ENV === 'production' ? productionSerializer : developmentSerializer,
 };
-
-const loggerOptions = baseLoggerOptions;
 
 if (NODE_ENV === 'development') {
   try {
