@@ -27,11 +27,10 @@ This template provides a maintainable backend structure with a focus on develope
 ├── public/          # Publicly served static assets
 ├── src/
 │   ├── common/      # Shared utilities (logger, helpers)
-│   ├── config/      # Environment variables and configuration
 │   ├── modules/     # Domain-specific modules (e.g., todos)
 │   │   └── todos/   # Example module structure
-│   ├── plugins/     # Fastify plugins (routes, swagger)
-│   ├── bootstrap.ts # Plugin registration and app startup
+│   ├── plugins/     # Global plugins (routes, swagger)
+│   ├── bootstrap.ts # Global plugin registrations
 │   ├── init.ts      # Pre-startup initialization
 │   ├── server.ts    # Fastify instance and server configuration
 │   └── main.ts      # Application entry point
