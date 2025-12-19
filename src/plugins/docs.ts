@@ -11,7 +11,19 @@ interface Options {
   servers?: OpenAPIV3_1.ServerObject[];
 }
 
-export const swagger = fastifyPlugin<Options>(
+/**
+ * A Fastify plugin that configures and registers Swagger (OpenAPI) documentation.
+ * It integrates `@fastify/swagger` for specification generation and `@fastify/swagger-ui`
+ * for the interactive documentation interface.
+ *
+ * The plugin automatically derives the API version from `package.json`.
+ * Additionally, it updates the `servers` list in the OpenAPI document to include
+ * accessible network addresses (localhost and LAN IPs) once the server starts listening.
+ *
+ * @param app The Fastify instance.
+ * @param options The plugin options, allowing custom server definitions.
+ */
+export const docs = fastifyPlugin<Options>(
   async function (app, options) {
     const PACKAGE_JSON_PATH = path.resolve(__dirname, '../../package.json');
     const config = fs.existsSync(PACKAGE_JSON_PATH)
@@ -53,7 +65,7 @@ export const swagger = fastifyPlugin<Options>(
       const addresses = app.addresses().map(({ address }) => address);
       const port = PORT;
 
-      app.log.info(`swagger documentation available at (${routePrefix})`);
+      app.log.info(`API documentation available at (${routePrefix})`);
 
       if (!addresses.includes('0.0.0.0')) {
         for (const address of addresses) {
@@ -78,5 +90,5 @@ export const swagger = fastifyPlugin<Options>(
       }
     });
   },
-  { name: 'fastify-template-swagger' },
+  { name: 'fastify-template-docs' },
 );

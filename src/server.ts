@@ -15,7 +15,7 @@ export async function run() {
     host,
     port,
     listenTextResolver(address) {
-      return `listening at ${address}`;
+      return `Listening at ${address}`;
     },
   });
 }

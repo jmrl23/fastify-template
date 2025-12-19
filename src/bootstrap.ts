@@ -1,6 +1,6 @@
 import { CORS_ORIGIN, SWAGGER_SERVERS } from '@/common/env';
+import { docs } from '@/plugins/docs';
 import { routes } from '@/plugins/routes';
-import { swagger } from '@/plugins/swagger';
 import fastifyCors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
 import fastifyStatic from '@fastify/static';
@@ -20,7 +20,7 @@ export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
     });
   }
 
-  await app.register(swagger, {
+  await app.register(docs, {
     servers: SWAGGER_SERVERS?.map((url) => ({ url })),
   });
 
@@ -28,7 +28,7 @@ export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
     location: path.resolve(__dirname, './modules'),
     onRegister(routes) {
       for (const route of routes) {
-        app.log.info(`loaded route (${route})`);
+        app.log.info(`Loaded route (${route})`);
       }
     },
   });
