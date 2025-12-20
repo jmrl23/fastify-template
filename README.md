@@ -63,7 +63,7 @@ yarn run start:dev
 ```
 
 - Starts the server with `tsx watch` for hot-reloading.
-- Swagger UI available at `http://localhost:3001/docs` (if PORT is 3001).
+- Swagger UI available at `http://localhost:3001/documentation` (if PORT is 3001).
 
 ### 4. Build and run
 

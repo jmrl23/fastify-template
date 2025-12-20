@@ -9,6 +9,7 @@ import { OpenAPIV3_1 } from 'openapi-types';
 
 interface Options {
   servers?: OpenAPIV3_1.ServerObject[];
+  docsPath?: string;
 }
 
 /**
@@ -31,9 +32,10 @@ export const docs = fastifyPlugin<Options>(
       : { version: '1.0.0' };
 
     const servers: OpenAPIV3_1.ServerObject[] = [...(options.servers || [])];
+    const docsPath = options.docsPath || '/documentation';
 
     await app.register(fastifySwagger, {
-      prefix: '/docs',
+      prefix: docsPath,
       logLevel: 'silent',
       openapi: {
         openapi: '3.1.0',
@@ -54,9 +56,8 @@ export const docs = fastifyPlugin<Options>(
       },
     });
 
-    const routePrefix = '/docs';
     await app.register(fastifySwaggerUi, {
-      routePrefix,
+      routePrefix: docsPath,
       logLevel: 'silent',
     });
 
@@ -65,7 +66,7 @@ export const docs = fastifyPlugin<Options>(
       const addresses = app.addresses().map(({ address }) => address);
       const port = PORT;
 
-      app.log.info(`API documentation available at (${routePrefix})`);
+      app.log.info(`API documentation available at (${docsPath})`);
 
       if (!addresses.includes('0.0.0.0')) {
         for (const address of addresses) {
