@@ -82,7 +82,7 @@ Configuration is managed in `src/common/env.ts`. Define these in a `.env` file:
 | :---------------- | :----------------------------------------------------- | :------------ |
 | `NODE_ENV`        | Environment mode (`development`, `test`, `production`) | `development` |
 | `PORT`            | Port to listen on                                      | `3001`        |
-| `TRUST_PROXY`     | Proxy trust configuration                              | `loopback`    |
+| `TRUST_PROXY`     | Comma-separated list of trust proxies                  | `loopback`    |
 | `CORS_ORIGIN`     | Comma-separated list of allowed origins                | `undefined`   |
 | `SWAGGER_SERVERS` | Comma-separated list of urls                           | `undefined`   |
 
