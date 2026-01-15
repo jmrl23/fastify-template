@@ -2,6 +2,7 @@ import { FastifyInstance, RegisterOptions } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { glob } from 'glob';
 import path from 'node:path';
+import url from 'node:url';
 
 export interface Options extends RegisterOptions {
   location: string;
@@ -25,7 +26,8 @@ export interface RouteFunction {
  */
 export const routes = fastifyPlugin(
   async function routes(app: FastifyInstance, options: Options) {
-    const files = await glob([`${options.location}/**/*.route.{ts,js}`], {
+    const location = options.location.replace(/[\\/]/g, '/');
+    const files = await glob([`${location}/**/*.route.{ts,js}`], {
       absolute: true,
     });
     const imports = await Promise.all(
@@ -44,7 +46,7 @@ export const routes = fastifyPlugin(
                   };
             };
           }>(async (resolve) => {
-            const module = await import(routeFile);
+            const module = await import(url.pathToFileURL(routeFile).href);
             resolve({
               path: routeFile,
               module,
