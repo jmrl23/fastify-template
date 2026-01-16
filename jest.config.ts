@@ -13,7 +13,7 @@ export default {
   modulePathIgnorePatterns: ['<rootDir>/build/', '<rootDir>/coverage/'],
   globalSetup: '<rootDir>/../jest.global-setup.ts',
   globalTeardown: '<rootDir>/../jest.global-teardown.ts',
-  testMatch: ['<rootDir>/**/?(*.)+(spec|test).[tj]s'],
+  testMatch: ['**/?(*.)+(spec|test).[tj]s'],
   moduleFileExtensions: ['ts', 'js'],
   moduleNameMapper: {
     ...pathsToModuleNameMapper(tsconfig.compilerOptions.paths, {
