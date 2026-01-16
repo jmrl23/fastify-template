@@ -9,7 +9,7 @@ const tsconfig = JSON.parse(
 
 export default {
   testEnvironment: 'node',
-  rootDir: path.resolve(process.cwd(), tsconfig.compilerOptions.baseUrl),
+  rootDir: path.resolve(__dirname, tsconfig.compilerOptions.baseUrl),
   modulePathIgnorePatterns: ['<rootDir>/build/', '<rootDir>/coverage/'],
   globalSetup: '<rootDir>/../jest.global-setup.ts',
   globalTeardown: '<rootDir>/../jest.global-teardown.ts',

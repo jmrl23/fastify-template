@@ -68,7 +68,7 @@ export class TodosService {
     if (!todo) throw new NotFound('Todo not found');
     if (content !== undefined) todo.content = content;
     if (done !== undefined) todo.done = done;
-    this.write(data);
+    await this.write(data);
     return todo;
   }
 
