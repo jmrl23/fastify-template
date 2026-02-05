@@ -5,39 +5,35 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 jobs:
   dependabot:
-    if: ${{ github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
 
     steps:
-      - name: Approve PR
-        uses: actions/github-script@v8
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.pulls.createReview({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
-              event: "APPROVE"
-            });
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Enable auto-merge
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const query = `mutation EnableAutoMerge($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
-              enablePullRequestAutoMerge(input: {pullRequestId: $pullRequestId, mergeMethod: $mergeMethod}) {
-                clientMutationId
-              }
-            }`;
+      - name: Approve and Enable Auto-merge
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            const variables = {
-              pullRequestId: context.payload.pull_request.node_id,
-              mergeMethod: "SQUASH"
-            };
-
-            await github.graphql(query, variables);
+      - name: Alert Owner on Major Update
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' }}
+        run: |
+          gh pr edit "$PR_URL" --add-assignee "$OWNER"
+          gh pr comment "$PR_URL" --body "⚠️ **Major Update Detected**: This is a breaking change. Assigned to @$OWNER for manual review."
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
