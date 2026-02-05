@@ -46,12 +46,14 @@ jobs:
         run: yarn run test --coverage
 
       - name: Save coverage reports artifacts
+        if: ${{ env.CODECOV_TOKEN != '' }}
         uses: actions/upload-artifact@v5.0.0
         with:
           name: coverage-${{github.run_id}}
           path: ./coverage
 
       - name: Upload coverage reports to Codecov
+        if: ${{ env.CODECOV_TOKEN != '' }}
         uses: codecov/codecov-action@v5
         with:
           token: ${{ env.CODECOV_TOKEN }}
