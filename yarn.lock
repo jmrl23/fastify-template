@@ -277,10 +277,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dotenvx/dotenvx@^1.59.1":
-  version "1.59.1"
-  resolved "https://registry.yarnpkg.com/@dotenvx/dotenvx/-/dotenvx-1.59.1.tgz#187374f702006db6e84f57cda640d9ac6b3050b1"
-  integrity sha512-Qg+meC+XFxliuVSDlEPkKnaUjdaJKK6FNx/Wwl2UxhQR8pyPIuLhMavsF7ePdB9qFZUWV1jEK3ckbJir/WmF4w==
+"@dotenvx/dotenvx@^1.60.0":
+  version "1.60.0"
+  resolved "https://registry.yarnpkg.com/@dotenvx/dotenvx/-/dotenvx-1.60.0.tgz#72de20abc5cd614d175e3e1a01ae5fbf1abd0e7f"
+  integrity sha512-zWepVRNan/5gCALiT/QCHVsmxvq81xenBqGRyoTUy+ClJ+Mgs+tTJ6h4f65nqs8ijVFe6xg4lIQAIwe+HfgWXg==
   dependencies:
     commander "^11.1.0"
     dotenv "^17.2.1"
@@ -291,6 +291,7 @@
     object-treeify "1.1.33"
     picomatch "^4.0.2"
     which "^4.0.0"
+    yocto-spinner "^1.1.0"
 
 "@ecies/ciphers@^0.2.4":
   version "0.2.5"
@@ -4381,6 +4382,18 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+yocto-spinner@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/yocto-spinner/-/yocto-spinner-1.1.0.tgz#07ac2ae3c4a02b6a39c1842b7c775a779f041f06"
+  integrity sha512-/BY0AUXnS7IKO354uLLA2eRcWiqDifEbd6unXCsOxkFDAkhgUL3PH9X2bFoaU0YchnDXsF+iKleeTLJGckbXfA==
+  dependencies:
+    yoctocolors "^2.1.1"
+
+yoctocolors@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/yoctocolors/-/yoctocolors-2.1.2.tgz#d795f54d173494e7d8db93150cec0ed7f678c83a"
+  integrity sha512-CzhO+pFNo8ajLM2d2IW/R93ipy99LWjtwblvC1RsoSUMZgyLbYFr221TnSNT7GjGdYui6P459mw9JH/g/zW2ug==
 
 zod@^4.3.6:
   version "4.3.6"
