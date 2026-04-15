@@ -23,7 +23,7 @@
     "@fastify/swagger-ui": "^5.2.5",
     "detect-port": "^2.1.0",
     "env-var": "^7.5.0",
-    "fastify": "^5.8.4",
+    "fastify": "^5.8.5",
     "fastify-plugin": "^5.1.0",
     "glob": "^13.0.6",
     "http-errors": "^2.0.1",
