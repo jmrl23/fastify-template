@@ -18,7 +18,7 @@
     "@dotenvx/dotenvx": "^1.61.0",
     "@fastify/cors": "^11.2.0",
     "@fastify/etag": "^6.1.0",
-    "@fastify/static": "^8.3.0",
+    "@fastify/static": "^9.1.1",
     "@fastify/swagger": "^9.7.0",
     "@fastify/swagger-ui": "^5.2.5",
     "detect-port": "^2.1.0",
