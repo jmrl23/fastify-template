@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./build/main.js",
   "scripts": {
-    "build": "tsc -p ./tsconfig.json && tsc-alias -p ./tsconfig.json",
+    "build": "tsc -p ./tsconfig.build.json && tsc-alias -p ./tsconfig.build.json",
     "test": "jest",
     "start": "node ./build/main.js",
     "start:dev": "tsx watch --include \"./package.json\" ./src/main.ts -- --inspect=9229",

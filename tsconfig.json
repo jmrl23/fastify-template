@@ -4,11 +4,11 @@
     "checkJs": true,
     "rootDir": "./src",
     "outDir": "./build",
+    "types": ["node", "jest"],
     "paths": {
       "@/*": ["./src/*"]
     }
   },
   "extends": "@tsconfig/node-lts/tsconfig.json",
-  "include": ["./src"],
-  "exclude": ["./src/**/*.spec.ts", "./src/**/*.test.ts"]
+  "include": ["./src"]
 }
