@@ -2,12 +2,13 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
+    "rootDir": "./src",
     "outDir": "./build",
-    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
   "extends": "@tsconfig/node-lts/tsconfig.json",
-  "include": ["./src"]
+  "include": ["./src"],
+  "exclude": ["./src/**/*.spec.ts", "./src/**/*.test.ts"]
 }
