@@ -277,10 +277,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dotenvx/dotenvx@^1.63.0":
-  version "1.63.0"
-  resolved "https://registry.yarnpkg.com/@dotenvx/dotenvx/-/dotenvx-1.63.0.tgz#8dddc63a51499cc26281d91a965227e02187ad21"
-  integrity sha512-jjkmzIRu19uH78AjFInqfcALehbDCZZ7M09hurVawyqNxtOXEg2LR73L59y4QnzfYDEzjbhVzGAd2uDHu0D1aQ==
+"@dotenvx/dotenvx@^1.64.0":
+  version "1.64.0"
+  resolved "https://registry.yarnpkg.com/@dotenvx/dotenvx/-/dotenvx-1.64.0.tgz#7c33c8919209a07171749a01be078bb85b0e4814"
+  integrity sha512-6+xRpZaWuHXEqnhBjae+VmQI9Uaqw5Uzu/ScpO+W7ww9Zp3lHSNBoNjFcUxhrCyc7pRGQzyDjhKzloqrPHERiQ==
   dependencies:
     commander "^11.1.0"
     dotenv "^17.2.1"
