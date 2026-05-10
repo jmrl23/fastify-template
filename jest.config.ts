@@ -1,4 +1,4 @@
-/// <reference types="ts-jest" />
+/// <reference types="node" />
 import { Config } from '@jest/types';
 import path from 'node:path';
 

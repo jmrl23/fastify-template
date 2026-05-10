@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  "quiet": true,
+  "watch": [
+    "package.json",
+    "src",
+    ".env",
+    ".env.local",
+    ".env.development",
+    ".env.development.local"
+  ],
+  "ext": "ts,json",
+  "ignore": ["src/**/*.spec.ts", "src/**/*.test.ts"],
+  "exec": "dotenvx run --env NODE_ENV=development --ignore=MISSING_ENV_FILE -- tsx --inspect=9229 src/main.ts"
+}
