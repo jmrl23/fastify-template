@@ -26,7 +26,6 @@ This template provides a maintainable backend structure with a focus on develope
 .
 ├── public/          # Publicly served static assets
 ├── src/
-│   ├── common/      # Shared utilities (logger, helpers)
 │   ├── modules/     # Domain-specific modules (e.g., todos)
 │   │   └── todos/   # Example module structure
 │   ├── plugins/     # Global plugins (routes, swagger)
@@ -71,20 +70,6 @@ yarn run start:dev
 yarn run build
 yarn run start
 ```
-
----
-
-## Environment Variables
-
-Configuration is managed in `src/common/env.ts`. Define these in a `.env` file:
-
-| Variable          | Description                                            | Default       |
-| :---------------- | :----------------------------------------------------- | :------------ |
-| `NODE_ENV`        | Environment mode (`development`, `test`, `production`) | `development` |
-| `PORT`            | Port to listen on                                      | `3001`        |
-| `TRUST_PROXY`     | Comma-separated list of trust proxies                  | `loopback`    |
-| `CORS_ORIGIN`     | Comma-separated list of allowed origins                | `undefined`   |
-| `SWAGGER_SERVERS` | Comma-separated list of urls                           | `undefined`   |
 
 ---
 
