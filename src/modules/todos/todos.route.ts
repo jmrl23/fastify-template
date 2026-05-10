@@ -12,9 +12,9 @@ import {
   updateTodoBodySchema,
   UpdateTodoParams,
   updateTodoParamsSchema,
-} from '@/modules/todos/todos.schema';
-import { TodosService } from '@/modules/todos/todos.service';
-import { asRouteFunction } from '@/plugins/routes';
+} from './todos.schema';
+import { TodosService } from './todos.service';
+import { asRouteFunction } from '../../plugins/routes';
 import { FastifyRequest } from 'fastify';
 import z from 'zod';
 

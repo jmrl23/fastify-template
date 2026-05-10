@@ -13,7 +13,7 @@ import {
   updateTodoBodySchema,
   updateTodoParams,
   updateTodoParamsSchema,
-} from '@/modules/todos/todos.schema';
+} from './todos.schema';
 import Ajv from 'ajv';
 import crypto from 'node:crypto';
 

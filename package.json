@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./build/main.js",
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json && tsc-alias -p ./tsconfig.build.json",
+    "build": "tsc -p ./tsconfig.build.json",
     "test": "jest",
     "start": "node ./build/main.js",
     "start:dev": "tsx watch --include \"./package.json\" ./src/main.ts -- --inspect=9229",
@@ -36,7 +36,8 @@
     "@tsconfig/node-lts": "^24.0.0",
     "@types/http-errors": "^2.0.5",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
+    "baseline-browser-mapping": "^2.10.29",
     "eslint": "^10.3.0",
     "globals": "^17.6.0",
     "jest": "^30.3.0",
@@ -46,7 +47,6 @@
     "prettier": "^3.8.3",
     "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
-    "tsc-alias": "^1.8.17",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.1"

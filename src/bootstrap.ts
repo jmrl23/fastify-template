@@ -1,13 +1,17 @@
-import { CORS_ORIGIN, SWAGGER_SERVERS } from '@/common/env';
-import { docs } from '@/plugins/docs';
-import { routes } from '@/plugins/routes';
+import { docs } from './plugins/docs';
+import { routes } from './plugins/routes';
 import fastifyCors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
 import fastifyStatic from '@fastify/static';
 import { fastifyPlugin } from 'fastify-plugin';
 import path from 'node:path';
+import { getEnv } from './packages/env-var/get-env';
 
 interface Options {}
+
+export const CORS_ORIGIN = getEnv('CORS_ORIGIN').asArray(',');
+
+export const SWAGGER_SERVERS = getEnv('SWAGGER_SERVERS').asArray(',');
 
 export const bootstrap = fastifyPlugin<Options>(async function bootstrap(app) {
   await app.register(fastifyEtag);

@@ -1,5 +1,5 @@
-import todosRoute from '@/modules/todos/todos.route';
-import { todo, Todo } from '@/modules/todos/todos.schema';
+import todosRoute from './todos.route';
+import { todo, Todo } from './todos.schema';
 import fastify, { FastifyInstance } from 'fastify';
 
 describe('test todos route', () => {

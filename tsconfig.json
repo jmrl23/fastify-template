@@ -4,10 +4,7 @@
     "checkJs": true,
     "rootDir": "./src",
     "outDir": "./build",
-    "types": ["node", "jest"],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "types": ["node", "jest"]
   },
   "extends": "@tsconfig/node-lts/tsconfig.json",
   "include": ["./src"]

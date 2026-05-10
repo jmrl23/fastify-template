@@ -1,4 +1,3 @@
-import { PORT } from '@/common/env';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastifyPlugin from 'fastify-plugin';
@@ -6,6 +5,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { OpenAPIV3_1 } from 'openapi-types';
+import { getEnv } from '../packages/env-var/get-env';
 
 interface Options {
   servers?: OpenAPIV3_1.ServerObject[];
@@ -64,7 +64,7 @@ export const docs = fastifyPlugin<Options>(
     app.addHook('onListen', async function () {
       const swagger = app.swagger() as OpenAPIV3_1.Document;
       const addresses = app.addresses().map(({ address }) => address);
-      const port = PORT;
+      const port = getEnv('PORT').default(3001).asPortNumber();
 
       app.log.info(`API documentation available at (${docsPath})`);
 

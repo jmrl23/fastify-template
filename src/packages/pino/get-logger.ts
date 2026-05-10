@@ -1,6 +1,6 @@
-import { NODE_ENV } from '@/common/env';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import pino, { LoggerOptions } from 'pino';
+import { getEnv } from '../env-var/get-env';
 
 const developmentSerializer = {
   req(request: FastifyRequest) {
@@ -36,6 +36,10 @@ const productionSerializer = {
   },
 };
 
+const NODE_ENV = getEnv('NODE_ENV')
+  .default('development')
+  .asEnum(['development', 'test', 'production']);
+
 const loggerOptions: LoggerOptions = {
   level: NODE_ENV === 'production' ? 'info' : 'debug',
   serializers:
@@ -56,4 +60,6 @@ if (NODE_ENV === 'development') {
   } catch {}
 }
 
-export const logger = pino(loggerOptions);
+const logger = pino(loggerOptions);
+
+export const getLogger = () => logger;

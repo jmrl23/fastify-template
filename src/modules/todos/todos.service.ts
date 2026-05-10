@@ -1,4 +1,4 @@
-import { GetTodos, Todo } from '@/modules/todos/todos.schema';
+import { GetTodos, Todo } from './todos.schema';
 import { NotFound } from 'http-errors';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
