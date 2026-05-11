@@ -40,7 +40,7 @@
     "baseline-browser-mapping": "^2.10.29",
     "eslint": "^10.3.0",
     "globals": "^17.6.0",
-    "jest": "^30.3.0",
+    "jest": "^30.4.2",
     "jiti": "^2.7.0",
     "nodemon": "^3.1.14",
     "pino-pretty": "^13.1.3",
