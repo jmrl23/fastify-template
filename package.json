@@ -37,7 +37,7 @@
     "@types/http-errors": "^2.0.5",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.8.0",
-    "baseline-browser-mapping": "^2.10.29",
+    "baseline-browser-mapping": "^2.10.30",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
     "jest": "^30.4.2",
