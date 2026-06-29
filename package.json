@@ -39,7 +39,7 @@
     "@types/node": "^25.9.4",
     "baseline-browser-mapping": "^2.10.40",
     "eslint": "^10.6.0",
-    "globals": "^17.6.0",
+    "globals": "^17.7.0",
     "jest": "^30.4.2",
     "jiti": "^2.7.0",
     "nodemon": "^3.1.14",
