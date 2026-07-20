@@ -569,12 +569,12 @@
   resolved "https://registry.npmjs.org/@fastify/error/-/error-4.0.0.tgz"
   integrity sha512-OO/SA8As24JtT1usTUTKgGH7uLvhfwZPwlptRi2Dp5P4KKmJI3gvsZ8MIHnNwDs4sLf/aai5LzTyl66xr7qMxA==
 
-"@fastify/etag@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@fastify/etag/-/etag-6.1.0.tgz#b408a0fc85a30f4eb4cc8060f01c777bc8050ac5"
-  integrity sha512-95fxJ1YHSh1p76+tXyFvluy/H1G1Z+f7fSlv8CQxAFCuGIr/DgtwAYAfZIG//WuKZ7UB4TBLJOX14ZaIPqEirQ==
+"@fastify/etag@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@fastify/etag/-/etag-6.2.0.tgz#1b6400c391a62dda73be062634623d08e1b36cc0"
+  integrity sha512-ptNM6UYBY+DFbZ4UPCSlGN0YRRIBy1ZAoo/cPLu8m7xJ58XpfTYLvS5bpS5KFws7MEcCqJJuAMu+rvrRCISfgw==
   dependencies:
-    fastify-plugin "^5.0.0"
+    fastify-plugin "^6.0.0"
 
 "@fastify/fast-json-stringify-compiler@^5.0.0":
   version "5.0.2"
